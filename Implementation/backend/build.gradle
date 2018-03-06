@@ -1,0 +1,69 @@
+buildscript {
+    dependencies {
+        classpath "mysql:mysql-connector-java:6.0.6"
+        classpath "com.github.michaelruocco:embedded-mysql-plugin:2.1.6"
+    }
+}
+
+plugins {
+    id "org.flywaydb.flyway" version "5.0.7"
+}
+
+group "ch.heiafr.arsi.g6"
+version "1.0-SNAPSHOT"
+
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "embedded-mysql"
+apply from: "https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile "mysql:mysql-connector-java:6.0.6"
+    compile "org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.RELEASE"
+    testCompile "org.springframework.boot:spring-boot-starter-test:2.0.0.RELEASE"
+}
+
+def databaseUrl = "jdbc:mysql://localhost:3306/mydb?useSSL=false"
+def databaseUser = "user"
+def databasePassword = "tnxc7Db6DSvGavDe"
+
+embeddedMysql {
+    url = databaseUrl
+    username = databaseUser
+    password = databasePassword
+    version = "v5_7_latest"
+}
+
+flyway {
+    url = databaseUrl
+    user = databaseUser
+    password = databasePassword
+    locations = ["filesystem:database"]
+}
+
+gretty {
+    contextPath = "/"
+    servletContainer = "tomcat8"
+}
+
+
+task serverRun {
+}
+
+project.afterEvaluate {
+    serverRun.dependsOn("startEmbeddedMysql")
+    serverRun.dependsOn("flywayMigrate")
+    serverRun.dependsOn("appRun")
+    serverRun.dependsOn("stopEmbeddedMysql")
+    tasks.getByName("flywayMigrate").mustRunAfter("startEmbeddedMysql")
+    tasks.getByName("appRun").mustRunAfter("flywayMigrate")
+    tasks.getByName("stopEmbeddedMysql").mustRunAfter("appRun")
+}
