@@ -1,0 +1,19 @@
+<div class="container">
+  <table>
+    <tr class="font-weight-bold">
+      <td class="id-cell">ID</td>
+      <td>Nom</td>
+      <td>Prénom</td>
+      <td class="action-cell">Actions</td>
+    </tr>
+    <tr *ngFor="let person of persons">
+      <td class="id-cell">{{person.personId}}</td>
+      <td>{{person.lastname}}</td>
+      <td>{{person.firstname}}</td>
+      <td class="action-cell">
+        <button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,26 @@
+table {
+  width: 100%;
+}
+
+tr {
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.action-cell {
+  width: 95px;
+  max-width: 95px;
+}
+
+.id-cell {
+  width: 50px;
+  max-width: 50px;
+}
