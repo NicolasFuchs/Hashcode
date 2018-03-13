@@ -22,4 +22,9 @@ public class PersonService implements IPersonService {
   public List<Person> findAll() {
     return personRepository.findAll();
   }
+
+  @Override
+  public Person save(Person person) {
+    return personRepository.save(person);
+  }
 }
