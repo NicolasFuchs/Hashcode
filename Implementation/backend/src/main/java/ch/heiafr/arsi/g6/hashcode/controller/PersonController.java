@@ -26,7 +26,13 @@ public class PersonController {
 
   @CrossOrigin
   @PostMapping
-  public Person save(@RequestBody Person person) {
+  public Person create(@RequestBody Person person) {
+    return personService.save(person);
+  }
+
+  @CrossOrigin
+  @PutMapping
+  public Person update(@RequestBody Person person) {
     return personService.save(person);
   }
 }

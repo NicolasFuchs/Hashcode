@@ -25,6 +25,14 @@ export class PersonService {
       .catch(this.handleError);
   }
 
+  public updatePerson(person: Person): Promise<Person> {
+    return this.http
+      .put(baseUrl, JSON.stringify(person), {headers: {'Content-Type': 'application/json'}})
+      .toPromise()
+      .then(response => response as Person)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     return Promise.reject(error);
   }
