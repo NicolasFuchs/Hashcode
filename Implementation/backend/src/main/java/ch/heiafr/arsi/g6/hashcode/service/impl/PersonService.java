@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService implements IPersonService {
@@ -26,5 +27,14 @@ public class PersonService implements IPersonService {
   @Override
   public Person save(Person person) {
     return personRepository.save(person);
+  }
+
+  @Override
+  public Person delete(Integer personId) {
+    Person person = null;
+    Optional<Person> res = personRepository.findById(personId);
+    if (res.isPresent()) person = res.get();
+    personRepository.deleteById(personId);
+    return person;
   }
 }

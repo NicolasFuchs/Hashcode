@@ -53,6 +53,10 @@ export class PersonComponent implements OnInit {
     }
   }
 
+  public deletePerson(index: number): void {
+    this.personService.deletePerson(this.persons[index]).then(() => this.persons.splice(index, 1));
+  }
+
   private createPerson(): void {
     if (this.personLastname !== '' && this.personFirstname !== '') {
       const newPerson: Person = new Person();

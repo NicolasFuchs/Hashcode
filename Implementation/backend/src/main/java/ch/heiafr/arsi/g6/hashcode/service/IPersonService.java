@@ -9,4 +9,6 @@ public interface IPersonService {
   List<Person> findAll();
 
   Person save(Person person);
+
+  Person delete(Integer personId);
 }

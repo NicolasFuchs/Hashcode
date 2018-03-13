@@ -33,6 +33,14 @@ export class PersonService {
       .catch(this.handleError);
   }
 
+  public deletePerson(person: Person): Promise<void> {
+    const url = `${baseUrl}/${person.personId}`;
+    return this.http.delete(url, {headers: {'Content-Type': 'application/json'}})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     return Promise.reject(error);
   }

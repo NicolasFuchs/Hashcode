@@ -35,4 +35,10 @@ public class PersonController {
   public Person update(@RequestBody Person person) {
     return personService.save(person);
   }
+
+  @CrossOrigin
+  @DeleteMapping("/{id}")
+  public Person delete(@PathVariable("id") Integer personId) {
+    return personService.delete(personId);
+  }
 }
