@@ -1,0 +1,64 @@
+<div class="container">
+  <table>
+    <tr class="font-weight-bold">
+      <td class="id-cell">ID</td>
+      <td>Nom</td>
+      <td>Prénom</td>
+      <td class="action-cell">Actions</td>
+    </tr>
+    <tr *ngFor="let person of persons; let i = index">
+      <td class="id-cell">{{person.personId}}</td>
+      <td>{{person.lastname}}</td>
+      <td>{{person.firstname}}</td>
+      <td class="action-cell">
+        <button type="button" class="btn btn-primary" (click)="openModalWithInfos(i)"><i class="fa fa-pencil"
+                                                                                         aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deletePerson(i)"><i class="fa fa-trash"
+                                                                                  aria-hidden="true"></i></button>
+      </td>
+    </tr>
+    <tr class="font-weight-bold">
+      <td class="id-cell"></td>
+      <td></td>
+      <td></td>
+      <td class="action-cell">
+        <button type="button" class="btn btn-success" (click)="openModalWithoutInfos()"><i
+          class="fa fa-plus" aria-hidden="true"></i> Ajouter
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- Modal -->
+<div #modalRef class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Données de la personne</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="lastname">Nom</label>
+            <input #personLastnameRef type="text" class="form-control" id="lastname"
+                   (input)="personLastname = $event.target.value">
+          </div>
+          <div class="form-group">
+            <label for="firstname">Prénom</label>
+            <input #personFirstnameRef type="text" class="form-control" id="firstname"
+                   (input)="personFirstname = $event.target.value">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="savePerson()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
