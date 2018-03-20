@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class Person {
@@ -16,6 +17,8 @@ public class Person {
 
   private String lastname;
 
+  private LocalDate birthday;
+
   public Integer getPersonId() {
     return personId;
   }
@@ -26,5 +29,9 @@ public class Person {
 
   public String getLastname() {
     return lastname;
+  }
+
+  public LocalDate getBirthday() {
+    return birthday;
   }
 }
