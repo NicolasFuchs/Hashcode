@@ -16,9 +16,11 @@ export class PersonComponent implements OnInit {
   @ViewChild('modalRef') public modalRef: ElementRef;
   @ViewChild('personLastnameRef') public personLastnameRef: ElementRef;
   @ViewChild('personFirstnameRef') public personFirstnameRef: ElementRef;
+  @ViewChild('personBirthdayRef') public personBirthdayRef: ElementRef;
 
   public personLastname: string;
   public personFirstname: string;
+  public personBirthday: string;
 
   private currentIndex: number;
 
@@ -34,6 +36,7 @@ export class PersonComponent implements OnInit {
     this.clearData();
     this.personLastnameRef.nativeElement.value = '';
     this.personFirstnameRef.nativeElement.value = '';
+    this.personBirthdayRef.nativeElement.value = '';
     $(this.modalRef.nativeElement).modal();
   }
 
@@ -42,6 +45,8 @@ export class PersonComponent implements OnInit {
     this.currentIndex = index;
     this.personLastnameRef.nativeElement.value = this.persons[this.currentIndex].lastname;
     this.personFirstnameRef.nativeElement.value = this.persons[this.currentIndex].firstname;
+    this.personBirthdayRef.nativeElement.value = this.persons[this.currentIndex].birthday
+      .toLocaleDateString().replace(/\//g, '.');
     $(this.modalRef.nativeElement).modal();
   }
 
@@ -58,20 +63,22 @@ export class PersonComponent implements OnInit {
   }
 
   private createPerson(): void {
-    if (this.personLastname !== '' && this.personFirstname !== '') {
+    if (this.personLastname !== '' && this.personFirstname !== '' && this.personBirthday !== '') {
       const newPerson: Person = new Person();
       newPerson.lastname = this.personLastname;
       newPerson.firstname = this.personFirstname;
+      newPerson.birthday = new Date(this.personBirthday);
       this.personService.createPerson(newPerson).then(resp => this.persons.push(resp));
     }
   }
 
   private updatePerson(): void {
-    if (this.personLastname !== '' || this.personFirstname !== '') {
+    if (this.personLastname !== '' || this.personFirstname !== '' && this.personBirthday !== '') {
       const updatedPerson: Person = new Person();
       updatedPerson.personId = this.persons[this.currentIndex].personId;
       updatedPerson.lastname = this.personLastname !== '' ? this.personLastname : this.persons[this.currentIndex].lastname;
       updatedPerson.firstname = this.personFirstname !== '' ? this.personFirstname : this.persons[this.currentIndex].firstname;
+      updatedPerson.birthday = this.personBirthday !== '' ? new Date(this.personBirthday) : this.persons[this.currentIndex].birthday;
       this.personService.updatePerson(updatedPerson).then(resp => this.persons[this.currentIndex] = resp);
     }
   }
@@ -80,5 +87,6 @@ export class PersonComponent implements OnInit {
     this.currentIndex = -1;
     this.personLastname = '';
     this.personFirstname = '';
+    this.personBirthday = '';
   }
 }

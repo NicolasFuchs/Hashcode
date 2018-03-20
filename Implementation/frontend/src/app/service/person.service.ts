@@ -13,7 +13,11 @@ export class PersonService {
   public getPersons(): Promise<Person[]> {
     return this.http.get(baseUrl)
       .toPromise()
-      .then(response => response as Person[])
+      .then(response => {
+        const persons: Person[] = response as Person[];
+        persons.forEach(person => person.birthday = new Date(person.birthday));
+        return persons;
+      })
       .catch(this.handleError);
   }
 
