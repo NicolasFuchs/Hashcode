@@ -60,7 +60,8 @@
           <div class="form-group">
             <label for="birthday">Date de naissance</label>
             <input #personBirthdayRef type="text" class="form-control" id="birthday" placeholder="jj.mm.aaaa"
-                   (input)="personBirthday = $event.target.value">
+                   (input)="personBirthday = $event.target.value; checkDateFormat($event.target.value)"
+                   [class.is-invalid]="!isBirthdayFormatValid">
           </div>
         </form>
       </div>
