@@ -21,6 +21,7 @@ export class PersonComponent implements OnInit {
   public personLastname: string;
   public personFirstname: string;
   public personBirthday: string;
+  public isBirthdayFormatValid: boolean;
 
   private currentIndex: number;
 
@@ -62,6 +63,10 @@ export class PersonComponent implements OnInit {
     this.personService.deletePerson(this.persons[index]).then(() => this.persons.splice(index, 1));
   }
 
+  public checkDateFormat(date: string): void {
+    this.isBirthdayFormatValid = /(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/.test(date);
+  }
+
   private createPerson(): void {
     if (this.personLastname !== '' && this.personFirstname !== '' && this.personBirthday !== '') {
       const newPerson: Person = new Person();
@@ -73,13 +78,15 @@ export class PersonComponent implements OnInit {
   }
 
   private updatePerson(): void {
-    if (this.personLastname !== '' || this.personFirstname !== '' && this.personBirthday !== '') {
+    if (this.personLastname !== '' || this.personFirstname !== '' || this.personBirthday !== '') {
       const updatedPerson: Person = new Person();
       updatedPerson.personId = this.persons[this.currentIndex].personId;
       updatedPerson.lastname = this.personLastname !== '' ? this.personLastname : this.persons[this.currentIndex].lastname;
       updatedPerson.firstname = this.personFirstname !== '' ? this.personFirstname : this.persons[this.currentIndex].firstname;
       updatedPerson.birthday = this.personBirthday !== '' ? new Date(this.personBirthday) : this.persons[this.currentIndex].birthday;
-      this.personService.updatePerson(updatedPerson).then(resp => this.persons[this.currentIndex] = resp);
+      console.log(this.personBirthday);
+      console.log(updatedPerson.birthday);
+      // this.personService.updatePerson(updatedPerson).then(resp => this.persons[this.currentIndex] = resp);
     }
   }
 
@@ -88,5 +95,6 @@ export class PersonComponent implements OnInit {
     this.personLastname = '';
     this.personFirstname = '';
     this.personBirthday = '';
+    this.isBirthdayFormatValid = true;
   }
 }
