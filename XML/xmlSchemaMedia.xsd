@@ -1,0 +1,40 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- La première balise doit être "mediaChallenge" c'est la balise principale du document -->
+     <xs:element name="mediaChallenge" type="mediaChallengeType"/>
+
+     <!-- Définition du type "mediaChallenge" -->
+     <xs:complexType name="mediaChallengeType">
+        <!-- L'ordre des éléments n'est pas important -->
+        <xs:all>
+          <!-- L'élément "Information" est obligatoire
+                alors que "Figure" et "Video" sont optionnel -->
+            <xs:element name="Information" type="InformationType"/>
+            <xs:element name="Figure" type="mediaType" minOccurs="0"/>
+            <xs:element name="Video" type="mediaType" minOccurs="0"/>
+        </xs:all>
+     </xs:complexType>
+
+    <!-- Définition du type "InformationType" -->
+     <xs:complexType name="InformationType">
+      <!-- L'ordre des éléments est imposé et obligatoire -->
+        <xs:sequence>
+          <xs:element name="description" type="xs:string"/> <!-- Minimum 1 Maximum 1 -->
+        </xs:sequence>
+     </xs:complexType>
+
+    <!-- Définition du type "mediaType" -->
+     <xs:complexType name="mediaType">
+    <!-- L'ordre des éléments est définit et obligatoire -->
+        <xs:sequence>
+            <xs:element name="file" type="fileType" maxOccurs="unbounded"/> <!-- Minimum 1 Maximum infini -->
+        </xs:sequence>
+     </xs:complexType>
+
+    <!-- Définition du type "fileType"
+            Il ne contient que du texte à l'intérieur de ça balise -->
+     <xs:complexType name="fileType" mixed="true">
+         <!-- Oblige l'utilisation de l'attribut "title" aux éléments du type "file" -->
+         <xs:attribute name="title" type="xs:string" use="required"/>
+     </xs:complexType>
+</xs:schema>
