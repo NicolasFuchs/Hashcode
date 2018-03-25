@@ -15,7 +15,7 @@ export class PersonService {
       .toPromise()
       .then(response => {
         const persons: Person[] = response as Person[];
-        persons.forEach(person => person.birthday = new Date(person.birthday));
+        persons.forEach(personEl => personEl.birthday = new Date(personEl.birthday));
         return persons;
       })
       .catch(this.handleError);
@@ -25,7 +25,11 @@ export class PersonService {
     return this.http
       .post(baseUrl, JSON.stringify(person), {headers: {'Content-Type': 'application/json'}})
       .toPromise()
-      .then(response => response as Person)
+      .then(response => {
+        const personResp: Person = response as Person;
+        personResp.birthday = new Date(personResp.birthday);
+        return personResp;
+      })
       .catch(this.handleError);
   }
 
@@ -33,7 +37,11 @@ export class PersonService {
     return this.http
       .put(baseUrl, JSON.stringify(person), {headers: {'Content-Type': 'application/json'}})
       .toPromise()
-      .then(response => response as Person)
+      .then(response => {
+        const personResp: Person = response as Person;
+        personResp.birthday = new Date(personResp.birthday);
+        return personResp;
+      })
       .catch(this.handleError);
   }
 

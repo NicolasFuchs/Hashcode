@@ -19,6 +19,8 @@ public class Person {
 
   private LocalDate birthday;
 
+  private String addressXML;
+
   public Integer getPersonId() {
     return personId;
   }
@@ -33,5 +35,9 @@ public class Person {
 
   public LocalDate getBirthday() {
     return birthday;
+  }
+
+  public String getAddressXML() {
+    return addressXML;
   }
 }
