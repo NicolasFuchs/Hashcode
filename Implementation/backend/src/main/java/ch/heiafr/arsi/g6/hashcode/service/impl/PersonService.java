@@ -1,5 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.service.impl;
 
+import ch.heiafr.arsi.g6.hashcode.helper.XSDValidatorHelper;
 import ch.heiafr.arsi.g6.hashcode.model.Person;
 import ch.heiafr.arsi.g6.hashcode.repository.PersonRepository;
 import ch.heiafr.arsi.g6.hashcode.service.IPersonService;
@@ -26,6 +27,7 @@ public class PersonService implements IPersonService {
 
   @Override
   public Person save(Person person) {
+    XSDValidatorHelper.validateXML(person.getAddressXML());
     return personRepository.save(person);
   }
 
