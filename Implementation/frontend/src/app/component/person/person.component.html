@@ -5,6 +5,7 @@
       <td>Nom</td>
       <td>Prénom</td>
       <td>Date de naissance</td>
+      <td>Adresse</td>
       <td class="action-cell">Actions</td>
     </tr>
     <tr *ngFor="let person of persons; let i = index">
@@ -12,6 +13,10 @@
       <td>{{person.lastname}}</td>
       <td>{{person.firstname}}</td>
       <td>{{person.birthday | date: 'dd.MM.yyyy'}}</td>
+      <td>{{getValueFromXML(person.addressXML, 'street')}} {{getValueFromXML(person.addressXML, 'building')}}
+        <br>
+        {{getValueFromXML(person.addressXML, 'postalCode')}} {{getValueFromXML(person.addressXML, 'city')}}
+      </td>
       <td class="action-cell">
         <button type="button" class="btn btn-primary" (click)="openModalWithInfos(i)"><i class="fa fa-pencil"
                                                                                          aria-hidden="true"></i>
@@ -22,6 +27,7 @@
     </tr>
     <tr class="font-weight-bold">
       <td class="id-cell"></td>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -63,6 +69,30 @@
                    (input)="personBirthday = $event.target.value; checkDateFormat($event.target.value)"
                    [class.is-invalid]="!isBirthdayFormatValid">
           </div>
+          <div class="fields-inline">
+            <div class="form-group street-field">
+              <label for="street">Rue</label>
+              <input #personStreetRef type="text" class="form-control" id="street"
+                     (input)="personStreet = $event.target.value">
+            </div>
+            <div class="form-group building-field">
+              <label for="building">No</label>
+              <input #personBuildingRef type="text" class="form-control" id="building"
+                     (input)="personBuilding = $event.target.value">
+            </div>
+          </div>
+          <div class="fields-inline">
+            <div class="form-group postal-code-field">
+              <label for="postalCode">NPA</label>
+              <input #personPostalCodeRef type="text" class="form-control" id="postalCode"
+                     (input)="personPostalCode = $event.target.value">
+            </div>
+            <div class="form-group city-field">
+              <label for="city">Ville</label>
+              <input #personCityRef type="text" class="form-control" id="city"
+                     (input)="personCity = $event.target.value">
+            </div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -70,4 +100,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div #alertMessageRef class="alert alert-danger alert-message" role="alert">
+  <span *ngIf="currentIndex === -1">Erreur lors de la création</span>
+  <span *ngIf="currentIndex !== -1">Erreur lors de la modification</span>
 </div>

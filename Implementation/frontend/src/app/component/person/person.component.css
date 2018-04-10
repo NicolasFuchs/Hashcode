@@ -28,3 +28,42 @@ button:not(:last-child) {
   width: 50px;
   max-width: 50px;
 }
+
+.fields-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.street-field {
+  width: calc(100% - 60px - 1rem);
+}
+
+.building-field {
+  margin-left: 1rem;
+  width: 60px;
+}
+
+.postal-code-field {
+  margin-right: 1rem;
+  width: 70px;
+}
+
+.city-field {
+  width: calc(100% - 70px - 1rem);
+}
+
+.alert-message {
+  position: fixed;
+  top: 60px;
+  left: 20px;
+  width: calc(100% - 40px);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .5s, opacity .5s linear;
+}
+
+.alert-show {
+  visibility: visible;
+  opacity: 1;
+}
