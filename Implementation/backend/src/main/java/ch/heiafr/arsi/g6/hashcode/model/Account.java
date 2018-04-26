@@ -7,11 +7,11 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-public class Person {
+public class Account {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer personId;
+  private Integer accountId;
 
   private String firstname;
 
@@ -19,25 +19,11 @@ public class Person {
 
   private LocalDate birthday;
 
-  private String addressXML;
+  private String email;
 
-  public Integer getPersonId() {
-    return personId;
-  }
+  private String password;
 
-  public String getFirstname() {
-    return firstname;
-  }
+  private String token;
 
-  public String getLastname() {
-    return lastname;
-  }
-
-  public LocalDate getBirthday() {
-    return birthday;
-  }
-
-  public String getAddressXML() {
-    return addressXML;
-  }
+  private String image;
 }
