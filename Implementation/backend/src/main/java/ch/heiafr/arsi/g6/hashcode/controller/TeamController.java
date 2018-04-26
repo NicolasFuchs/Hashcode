@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/teams")
 public class TeamController {
 
-  private ITeamService teamService;
+  private final ITeamService teamService;
 
   @Autowired
   public TeamController(ITeamService teamService) {

@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/challenges")
 public class ChallengeController {
 
-  private IChallengeService challengeService;
+  private final IChallengeService challengeService;
 
   @Autowired
   public ChallengeController(IChallengeService challengeService) {

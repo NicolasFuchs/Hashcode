@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/accounts")
 public class AccountController {
 
-  private IAccountService accountService;
+  private final IAccountService accountService;
 
   @Autowired
   public AccountController(IAccountService accountService) {
