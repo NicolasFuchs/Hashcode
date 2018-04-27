@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
   INSERT INTO account (firstname,lastname,email,pseudo,password,token, fk_role)
       VALUES ("Karim", "Benzema","kb9@email.ch","kb9","emf123",NULL,4);
   INSERT INTO account (firstname,lastname,email,pseudo,password,token, fk_role)
-      VALUES ("Vladimir", "Meier","vladm@email.ch","vladm","emf123",NULL,4);
+      VALUES ("Valdimir", "Meier","valdm@email.ch","valdm","emf123",NULL,4);
   INSERT INTO account (firstname,lastname,email,pseudo,password,token, fk_role)
       VALUES ("Justin", "Koestinger","jk@email.ch","juju","emf123",NULL,4);
   INSERT INTO account (firstname,lastname,email,pseudo,password,token, fk_role)
@@ -127,6 +127,3 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
       VALUES ("Optimisation Challenge", 8,"2018-06-04 23:00:00","2018-06-07 10:30:00","2018-06-16 16:30:00","provisoire");
 
   */
-
-
-  
