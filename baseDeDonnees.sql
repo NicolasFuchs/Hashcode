@@ -4,7 +4,7 @@ USE `hashcodedb`;
 
 CREATE TABLE IF NOT EXISTS `hashcodedb`.role (
   id_role   INT          NOT NULL AUTO_INCREMENT,
-  name      VARCHAR(100) NOT NULL,
+  name      VARCHAR(19) NOT NULL,
   PRIMARY KEY (id_role),
   CHECK (name IN ('Admin', 'validated_organizer', 'waiting_organizer', 'validated_user', 'waiting_user')) -- Contrainte relationnelles CR1
 );
