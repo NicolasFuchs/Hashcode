@@ -13,4 +13,12 @@ public class Role {
   private Integer roleId;
 
   private String name;
+
+  public Integer getRoleId() {
+    return roleId;
+  }
+
+  public String getName() {
+    return name;
+  }
 }

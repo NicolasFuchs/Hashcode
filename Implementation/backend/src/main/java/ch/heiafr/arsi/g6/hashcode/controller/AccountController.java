@@ -4,6 +4,8 @@ import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,9 +53,9 @@ public class AccountController {
     // Must be implanted!
   }
 
-  public Account getAccount(Integer id) {
-    // Must be implanted!
-    return null;
+  @GetMapping("/{id}")
+  public Account getAccount(@PathVariable("id") Integer id) {
+    return accountService.getAccount(id);
   }
 
   public void updateAccount(Account account) {
