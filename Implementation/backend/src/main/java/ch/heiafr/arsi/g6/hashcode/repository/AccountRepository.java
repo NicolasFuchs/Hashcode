@@ -19,6 +19,5 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
   // Maybe need to be rewritten!
   // List<Account> findOrganizersByPseudo(String pseudo);
 
-  // Maybe need to be rewritten!
-  // Account findByPseudo(String pseudo);
+  Account findByPseudo(String pseudo);
 }

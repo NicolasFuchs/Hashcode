@@ -81,7 +81,7 @@ INSERT INTO role (name) VALUES ('WAITING_USER');
 -- Test data
 
 INSERT INTO account (firstname, lastname, email, pseudo, password, token, roleId)
-VALUES ('Jonathan', 'Rial', 'jonathan@email.ch', 'riri', 'emf123', NULL, 1);
+VALUES ('Jonathan', 'Rial', 'jonathan@email.ch', 'riri', '$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG', NULL, 1);
 
 /*
 -- Remplissage de la base de donnée pour avoir des exemples
