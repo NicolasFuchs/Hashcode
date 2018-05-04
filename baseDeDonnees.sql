@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account (
   password     VARCHAR(100) NOT NULL,
   token        VARCHAR(100) NULL UNIQUE, -- NULL : Contrainte relationnel CR3  + UNIQUE : Contrainte intégrité C2
   image        VARCHAR(100) NULL, -- NULL : Contrainte relationnel CR3
-  roleId INT,
+  roleId INT NOT NULL,
   PRIMARY KEY (accountId),
   constraint fk_role FOREIGN KEY (roleId) REFERENCES role(roleId)
 );
@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.challenge (
 CREATE TABLE IF NOT EXISTS `hashcodedb`.team (
   id_team      INT          NOT NULL AUTO_INCREMENT,
   t_name       VARCHAR(100) NOT NULL,
-  fk_challenge INT,
-  fk_leader INT,
+  fk_challenge INT NOT NULL,
+  fk_leader INT NOT NULL,
   PRIMARY KEY (id_team),
   constraint fk_challenge FOREIGN KEY (fk_challenge) REFERENCES challenge(challenge_id),
   constraint fk_leader FOREIGN KEY (fk_leader)    REFERENCES account(accountId)
@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.team (
 
 
 CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
-  fk_account INT,
-  fk_team INT,
+  fk_account INT NOT NULL,
+  fk_team INT NOT NULL,
   constraint fk_account FOREIGN KEY (fk_account) REFERENCES account(accountId),
   constraint fk_team FOREIGN KEY (fk_team)    REFERENCES team(id_team),
   PRIMARY KEY (fk_account,fk_team)
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
 
 
  CREATE TABLE IF NOT EXISTS `hashcodedb`.challenge_organizer(
-   fk_challenge2 INT,
-   fk_organizer INT,
+   fk_challenge2 INT NOT NULL,
+   fk_organizer INT NOT NULL,
     PRIMARY KEY (fk_challenge2,fk_organizer),
     constraint fk_challenge2 FOREIGN KEY (fk_challenge2) REFERENCES challenge(challenge_id),
 	constraint fk_organizer FOREIGN KEY (fk_organizer) REFERENCES account(accountId)
@@ -75,8 +75,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
     version     FLOAT        NOT NULL,
     ranking     FLOAT        NULL, -- Un ranking null est considéré comme pas évalué
     submit_date DATETIME     NOT NULL,
-    fka_account_team INT,
-    fkt_account_team INT,
+    fka_account_team INT NOT NULL,
+    fkt_account_team INT NOT NULL,
     PRIMARY KEY (id_solution),
 	constraint fk_account_team FOREIGN KEY (fka_account_team,fkt_account_team) REFERENCES account_team(fk_account, fk_team)
   );
@@ -121,7 +121,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
       VALUES (11, "Donald", "Trump","dodo@email.ch","trump","emf123",NULL,4);
   INSERT INTO account (accountId, firstname,lastname,email,pseudo,password,token, roleId)
       VALUES (12, "Raphi", "Burgunder","rb@email.ch","sfl","emf123",NULL,4);
-
+  INSERT INTO account (accountId, firstname,lastname,email,pseudo,password,token, roleId)
+      VALUES (13, "Jonathan", "Rial","jonathan@email.ch","ririuser","emf123",NULL,2);
 
   INSERT INTO challenge (challenge_id, c_name,nb_teams,date_inscription,date_begin,date_end,mediaXML)
       VALUES (1, "Java Challenge #1", 2,"2018-03-01 16:00:00","2018-04-01 08:00:00","2018-04-15 16:00:00","provisoire");
@@ -175,6 +176,46 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
     VALUES (5, "Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 7.5, "2018-05-01 16:00:00", 9, 3);
 
 
+
+
+    delimiter |
+    CREATE TRIGGER C3
+    BEFORE INSERT ON account_team
+    FOR EACH ROW
+
+     BEGIN
+
+    	DECLARE v_firstname, v_lastname, v_email varchar(50);
+        DECLARE idChallenge INT;
+        DECLARE otherIdAccount INT;
+    	Select fk_challenge
+    	INTO idChallenge
+        FROM team
+    	inner join challenge on  team.fk_challenge = challenge.challenge_id
+    	where id_team = NEW.fk_team;
+
+    	Select firstname, lastname, email
+        INTO v_firstname, v_lastname, v_email
+        FROM account
+        where accountId = NEW.fk_account;
+
+        Select accountId
+        INTO otherIdAccount
+        FROM account
+        where accountId != NEW.fk_account
+    		and firstname = v_firstname
+    		and  lastname = v_lastname
+            and email = v_email;
+
+    	IF  EXISTS (Select * FROM challenge_organizer where fk_challenge2=idChallenge and fk_organizer=otherIdAccount)
+        THEN
+    		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un organisateur ne peut pas participer à son propre concours';
+        END IF;
+    END |
+    delimiter ;
+
+
+
     delimiter |
     CREATE TRIGGER C6C7
     BEFORE INSERT ON Solution
@@ -206,4 +247,13 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
         END IF;
     END |
     delimiter ;
-END */
+END
+
+
+-- C8 question
+
+-- C9 nécéssaire ?
+
+-- CR5 + CR6 + CR7 nécessaire ? 
+
+*/

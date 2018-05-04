@@ -7,9 +7,9 @@ import {Component} from '@angular/core';
 })
 export class ChallengesComponent {
 
-  public actual: boolean;
+  public time: string;
 
   constructor() {
-    this.actual = true;
+    this.time = "actual"
   }
 }
