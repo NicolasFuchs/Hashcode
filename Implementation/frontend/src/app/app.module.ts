@@ -9,13 +9,15 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HeaderComponent} from './component/header/header.component';
 import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
 import {AuthenticationService} from './service/authentication.service';
+import {HomeComponent} from './component/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
