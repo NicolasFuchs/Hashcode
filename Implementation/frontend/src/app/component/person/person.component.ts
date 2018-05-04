@@ -45,7 +45,7 @@ export class PersonComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.personService.getPersons().then(resp => this.persons = resp);
+    // this.personService.getPersons().then(resp => this.persons = resp);
   }
 
   public openModalWithoutInfos(): void {

@@ -1,5 +1,7 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,9 +19,9 @@ public class Account {
 
   private String pseudo;
 
-  private String password;
+  @JsonIgnore private String password;
 
-  private String token;
+  @JsonIgnore private String token;
 
   private String image;
 

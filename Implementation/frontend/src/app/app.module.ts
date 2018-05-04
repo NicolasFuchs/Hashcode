@@ -5,13 +5,17 @@ import {AppComponent} from './app.component';
 import {PersonComponent} from './component/person/person.component';
 import {AppRoutingModule} from './app-routing.module';
 import {PersonService} from './service/person.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HeaderComponent} from './component/header/header.component';
+import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
+import {AuthenticationService} from './service/authentication.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PersonComponent
+    PersonComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +23,15 @@ import {HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     NgbModule.forRoot()
   ],
-  providers: [PersonService],
+  providers: [PersonService,
+    AuthenticationService,
+    AuthenticationInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useExisting: AuthenticationInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
