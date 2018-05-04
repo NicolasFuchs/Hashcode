@@ -1,0 +1,44 @@
+.profile-infos {
+  display: table;
+  border-radius: 0.25rem;
+  padding: 3px;
+  color: #f8f9fa;
+  user-select: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+@media (max-width: 767px) {
+  .profile-infos {
+    width: 100%;
+  }
+}
+
+.profile-infos:hover {
+  color: #212529;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.profile-picture {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.profile-picture > img {
+  border-radius: 50%;
+  height: 34px;
+}
+
+.profile-pseudo {
+  display: table-cell;
+  vertical-align: middle;
+  padding-right: 10px;
+}
+
+@media (min-width: 768px) {
+  .dropdown-align {
+    left: auto;
+    right: -16px;
+    top: 46px;
+  }
+}

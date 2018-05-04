@@ -64,6 +64,11 @@ public class AccountService implements IAccountService {
   }
 
   @Override
+  public Account getAccountByPseudo(String pseudo) {
+    return accountRepository.findByPseudo(pseudo);
+  }
+
+  @Override
   public void updateAccount(Account account) {
     // Must be implanted!
   }

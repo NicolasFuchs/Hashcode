@@ -23,6 +23,8 @@ public interface IAccountService {
 
   Account getAccount(Integer id);
 
+  Account getAccountByPseudo(String pseudo);
+
   void updateAccount(Account account);
 
   List<Account> getLoggedUsers();
