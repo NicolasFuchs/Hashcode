@@ -1,15 +1,18 @@
 <div class="row justify-content-center">
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary no-outline" (click)="actual = false">
+    <label class="btn btn-secondary no-outline" (click)="time = 'past'">
       <input type="radio" name="options"> Passés
     </label>
-    <label class="btn btn-secondary no-outline active" (click)="actual = true">
+    <label class="btn btn-secondary no-outline active" (click)="time = 'actual'">
       <input type="radio" name="options" checked> Actuel
     </label>
-    <label class="btn btn-secondary no-outline" (click)="actual = false">
+    <label class="btn btn-secondary no-outline" (click)="time = 'futur'">
       <input type="radio" name="options"> Futurs
     </label>
   </div>
 </div>
 
-<app-challenge-details *ngIf="actual"></app-challenge-details>
+
+<app-challenges-list *ngIf="time=='past'"></app-challenges-list>
+<app-challenge-details *ngIf="time=='actual'"></app-challenge-details>
+<app-challenges-list *ngIf="time=='futur'"></app-challenges-list>
