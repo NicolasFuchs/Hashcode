@@ -33,7 +33,9 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.challenge (
   date_begin        DATETIME     NOT NULL,
   date_end          DATETIME     NOT NULL,
   mediaXML          TEXT         NOT NULL,
-  PRIMARY KEY (challenge_id)
+  PRIMARY KEY (challenge_id),
+  CHECK (date_inscription<date_begin),  -- C5
+  CHECK (date_begin<date_end) --  C4
 );
 
 
@@ -71,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
     language    VARCHAR(100) NOT NULL,
     solution    VARCHAR(100) NOT NULL,
     version     FLOAT        NOT NULL,
-    ranking     FLOAT        NOT NULL,
+    ranking     FLOAT        NULL, -- Un ranking null est considéré comme pas évalué
     submit_date DATETIME     NOT NULL,
     fka_account_team INT,
     fkt_account_team INT,
@@ -172,4 +174,36 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
   INSERT INTO solution (id_solution, s_name, language, solution, version, ranking, submit_date, fka_account_team, fkt_account_team)
     VALUES (5, "Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 7.5, "2018-05-01 16:00:00", 9, 3);
 
-*/
+
+    delimiter |
+    CREATE TRIGGER C6C7
+    BEFORE INSERT ON Solution
+    FOR EACH ROW
+
+     BEGIN
+    	DECLARE
+    		v_date_begin INT;
+    	DECLARE v_date_end INT;
+
+        SELECT date_begin, date_end
+        INTO v_date_begin, v_date_end
+            FROM challenge
+          inner join team on challenge.challenge_id = team.fk_challenge
+          inner join solution on  team.id_team = solution.fkt_account_team
+          where fkt_account_team = NEW.fkt_account_team
+          group by date_begin;
+
+        IF(date_begin > NEW.submit_date) THEN
+    		SET msg = 'La date de début du concours est plus récente
+            que la date de soumission de la solution';
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+        END IF;
+
+        IF(date_end < NEW.submit_date) THEN
+           SET msg = 'La date de fin du concours est plus récente
+          que la date de soumission de la solution';
+          SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+        END IF;
+    END |
+    delimiter ;
+END */
