@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../service/authentication.service';
 
 import * as $ from 'jquery';
 import 'bootstrap';
+import {LocalStorageService} from 'ngx-localstorage';
 
 @Component({
   selector: 'app-header',
@@ -21,11 +22,13 @@ export class HeaderComponent implements OnInit {
   @ViewChild('passwordInput') private _passwordInput: ElementRef;
 
   public constructor(private _authenticationService: AuthenticationService,
-                     private _authenticationInterceptor: AuthenticationInterceptor) {
+                     private _authenticationInterceptor: AuthenticationInterceptor,
+                     private _localStorageService: LocalStorageService) {
     this._isModalShowed = false;
   }
 
   public ngOnInit(): void {
+    // Listening events
     this._authenticationService.account.subscribe(account => this.account = account);
     this._authenticationInterceptor.errors.subscribe(err => {
       if (err.status === 401) {
@@ -37,6 +40,11 @@ export class HeaderComponent implements OnInit {
         }
       }
     });
+
+    // Check for token in LocalStorage
+    if (this._localStorageService.get('token') !== null) {
+      this._authenticationService.loginWithToken();
+    }
   }
 
   public isLogged(): boolean {
@@ -61,9 +69,5 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void {
     this._authenticationService.logout();
-  }
-
-  public test(event: any): void {
-    console.log(event);
   }
 }

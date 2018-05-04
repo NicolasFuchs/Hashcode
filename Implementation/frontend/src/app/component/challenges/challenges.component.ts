@@ -10,6 +10,6 @@ export class ChallengesComponent {
   public time: string;
 
   constructor() {
-    this.time = "actual"
+    this.time = 'actual';
   }
 }

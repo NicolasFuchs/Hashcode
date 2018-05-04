@@ -14,11 +14,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
-},
-    {
-        path: 'confirm',
-        component: ConfirmComponent
-    },
+  },
+  {
+    path: 'confirm',
+    component: ConfirmComponent
+  },
   {
     path: 'challenges',
     component: ChallengesComponent

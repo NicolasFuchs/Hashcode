@@ -23,6 +23,13 @@ export class AuthenticationService {
       .catch(AuthenticationService.handleError);
   }
 
+  public loginWithToken(): Promise<void> {
+    return this.http.get('http://localhost:8080/auth/login')
+      .toPromise()
+      .then(response => this.account.emit(response as Account))
+      .catch(AuthenticationService.handleError);
+  }
+
   public logout(): Promise<void> {
     return this.http.get('http://localhost:8080/auth/logout')
       .toPromise()
