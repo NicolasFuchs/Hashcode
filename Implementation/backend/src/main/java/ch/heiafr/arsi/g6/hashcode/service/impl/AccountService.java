@@ -59,7 +59,13 @@ public class AccountService implements IAccountService {
 
   @Override
   public Account getAccount(Integer id) {
-    return accountRepository.findById(id).orElse(null);
+    // Must be implanted!
+    return null;
+  }
+
+  @Override
+  public Account getAccountByPseudo(String pseudo) {
+    return accountRepository.findByPseudo(pseudo);
   }
 
   @Override

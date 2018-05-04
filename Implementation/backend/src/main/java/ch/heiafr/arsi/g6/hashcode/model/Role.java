@@ -1,5 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
@@ -24,6 +25,7 @@ public class Role implements GrantedAuthority {
     return name;
   }
 
+  @JsonIgnore
   @Override
   public String getAuthority() {
     return name;
