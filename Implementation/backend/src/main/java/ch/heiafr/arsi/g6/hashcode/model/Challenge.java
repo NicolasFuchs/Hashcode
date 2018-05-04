@@ -23,5 +23,5 @@ public class Challenge {
 
   private LocalDate end;
 
-  private String mediaXML;
+  private String mediaXml;
 }
