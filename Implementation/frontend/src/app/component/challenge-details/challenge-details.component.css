@@ -1,0 +1,71 @@
+.component-margin {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.light-subtitles h4 {
+  font-weight: 400;
+}
+
+.description {
+  text-align: justify;
+}
+
+.data {
+  display: block;
+  text-align: center;
+}
+
+.data-button {
+  text-align: center;
+  display: inline-block;
+  user-select: none;
+  width: 150px;
+  margin-top: 30px;
+}
+
+.data-button:hover {
+  color: #6c757d;
+  cursor: pointer;
+}
+
+.data-button i {
+  font-size: 50px;
+}
+
+.organizers {
+  display: block;
+}
+
+.organizer-profile {
+  text-align: center;
+  display: inline-block;
+  margin: 10px;
+}
+
+.organizer-profile p {
+  margin-bottom: 0;
+}
+
+.organizer-profile img {
+  height: 80px;
+  border-radius: 50%;
+}
+
+.participants {
+  list-style-type: none;
+  padding: 0;
+}
+
+.participants li:nth-child(odd) {
+  background-color: #f8f8f8;
+}
+
+.participants li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.make-team {
+  text-align: center;
+}

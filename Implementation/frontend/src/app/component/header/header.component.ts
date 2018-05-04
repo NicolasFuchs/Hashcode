@@ -16,9 +16,9 @@ export class HeaderComponent implements OnInit {
 
   private _isModalShowed: boolean;
 
-  @ViewChild('signModal') private signModal: ElementRef;
-  @ViewChild('pseudoInput') private pseudoInput: ElementRef;
-  @ViewChild('passwordInput') private passwordInput: ElementRef;
+  @ViewChild('signModal') private _signModal: ElementRef;
+  @ViewChild('pseudoInput') private _pseudoInput: ElementRef;
+  @ViewChild('passwordInput') private _passwordInput: ElementRef;
 
   public constructor(private _authenticationService: AuthenticationService,
                      private _authenticationInterceptor: AuthenticationInterceptor) {
@@ -30,8 +30,8 @@ export class HeaderComponent implements OnInit {
     this._authenticationInterceptor.errors.subscribe(err => {
       if (err.status === 401) {
         if (this._isModalShowed) {
-          $(this.pseudoInput.nativeElement).addClass('is-invalid');
-          $(this.passwordInput.nativeElement).addClass('is-invalid');
+          $(this._pseudoInput.nativeElement).addClass('is-invalid');
+          $(this._passwordInput.nativeElement).addClass('is-invalid');
         } else {
           this.showSignModal();
         }
@@ -44,17 +44,18 @@ export class HeaderComponent implements OnInit {
   }
 
   public showSignModal(): void {
-    $(this.signModal.nativeElement).modal('show');
+    $(this._signModal.nativeElement).modal('show');
     this._isModalShowed = true;
   }
 
   public login(): void {
-    const pseudo: string = this.pseudoInput.nativeElement.value;
-    const password: string = this.passwordInput.nativeElement.value;
+    const pseudo: string = this._pseudoInput.nativeElement.value;
+    const password: string = this._passwordInput.nativeElement.value;
     this._authenticationService.login(pseudo, password).then(() => {
-      $(this.signModal.nativeElement).modal('hide');
-      $(this.pseudoInput.nativeElement).removeClass('is-invalid');
-      $(this.passwordInput.nativeElement).removeClass('is-invalid');
+      $(this._signModal.nativeElement).modal('hide');
+      $(this._pseudoInput.nativeElement).removeClass('is-invalid');
+      $(this._passwordInput.nativeElement).removeClass('is-invalid');
+      this._isModalShowed = false;
     });
   }
 

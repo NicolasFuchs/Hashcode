@@ -10,6 +10,8 @@ import {HeaderComponent} from './component/header/header.component';
 import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
 import {AuthenticationService} from './service/authentication.service';
 import {HomeComponent} from './component/home/home.component';
+import {ChallengesComponent} from './component/challenges/challenges.component';
+import {ChallengeDetailsComponent} from './component/challenge-details/challenge-details.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import {HomeComponent} from './component/home/home.component';
     AppComponent,
     PersonComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    ChallengesComponent,
+    ChallengeDetailsComponent
   ],
   imports: [
     BrowserModule,
