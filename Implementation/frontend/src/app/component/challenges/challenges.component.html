@@ -1,0 +1,15 @@
+<div class="row justify-content-center">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary no-outline" (click)="actual = false">
+      <input type="radio" name="options"> Passés
+    </label>
+    <label class="btn btn-secondary no-outline active" (click)="actual = true">
+      <input type="radio" name="options" checked> Actuel
+    </label>
+    <label class="btn btn-secondary no-outline" (click)="actual = false">
+      <input type="radio" name="options"> Futurs
+    </label>
+  </div>
+</div>
+
+<app-challenge-details *ngIf="actual"></app-challenge-details>

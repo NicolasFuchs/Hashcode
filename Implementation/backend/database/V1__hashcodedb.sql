@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS hashcodedb.account (
 )
   ENGINE = InnoDB;
 
-
 CREATE TABLE IF NOT EXISTS hashcodedb.challenge (
   challenge_id     INT          NOT NULL AUTO_INCREMENT,
   c_name           VARCHAR(100) NOT NULL,

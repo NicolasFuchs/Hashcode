@@ -10,8 +10,13 @@ import {HeaderComponent} from './component/header/header.component';
 import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
 import {AuthenticationService} from './service/authentication.service';
 import {HomeComponent} from './component/home/home.component';
+
 import { ConfirmComponent } from './component/confirm/confirm.component';
 import { ChallengesListComponent } from './component/challenges-list/challenges-list.component';
+
+import {ChallengesComponent} from './component/challenges/challenges.component';
+import {ChallengeDetailsComponent} from './component/challenge-details/challenge-details.component';
+
 
 
 @NgModule({
@@ -21,7 +26,9 @@ import { ChallengesListComponent } from './component/challenges-list/challenges-
     HeaderComponent,
     HomeComponent,
     ConfirmComponent,
-    ChallengesListComponent
+    ChallengesListComponent,
+    ChallengesComponent,
+    ChallengeDetailsComponent
   ],
   imports: [
     BrowserModule,
