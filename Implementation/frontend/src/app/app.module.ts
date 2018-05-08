@@ -10,6 +10,7 @@ import {HeaderComponent} from './component/header/header.component';
 import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
 import {AuthenticationService} from './service/authentication.service';
 import {HomeComponent} from './component/home/home.component';
+import { ProfileComponent } from './component/profile/profile.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {HomeComponent} from './component/home/home.component';
     AppComponent,
     PersonComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
