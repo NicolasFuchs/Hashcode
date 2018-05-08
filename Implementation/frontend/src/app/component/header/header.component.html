@@ -7,7 +7,10 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/challenges" routerLinkActive="active">Concours</a>
       </li>
     </ul>
     <div *ngIf="isLogged()" class="profile-infos">
@@ -50,7 +53,8 @@
         </div>
         <div class="form-group">
           <label for="passwordInput">Password</label>
-          <input #passwordInput type="password" class="form-control" id="passwordInput">
+          <input #passwordInput type="password" class="form-control" id="passwordInput"
+                 (keypress)="$event.code === 'Enter' ? login() : any">
         </div>
       </div>
       <div class="modal-footer">
