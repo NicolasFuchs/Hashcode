@@ -27,7 +27,7 @@ import {ChallengeService} from './service/challenge.service';
     PersonComponent,
     HeaderComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
     ConfirmComponent,
     ChallengesListComponent,
     ChallengesComponent,
