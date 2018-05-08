@@ -4,6 +4,7 @@ import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class AuthenticationController {
   }
 
   @GetMapping("/login")
+  @PreAuthorize("isAuthenticated()")
   public Account login(HttpSession session) {
     SecurityContext securityContext =
         (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
@@ -33,6 +35,7 @@ public class AuthenticationController {
   }
 
   @GetMapping("/logout")
+  @PreAuthorize("isAuthenticated()")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void logout(HttpSession session) {
     session.invalidate();

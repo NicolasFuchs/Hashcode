@@ -1,17 +1,1 @@
-<?xml version="1.0"?>
-<mediaChallenge xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="xmlSchemaMedia.xsd">
-    <Information>
-        <description>
-            Long texte qui expliquant les consignes du concours
-        </description>
-    </Information>
-    <Figure>
-        <file title ="Class Diagram">www.heia-hashcode.ch/challenges/optimisationchallenge2/classDiagram.jpeg</file>
-        <file title ="Explanation schema">www.heia-hashcode.ch/challenges/optimisationchallenge2/explanationSchema.pdf</file>
-    </Figure>
-    <Video>
-        <file title ="Introduction video">www.heia-hashcode.ch/challenges/optimisationchallenge2/introduction.mp4</file>
-        <file title ="Theorie explanation">https://www.youtube.com/watch?v=dQw4w9WgXcQ</file>
-    </Video>
-</mediaChallenge>
+<mediaChallenge><Information><description>Long texte qui expliquant les consignes du concours</description></Information><Figure><file title ="Class Diagram">www.heia-hashcode.ch/challenges/optimisationchallenge2/classDiagram.jpeg</file><file title ="Explanation schema">www.heia-hashcode.ch/challenges/optimisationchallenge2/explanationSchema.pdf</file></Figure><Video><file title ="Introduction video">www.heia-hashcode.ch/challenges/optimisationchallenge2/introduction.mp4</file><file title ="Theorie explanation">https://www.youtube.com/watch?v=dQw4w9WgXcQ</file></Video></mediaChallenge>

@@ -13,4 +13,12 @@ public class Team {
   private Integer teamId;
 
   private String name;
+
+  public Integer getTeamId() {
+    return teamId;
+  }
+
+  public String getName() {
+    return name;
+  }
 }

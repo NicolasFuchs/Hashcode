@@ -21,10 +21,9 @@ public class ChallengeController {
     this.challengeService = challengeService;
   }
 
-  @GetMapping
+  @GetMapping("/actual")
   public Challenge getActualChallenge() {
-    // Must be implanted!
-    return null;
+    return challengeService.getActualChallenge();
   }
 
   public List<Challenge> getPastChallenges() {

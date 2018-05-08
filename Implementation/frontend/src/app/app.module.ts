@@ -17,6 +17,7 @@ import {ChallengesListComponent} from './component/challenges-list/challenges-li
 import {ChallengesComponent} from './component/challenges/challenges.component';
 import {ChallengeDetailsComponent} from './component/challenge-details/challenge-details.component';
 import {NgxLocalStorageModule} from 'ngx-localstorage';
+import {ChallengeService} from './service/challenge.service';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {NgxLocalStorageModule} from 'ngx-localstorage';
   ],
   providers: [PersonService,
     AuthenticationService,
+    ChallengeService,
     AuthenticationInterceptor,
     {
       provide: HTTP_INTERCEPTORS,

@@ -20,6 +20,12 @@ public class ChallengeService implements IChallengeService {
   }
 
   @Override
+  public Challenge getActualChallenge() {
+    List<Challenge> actual = challengeRepository.findByBeginBeforeNowAndEndAfterNow();
+    return actual.size() > 0 ? actual.get(0) : null;
+  }
+
+  @Override
   public List<Challenge> getPastChallenges() {
     // Must be implanted!
     return null;

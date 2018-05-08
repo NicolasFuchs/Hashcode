@@ -3,7 +3,18 @@ package ch.heiafr.arsi.g6.hashcode.repository;
 import ch.heiafr.arsi.g6.hashcode.model.Challenge;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
+import java.util.List;
+
+@SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public interface ChallengeRepository extends JpaRepository<Challenge, Integer> {
+
+  default List<Challenge> findByBeginBeforeNowAndEndAfterNow() {
+    LocalDate now = LocalDate.now();
+    return findByBeginBeforeAndEndAfter(now, now);
+  }
+
+  List<Challenge> findByBeginBeforeAndEndAfter(LocalDate beginDate, LocalDate endDate);
 
   // Maybe need to be rewritten!
   // List<Challenge> findByEndBefore(LocalDate date);

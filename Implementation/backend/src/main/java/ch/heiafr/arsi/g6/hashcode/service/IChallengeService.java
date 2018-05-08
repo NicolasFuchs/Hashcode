@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IChallengeService {
 
+  Challenge getActualChallenge();
+
   List<Challenge> getPastChallenges();
 
   List<Challenge> getFutureChallenges();

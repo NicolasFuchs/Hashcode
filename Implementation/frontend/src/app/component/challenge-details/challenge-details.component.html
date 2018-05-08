@@ -1,25 +1,15 @@
 <div class="container component-margin light-subtitles">
   <div class="centered-title">
-    <h1>Fake AP authentification hack script</h1>
+    <h1>{{challenge?.name}}</h1>
   </div>
   <hr>
   <h4>Description</h4>
-  <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque gravida consequat eros a
-    tincidunt. Duis nec magna in turpis congue aliquet. Curabitur sollicitudin tortor mi, quis mollis felis condimentum
-    id. Ut nec libero in tellus rhoncus tincidunt. Etiam dignissim condimentum condimentum. Nam vehicula molestie neque,
-    a vulputate magna dictum quis. Nulla consequat, elit id eleifend luctus, ipsum urna varius nunc, ut molestie odio
-    neque non ante. Sed aliquet risus nec ipsum suscipit aliquam. Nulla blandit sapien neque, at iaculis odio congue id.
-    Praesent id velit in sem mollis tempus at a leo. Nulla vitae mi sit amet quam cursus dapibus et et neque. Nulla
-    facilisi.
-    <br><br>
-    Nunc pharetra luctus ex. Nullam ultrices porta tortor, nec dapibus sem fermentum eget. Fusce eu efficitur ante.
-    Mauris luctus, mi id commodo egestas, elit lectus blandit lacus, ac malesuada dolor libero nec nisl. Praesent
-    pellentesque quis dolor a placerat. Vivamus at purus congue justo rhoncus dapibus sit amet sed posuere.</p>
+  <p class="description">{{getDescription()}}</p>
   <div class="data">
-    <div class="data-button">
+    <!--<div class="data-button">
       <i class="fa fa-file-text-o" aria-hidden="true"></i>
       <p>Données</p>
-    </div>
+    </div>-->
     <div class="data-button">
       <i class="fa fa-trophy" aria-hidden="true"></i>
       <p>Classement</p>
@@ -36,38 +26,15 @@
   <hr>
   <h4>Organisateurs</h4>
   <div class="organizers">
-    <div class="organizer-profile">
+    <div *ngFor="let organizer of challenge.organizers" class="organizer-profile">
       <img src="assets/placeholder.png"/>
-      <p>Jonathan Rial</p>
-    </div>
-    <div class="organizer-profile">
-      <img src="assets/placeholder.png"/>
-      <p>Nicolas Fuchs</p>
-    </div>
-    <div class="organizer-profile">
-      <img src="assets/placeholder.png"/>
-      <p>Joé Butty</p>
-    </div>
-    <div class="organizer-profile">
-      <img src="assets/placeholder.png"/>
-      <p>Jonathan Rial</p>
-    </div>
-    <div class="organizer-profile">
-      <img src="assets/placeholder.png"/>
-      <p>Nicolas Fuchs</p>
-    </div>
-    <div class="organizer-profile">
-      <img src="assets/placeholder.png"/>
-      <p>Joé Butty</p>
+      <p>{{organizer.pseudo}}</p>
     </div>
   </div>
   <hr>
   <h4>Participants</h4>
   <ul class="participants">
-    <li>GangOfFour</li>
-    <li>Les_Pirates_de_l'internet</li>
-    <li>Les 3 mousquetaires</li>
-    <li>Winner_Group</li>
+    <li *ngFor="let participant of challenge.participants">{{participant.name}}</li>
   </ul>
   <hr>
   <div class="make-team">
