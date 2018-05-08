@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="welcome-message">
+    <h1>Bienvenue sur votre page de profil</h1>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div id="profileContainer">
+          <img id="profileImage" *ngIf="account" [src]="account.image">
+          <div id="profileDarkener">
+            <div id="profileIcon">
+              <i class="fa fa-picture-o fa-5x" aria-hidden="true"></i>
+            </div>
+          </div>
+          <input type="file" id="fileExplorer" title=" " accept="image/png,image/jpg,image/jpeg" (change)="changeImageURL($event)">
+        </div>
+      </div>
+      <div class="col">
+        <form novalidate id="profileInfo">
+          <div class="form-group row">
+            <label for="lastname" class="col">Nom</label>
+            <input type="text" class="form-control col" id="lastname" placeholder="Nom" *ngIf="account" [value]="account.lastname" (keyup)="account.lastname = $event.target.value">
+          </div>
+          <div class="form-group row">
+            <label for="firstname" class="col">Prénom</label>
+            <input type="text" class="form-control col" id="firstname" placeholder="Prénom" *ngIf="account" [value]="account.firstname">
+          </div>
+          <div class="form-group row">
+            <label for="pseudo" class="col">Pseudo</label>
+            <input type="text" class="form-control col" id="pseudo" placeholder="Pseudo" *ngIf="account" [value]="account.pseudo">
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col">Email</label>
+            <input type="email" class="form-control col" id="email" placeholder="Email" *ngIf="account" [value]="account.email">
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col">Nouveau mot de passe</label>
+            <input type="password" class="form-control col" id="password" placeholder="Nouveau mot de passe">
+          </div>
+          <div class="form-group row">
+            <label for="passwordConfirmation" class="col">Confirmation</label>
+            <input type="password" class="form-control col" id="passwordConfirmation" placeholder="Confirmation du mot de passe">
+          </div>
+          <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

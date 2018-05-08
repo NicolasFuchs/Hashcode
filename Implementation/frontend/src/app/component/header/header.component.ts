@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationInterceptor} from '../../interceptor/authentication.interceptor';
 import {AuthenticationService} from '../../service/authentication.service';
+import {Account} from '../../model/Account';
 
 import * as $ from 'jquery';
 import 'bootstrap';

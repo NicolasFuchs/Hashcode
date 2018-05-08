@@ -1,9 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Account} from '../model/Account';
 
 @Injectable()
 export class AuthenticationService {
 
+  public actual: Account;
   public account: EventEmitter<Account>;
 
   private static handleError(error: any): Promise<any> {
@@ -19,7 +21,11 @@ export class AuthenticationService {
     headers = headers.append('Authorization', 'Basic ' + btoa(pseudo + ':' + password));
     return this._httpClient.get('http://localhost:8080/auth/login', {headers: headers})
       .toPromise()
-      .then(response => this.account.emit(response as Account))
+      .then(response => {
+        const account: Account = response as Account;
+        this.actual = account;
+        this.account.emit(account);
+      })
       .catch(AuthenticationService.handleError);
   }
 
@@ -33,7 +39,10 @@ export class AuthenticationService {
   public logout(): Promise<void> {
     return this._httpClient.get('http://localhost:8080/auth/logout')
       .toPromise()
-      .then(() => this.account.emit(undefined))
+      .then(() => {
+        this.actual = undefined;
+        this.account.emit(undefined);
+      })
       .catch(AuthenticationService.handleError);
   }
 }
