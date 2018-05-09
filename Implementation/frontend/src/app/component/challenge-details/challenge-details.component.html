@@ -14,11 +14,11 @@
       <i class="fa fa-trophy" aria-hidden="true"></i>
       <p>Classement</p>
     </div>
-    <div class="data-button">
+    <div *ngIf="hasFigures()" class="data-button" (click)="downloadFigures()">
       <i class="fa fa-file-image-o" aria-hidden="true"></i>
       <p>Figures</p>
     </div>
-    <div class="data-button">
+    <div *ngIf="hasVideos()" class="data-button" (click)="downloadVideos()">
       <i class="fa fa-file-video-o" aria-hidden="true"></i>
       <p>Vidéos</p>
     </div>
@@ -26,15 +26,15 @@
   <hr>
   <h4>Organisateurs</h4>
   <div class="organizers">
-    <div *ngFor="let organizer of challenge.organizers" class="organizer-profile">
-      <img src="assets/placeholder.png"/>
+    <div *ngFor="let organizer of challenge?.organizers" class="organizer-profile">
+      <img [src]="getProfilePicture(organizer.accountId)"/>
       <p>{{organizer.pseudo}}</p>
     </div>
   </div>
   <hr>
   <h4>Participants</h4>
   <ul class="participants">
-    <li *ngFor="let participant of challenge.participants">{{participant.name}}</li>
+    <li *ngFor="let participant of challenge?.participants">{{participant.name}}</li>
   </ul>
   <hr>
   <div class="make-team">
