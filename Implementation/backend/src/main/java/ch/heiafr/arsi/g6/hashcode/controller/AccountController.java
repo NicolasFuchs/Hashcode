@@ -20,9 +20,12 @@ public class AccountController {
     this.accountService = accountService;
   }
 
+  @GetMapping("/organizerpending")
   public List<Account> getPending() {
     // Must be implanted!
-    return null;
+
+
+    return accountService.getPending();
   }
 
   public void acceptPending(Account account) {

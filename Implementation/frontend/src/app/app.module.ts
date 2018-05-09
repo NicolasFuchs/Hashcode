@@ -19,6 +19,7 @@ import {ChallengesComponent} from './component/challenges/challenges.component';
 import {ChallengeDetailsComponent} from './component/challenge-details/challenge-details.component';
 import {NgxLocalStorageModule} from 'ngx-localstorage';
 import {ChallengeService} from './service/challenge.service';
+import { AdminComponent } from './component/admin/admin.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {ChallengeService} from './service/challenge.service';
     ConfirmComponent,
     ChallengesListComponent,
     ChallengesComponent,
-    ChallengeDetailsComponent
+    ChallengeDetailsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

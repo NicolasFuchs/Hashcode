@@ -113,6 +113,17 @@ VALUES ('Nicolas', 'Fuchs', 'nicolas@email.ch', 'Nico95', '$2a$10$g8t3whqZ.4oaYh
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
 VALUES ('Lucas', 'Hillringhaus', 'hill@email.ch', 'Hillring', 'no_password', NULL, NULL, 2);
 
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES ('Joé', 'Butty', 'jojo@email.ch', 'jojo', '$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG', NULL, NULL, 1);
+
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES ("Organisateur", "En Attente 1 ","orga@email.ch","oratt1","$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG",NULL, NULL,3);
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES ("Organisateur", "En Attente 2 ","orga@email.ch","oratt2","$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG",NULL, NULL,3);
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES ("Organisateur", "En Attente 3 ","orga@email.ch","oratt3","$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG",NULL, NULL,3);
+
+
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (1, 'Java Challenge #1', 2, '2018-03-01 16:00:00', '2018-04-01 08:00:00', '2018-04-15 16:00:00', 'provisoire');
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)

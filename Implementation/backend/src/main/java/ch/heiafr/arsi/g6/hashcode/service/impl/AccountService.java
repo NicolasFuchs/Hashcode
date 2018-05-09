@@ -22,6 +22,7 @@ public class AccountService implements IAccountService {
   @Override
   public List<Account> getPending() {
     // Must be implanted!
+    List<Account> allPending = accountRepository.findAllPending();
     return null;
   }
 

@@ -81,6 +81,13 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
 	constraint fk_account_team FOREIGN KEY (fka_account_team,fkt_account_team) REFERENCES account_team(fk_account, fk_team)
   );
 
+  CREATE TABLE IF NOT EXISTS `hashcodedb`.data (
+    id_data INT          NOT NULL AUTO_INCREMENT,
+    file      VARCHAR(100) NOT NULL,
+    fk_challenge INT NOT NULL,
+    PRIMARY KEY (id_solution),
+    constraint fk_challenge FOREIGN KEY (fk_challenge) REFERENCES challenge(challenge_id),
+  );
 
 
 /*
@@ -103,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
       VALUES (3, "Nicolas", "Fuchs","nicolas@email.ch","nico","emf123",NULL,2);
 
   INSERT INTO account (accountId, firstname,lastname,email,pseudo,password,token, roleId)
-      VALUES (4, "Organisateur", "En Attentent","orga@email.ch","or","emf123",NULL,3);
+      VALUES (4, "Organisateur", "En Attente","orga@email.ch","or","emf123",NULL,3);
 
   INSERT INTO account (accountId, firstname,lastname,email,pseudo,password,token, roleId)
       VALUES (5, "Cristiano", "Ronaldo","cr7@email.ch","cr7","emf123",NULL,4);
@@ -250,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
 END
 
 
--- C8 question
+-- C8 CR5 question
 
 -- C9 nécéssaire ?
 
