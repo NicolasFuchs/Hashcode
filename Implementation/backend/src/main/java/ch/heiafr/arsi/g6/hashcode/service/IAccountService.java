@@ -1,6 +1,7 @@
 package ch.heiafr.arsi.g6.hashcode.service;
 
 import ch.heiafr.arsi.g6.hashcode.model.Account;
+import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 
 import java.util.List;
@@ -32,4 +33,7 @@ public interface IAccountService {
   List<Account> getTeamMembers(Team team);
 
   List<Account> getOrganizersByPseudo(String pseudo);
+
+  List<Account> getAccountsByRole(Role role);
+
 }
