@@ -10,7 +10,7 @@ import {HeaderComponent} from './component/header/header.component';
 import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
 import {AuthenticationService} from './service/authentication.service';
 import {HomeComponent} from './component/home/home.component';
-import { ProfileComponent } from './component/profile/profile.component';
+import {ProfileComponent} from './component/profile/profile.component';
 
 import {ConfirmComponent} from './component/confirm/confirm.component';
 import {ChallengesListComponent} from './component/challenges-list/challenges-list.component';
