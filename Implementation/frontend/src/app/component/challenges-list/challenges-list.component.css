@@ -1,3 +1,8 @@
 .participants li:nth-child(odd) {
   background-color: #f8f8f8;
 }
+
+.component-margin {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}

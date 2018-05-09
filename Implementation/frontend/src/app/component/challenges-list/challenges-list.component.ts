@@ -1,4 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+import {Challenge} from '../../model/Challenge';
+import {ChallengeService} from '../../service/challenge.service';
+
 
 @Component({
   selector: 'app-challenges-list',
@@ -7,10 +10,18 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ChallengesListComponent implements OnInit {
 
-  constructor() {
+  public challenges:Challenge[];
+
+  @Input()
+  time: string;
+
+  constructor(private _challengeService: ChallengeService) {
   }
 
-  ngOnInit() {
+  ngOnInit() : void {
+    if(this.time=="past") this._challengeService.getPastChallenges().then(challenges => this.challenges = challenges);
+    else if (this.time=="futur") this._challengeService.getFutureChallenges().then(challenges => this.challenges = challenges);
   }
+
 
 }

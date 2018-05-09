@@ -28,13 +28,14 @@ public class ChallengeService implements IChallengeService {
   @Override
   public List<Challenge> getPastChallenges() {
     // Must be implanted!
-    return null;
+    List<Challenge> past = challengeRepository.findByEndBeforeNow();
+    return past;
   }
 
   @Override
   public List<Challenge> getFutureChallenges() {
-    // Must be implanted!
-    return null;
+    List<Challenge> future = challengeRepository.findByBeginAfterNow();
+    return future;
   }
 
   @Override

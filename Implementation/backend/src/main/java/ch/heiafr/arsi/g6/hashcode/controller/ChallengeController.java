@@ -26,14 +26,16 @@ public class ChallengeController {
     return challengeService.getActualChallenge();
   }
 
+  @GetMapping("/past")
   public List<Challenge> getPastChallenges() {
     // Must be implanted!
-    return null;
+    return challengeService.getPastChallenges();
   }
 
+  @GetMapping("/future")
   public List<Challenge> getFutureChallenges() {
     // Must be implanted!
-    return null;
+    return challengeService.getFutureChallenges();
   }
 
   public Challenge getChallenge(Integer id) {
