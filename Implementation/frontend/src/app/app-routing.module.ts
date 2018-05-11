@@ -20,6 +20,11 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
+    path: 'signup',
+    component: ProfileComponent,
+    data: {signup: true}
+  },
+  {
     path: 'confirm',
     component: ConfirmComponent
   },
