@@ -1,5 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.controller;
 
+import ch.heiafr.arsi.g6.hashcode.constante.RoleConst;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
@@ -29,7 +30,7 @@ public class AccountController {
 
   @GetMapping("/organizerpending")
   public List<Account> getOrganizerPending() {
-    return accountService.getPending();
+    return accountService.getAccountsByRole(RoleConst.PENDING_ORGANIZER);
   }
 
   public void acceptPending(Account account) {

@@ -1,5 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.service.impl;
 
+import ch.heiafr.arsi.g6.hashcode.constante.RoleConst;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
@@ -94,8 +95,6 @@ public class AccountService implements IAccountService {
 
   @Override
   public List<Account> getAccountsByRole(Role role) {
-    Role rol = new Role();
-    List<Account> accountByRole = accountRepository.findByRole(rol);
-    return null;
+    return accountRepository.findAllByRole(role);
   }
 }
