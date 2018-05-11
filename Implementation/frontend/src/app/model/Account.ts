@@ -6,6 +6,7 @@ export class Account {
   lastname: string;
   email: string;
   pseudo: string;
+  password: string;
   image: string;
   role: Role;
 }
