@@ -8,6 +8,7 @@ import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,12 +33,14 @@ public class AccountController {
   public List<Account> getOrganizerPending() {
     return accountService.getAccountsByRole(RoleConst.PENDING_ORGANIZER);
   }
-
+  @GetMapping("/users/{id}")
   public void acceptPending(Account account) {
     // Must be implanted!
   }
 
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   public void refusePending(Account account) {
+    accountService.deleteAccount(account);
     // Must be implanted!
   }
 

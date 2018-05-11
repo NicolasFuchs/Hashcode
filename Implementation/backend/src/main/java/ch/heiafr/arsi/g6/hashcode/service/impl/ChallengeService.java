@@ -41,7 +41,7 @@ public class ChallengeService implements IChallengeService {
   @Override
   public Challenge getChallenge(Integer id) {
     // Must be implanted!
-    return null;
+    return challengeRepository.getByChallengeId(id);
   }
 
   @Override

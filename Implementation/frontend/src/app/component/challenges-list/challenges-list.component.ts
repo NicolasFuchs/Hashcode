@@ -11,6 +11,8 @@ import {ChallengeService} from '../../service/challenge.service';
 export class ChallengesListComponent implements OnInit {
 
   public challenges:Challenge[];
+  public challengeClicked:boolean;
+  public challengeIdClicked:number;
 
   @Input()
   time: string;
@@ -21,7 +23,17 @@ export class ChallengesListComponent implements OnInit {
   ngOnInit() : void {
     if(this.time=="past") this._challengeService.getPastChallenges().then(challenges => this.challenges = challenges);
     else if (this.time=="futur") this._challengeService.getFutureChallenges().then(challenges => this.challenges = challenges);
+    this.challengeClicked = false;
+    this.challengeIdClicked = 0;
   }
+
+  private showInfoChallenge (challengeId: number):void{
+    this.challengeIdClicked = challengeId;
+    this.challengeClicked = true;
+  }
+
+  
+
 
 
 }

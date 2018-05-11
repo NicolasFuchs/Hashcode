@@ -19,6 +19,13 @@ export class ChallengeService {
       .catch(ChallengeService.handleError);
   }
 
+  public getChallengeById(challengeId:number): Promise<Challenge> {
+    return this._httpClient.get('http://localhost:8080/challenges/'+challengeId)
+      .toPromise()
+      .then(response => response as Challenge)
+      .catch(ChallengeService.handleError);
+  }
+
   public getPastChallenges(): Promise<Challenge[]> {
     return this._httpClient.get('http://localhost:8080/challenges/past')
       .toPromise()

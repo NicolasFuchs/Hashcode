@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {Challenge} from '../../model/Challenge';
 import {ChallengeService} from '../../service/challenge.service';
 import {Account} from '../../model/Account';
@@ -12,6 +12,8 @@ import {ZipCollectorHelper} from '../../helper/zip-collector.helper';
 export class ChallengeDetailsComponent implements OnInit {
 
   // @Input() public time: string;
+  @Input()
+  idChallenge: number;
 
   public challenge: Challenge;
   private _mediaXml: XMLDocument;
@@ -21,12 +23,22 @@ export class ChallengeDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     // this.time = 'actual';
+    if(this.idChallenge == 0){
     this._challengeService.getActualChallenge().then(challenge => {
       this.challenge = challenge;
       const parser: DOMParser = new DOMParser();
       this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
     });
+
+  }else{
+    this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
+      this.challenge = challenge;
+      const parser: DOMParser = new DOMParser();
+      this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
+  });
+
   }
+}
 
   public getDescription(): string {
     if (typeof this._mediaXml !== 'undefined') {

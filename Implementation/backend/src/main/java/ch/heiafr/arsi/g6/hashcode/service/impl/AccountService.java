@@ -32,6 +32,7 @@ public class AccountService implements IAccountService {
     // Must be implanted!
   }
 
+  // Inutile car on supprime le compte donc on utilise deleteAccount()
   @Override
   public void refusePending(Account account) {
     // Must be implanted!
@@ -51,7 +52,7 @@ public class AccountService implements IAccountService {
 
   @Override
   public void deleteAccount(Account account) {
-    // Must be implanted!
+     accountRepository.deleteById(account.getAccountId());
   }
 
   @Override

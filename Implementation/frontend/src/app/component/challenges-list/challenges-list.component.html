@@ -1,5 +1,6 @@
-<div class="container component-margin">
-<table class="table">
+
+<div *ngIf="challengeClicked==false" class="container component-margin">
+<table  class="table table-hover clickable">
   <thead>
     <tr>
       <th scope="col">Concours</th>
@@ -10,7 +11,8 @@
     </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let challenge of challenges">
+
+  <tr *ngFor="let challenge of challenges" (click)="showInfoChallenge(challenge.challengeId)">
     <td> {{challenge.name}}</td>
     <td  *ngIf="time=='futur'">{{challenge.inscriptionDate}}</td>
     <td *ngIf="time=='futur'"> {{challenge.nbTeams}}</td>
@@ -21,3 +23,10 @@
 
 </table>
 </div>
+
+
+<app-challenge-details idChallenge={{this.challengeIdClicked}} *ngIf="challengeClicked==true"></app-challenge-details>
+
+<button (click)="ngOnInit()" *ngIf="challengeClicked==true" type="button" class="btn btn-danger btn-md">
+  Retour
+</button>
