@@ -261,6 +261,54 @@ END
 
 -- C9 nécéssaire ?
 
--- CR5 + CR6 + CR7 nécessaire ? 
+-- CR5 + CR6 + CR7 nécessaire ?
+
+-- Procedure stocker pour CR5
+DELIMITER |
+
+CREATE PROCEDURE create_team  (name_team VARCHAR(100), challenge_id INT, leader_id INT)
+
+-- team_exist = 0 if nothing
+-- team_exist = 1 if exist
+
+BEGIN
+
+INSERT INTO team (`name`, `challenge_id`, `leader_id`) VALUES (name_team, challenge_id, leader_id);
+
+SELECT team_id INTO @idTeam
+FROM team
+Where `name` = name_team and  `challenge_id`=  challenge_id and leader_id=  `leader_id`  ;
+
+
+INSERT INTO account_team ( `fk_account`, `fk_team`)
+VALUES (leader_id, @idTeam);
+
+END |
+
+DELIMITER ;
+
+
+-- Procedure stocker pour CR6
+CREATE PROCEDURE create_challenge AS
+DELIMITER |
+
+CREATE PROCEDURE create_challenge  (name_challenge VARCHAR(100), nb_teams_challenge INT,
+	inscription_date DATETIME, begin_challenge DATETIME, end_challenge DATETIME, media_xml TEXT, id_organizer INT)
+
+BEGIN
+INSERT INTO challenge ( `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
+VALUES (name_challenge, nb_teams_challenge, inscription_date, begin_challenge, end_challenge, media_xml);
+
+SELECT challenge_id INTO @idChallenge
+FROM challenge
+WHERE `name` = name_challenge and  `nb_teams` = nb_teams_challenge
+				and  `inscription_date` = inscription_date and `begin` = begin_challenge
+                and `end` = end_challenge and `media_xml` = media_xml;
+
+INSERT INTO challenge_account (`challenge_id`, `account_id`) VALUES (@idChallenge, id_organizer);
+
+END |
+
+DELIMITER ;
 
 */
