@@ -81,6 +81,13 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
 	constraint fk_account_team FOREIGN KEY (fka_account_team,fkt_account_team) REFERENCES account_team(fk_account, fk_team)
   );
 
+  CREATE TABLE IF NOT EXISTS `hashcodedb`.data (
+    id_data INT          NOT NULL AUTO_INCREMENT,
+    file      VARCHAR(100) NOT NULL,
+    fk_challenge INT NOT NULL,
+    PRIMARY KEY (id_solution),
+    constraint fk_challenge FOREIGN KEY (fk_challenge) REFERENCES challenge(challenge_id),
+  );
 
 
 /*
@@ -103,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
       VALUES (3, "Nicolas", "Fuchs","nicolas@email.ch","nico","emf123",NULL,2);
 
   INSERT INTO account (accountId, firstname,lastname,email,pseudo,password,token, roleId)
-      VALUES (4, "Organisateur", "En Attentent","orga@email.ch","or","emf123",NULL,3);
+      VALUES (4, "Organisateur", "En Attente","orga@email.ch","or","emf123",NULL,3);
 
   INSERT INTO account (accountId, firstname,lastname,email,pseudo,password,token, roleId)
       VALUES (5, "Cristiano", "Ronaldo","cr7@email.ch","cr7","emf123",NULL,4);
@@ -250,10 +257,58 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
 END
 
 
--- C8 question
+-- C8 CR5 question
 
 -- C9 nécéssaire ?
 
--- CR5 + CR6 + CR7 nécessaire ? 
+-- CR5 + CR6 + CR7 nécessaire ?
+
+-- Procedure stocker pour CR5
+DELIMITER |
+
+CREATE PROCEDURE create_team  (name_team VARCHAR(100), challenge_id INT, leader_id INT)
+
+-- team_exist = 0 if nothing
+-- team_exist = 1 if exist
+
+BEGIN
+
+INSERT INTO team (`name`, `challenge_id`, `leader_id`) VALUES (name_team, challenge_id, leader_id);
+
+SELECT team_id INTO @idTeam
+FROM team
+Where `name` = name_team and  `challenge_id`=  challenge_id and leader_id=  `leader_id`  ;
+
+
+INSERT INTO account_team ( `fk_account`, `fk_team`)
+VALUES (leader_id, @idTeam);
+
+END |
+
+DELIMITER ;
+
+
+-- Procedure stocker pour CR6
+CREATE PROCEDURE create_challenge AS
+DELIMITER |
+
+CREATE PROCEDURE create_challenge  (name_challenge VARCHAR(100), nb_teams_challenge INT,
+	inscription_date DATETIME, begin_challenge DATETIME, end_challenge DATETIME, media_xml TEXT, id_organizer INT)
+
+BEGIN
+INSERT INTO challenge ( `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
+VALUES (name_challenge, nb_teams_challenge, inscription_date, begin_challenge, end_challenge, media_xml);
+
+SELECT challenge_id INTO @idChallenge
+FROM challenge
+WHERE `name` = name_challenge and  `nb_teams` = nb_teams_challenge
+				and  `inscription_date` = inscription_date and `begin` = begin_challenge
+                and `end` = end_challenge and `media_xml` = media_xml;
+
+INSERT INTO challenge_account (`challenge_id`, `account_id`) VALUES (@idChallenge, id_organizer);
+
+END |
+
+DELIMITER ;
 
 */

@@ -1,7 +1,23 @@
-<ul class="list-group">
-  <li class="list-group-item">Cras justo odio</li>
-  <li class="list-group-item">Dapibus ac facilisis in</li>
-  <li class="list-group-item">Morbi leo risus</li>
-  <li class="list-group-item">Porta ac consectetur ac</li>
-  <li class="list-group-item">Vestibulum at eros</li>
-</ul>
+<div class="container component-margin">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Concours</th>
+      <th *ngIf="time=='futur'" scope="col">Délaie inscription</th>
+      <th *ngIf="time=='futur'" scope="col">Nbr d'équipes max</th>
+      <th *ngIf="time=='futur'" scope="col"></th>
+      <th *ngIf="time=='past'" scope="col">Fin du concours</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let challenge of challenges">
+    <td> {{challenge.name}}</td>
+    <td  *ngIf="time=='futur'">{{challenge.inscriptionDate}}</td>
+    <td *ngIf="time=='futur'"> {{challenge.nbTeams}}</td>
+    <td *ngIf="time=='futur'"><button type="button" class="btn btn-primary btn-sm">Créer une équipe !</button> </td>
+    <td *ngIf="time=='past'"> {{challenge.end}}</td>
+  </tr>
+</tbody>
+
+</table>
+</div>

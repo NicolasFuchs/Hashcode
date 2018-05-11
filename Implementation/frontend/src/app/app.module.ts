@@ -10,7 +10,7 @@ import {HeaderComponent} from './component/header/header.component';
 import {AuthenticationInterceptor} from './interceptor/authentication.interceptor';
 import {AuthenticationService} from './service/authentication.service';
 import {HomeComponent} from './component/home/home.component';
-import { ProfileComponent } from './component/profile/profile.component';
+import {ProfileComponent} from './component/profile/profile.component';
 
 import {ConfirmComponent} from './component/confirm/confirm.component';
 import {ChallengesListComponent} from './component/challenges-list/challenges-list.component';
@@ -19,6 +19,7 @@ import {ChallengesComponent} from './component/challenges/challenges.component';
 import {ChallengeDetailsComponent} from './component/challenge-details/challenge-details.component';
 import {NgxLocalStorageModule} from 'ngx-localstorage';
 import {ChallengeService} from './service/challenge.service';
+import { AdminComponent } from './component/admin/admin.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {ChallengeService} from './service/challenge.service';
     ConfirmComponent,
     ChallengesListComponent,
     ChallengesComponent,
-    ChallengeDetailsComponent
+    ChallengeDetailsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

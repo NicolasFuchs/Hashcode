@@ -3,7 +3,9 @@ package ch.heiafr.arsi.g6.hashcode.controller;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +23,13 @@ public class AccountController {
   }
 
   public List<Account> getPending() {
-    // Must be implanted!
+    //return accountService.getPending();
     return null;
+  }
+
+  @GetMapping("/organizerpending")
+  public List<Account> getOrganizerPending() {
+    return accountService.getPending();
   }
 
   public void acceptPending(Account account) {

@@ -1,3 +1,4 @@
+import {Account} from './Account';
 import {Team} from './Team';
 
 export class Challenge {
