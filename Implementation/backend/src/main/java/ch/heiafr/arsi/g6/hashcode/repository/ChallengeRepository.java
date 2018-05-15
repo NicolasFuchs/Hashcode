@@ -37,4 +37,6 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Integer> {
 
   // Maybe need to be rewritten!
   // List<LocalDate> findAllDate();
+
+  Challenge getByChallengeId(int Id);
 }

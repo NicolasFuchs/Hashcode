@@ -4,6 +4,8 @@ import {HomeComponent} from './component/home/home.component';
 import {ProfileComponent} from './component/profile/profile.component';
 import {ConfirmComponent} from './component/confirm/confirm.component';
 import {ChallengesComponent} from './component/challenges/challenges.component';
+import {AdminComponent} from './component/admin/admin.component';
+
 
 const routes: Routes = [
   {
@@ -31,7 +33,12 @@ const routes: Routes = [
   {
     path: 'challenges',
     component: ChallengesComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
   }
+
 ];
 
 @NgModule({

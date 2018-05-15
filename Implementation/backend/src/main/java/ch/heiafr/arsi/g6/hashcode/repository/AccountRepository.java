@@ -17,7 +17,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
    //List<Account> findAllPending();
 
   // Maybe need to be rewritten!
-   List<Account> findByRole(Role role);
+   List<Account> findAllByRole(Role role);
 
   // Maybe need to be rewritten!
   // List<Account> findAllTeamMembers();
@@ -26,4 +26,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
   // List<Account> findOrganizersByPseudo(String pseudo);
 
   Account findByPseudo(String pseudo);
+
+  Account deleteById(int accountId);
 }

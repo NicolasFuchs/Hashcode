@@ -4,6 +4,7 @@ import ch.heiafr.arsi.g6.hashcode.model.Challenge;
 import ch.heiafr.arsi.g6.hashcode.service.IChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,9 +39,10 @@ public class ChallengeController {
     return challengeService.getFutureChallenges();
   }
 
-  public Challenge getChallenge(Integer id) {
+  @GetMapping("/{id}")
+  public Challenge getChallenge(@PathVariable int id) {
     // Must be implanted!
-    return null;
+    return challengeService.getChallenge(id);
   }
 
   public List<LocalDate> getChallengesDates() {

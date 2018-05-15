@@ -1,5 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.service.impl;
 
+import ch.heiafr.arsi.g6.hashcode.constante.RoleConst;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
@@ -31,6 +32,7 @@ public class AccountService implements IAccountService {
     // Must be implanted!
   }
 
+  // Inutile car on supprime le compte donc on utilise deleteAccount()
   @Override
   public void refusePending(Account account) {
     // Must be implanted!
@@ -50,7 +52,7 @@ public class AccountService implements IAccountService {
 
   @Override
   public void deleteAccount(Account account) {
-    // Must be implanted!
+     accountRepository.deleteById(account.getAccountId());
   }
 
   @Override
@@ -94,8 +96,6 @@ public class AccountService implements IAccountService {
 
   @Override
   public List<Account> getAccountsByRole(Role role) {
-    Role rol = new Role();
-    List<Account> accountByRole = accountRepository.findByRole(rol);
-    return null;
+    return accountRepository.findAllByRole(role);
   }
 }
