@@ -128,7 +128,7 @@ INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `to
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (1, 'Java Challenge #1', 2, '2018-03-01 16:00:00', '2018-04-01 08:00:00', '2018-04-15 16:00:00', 'provisoire');
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
-VALUES (2, 'Java Challenge #2', 4, '2018-04-18 16:00:00', '2018-04-23 10:00:00', '2018-05-15 18:00:00',
+VALUES (2, 'Java Challenge #2', 4, '2018-04-18 16:00:00', '2018-04-23 10:00:00', '2018-05-20 18:00:00',
         '<media><information><description>Long texte qui expliquant les consignes du concours</description></information><figure><file>cervin_with_trees.jpg</file><file>cervin_without_trees.jpg</file></figure><video><file>big_buck_bunny.mp4</file></video></media>');
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (3, 'PHP Challenge #1', 4, '2018-05-18 10:00:00', '2018-05-20 16:00:00', '2018-05-30 16:00:00', 'provisoire');
