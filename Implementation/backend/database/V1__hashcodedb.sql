@@ -1,4 +1,6 @@
--- Création de  la base de données pour l'application
+-- Création de  la base de données pour l'applicationsolution
+CREATE DATABASE IF NOT EXISTS hashcodedb;
+
 USE `hashcodedb`;
 
 CREATE TABLE IF NOT EXISTS `hashcodedb`.`role` (

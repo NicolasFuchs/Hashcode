@@ -85,12 +85,12 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.account_team (
     id_data INT          NOT NULL AUTO_INCREMENT,
     file      VARCHAR(100) NOT NULL,
     fk_challenge INT NOT NULL,
-    PRIMARY KEY (id_solution),
-    constraint fk_challenge FOREIGN KEY (fk_challenge) REFERENCES challenge(challenge_id),
+    PRIMARY KEY (id_datasolution),
+    constraint fk_challenge3 FOREIGN KEY (fk_challenge) REFERENCES challenge(challenge_id)
   );
 
 
-/*
+
 
 
   INSERT INTO role (roleId, name) VALUES (1, "admin");
@@ -310,5 +310,3 @@ INSERT INTO challenge_account (`challenge_id`, `account_id`) VALUES (@idChalleng
 END |
 
 DELIMITER ;
-
-*/
