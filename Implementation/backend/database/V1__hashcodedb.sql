@@ -53,6 +53,36 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`team` (
   CONSTRAINT `fk_leader` FOREIGN KEY (`leader_id`) REFERENCES account (`account_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `hashcodedb`.`account_team` (
+  `account_id` INT NOT NULL,
+  `team_id`    INT NOT NULL,
+  PRIMARY KEY (`account_id`, `team_id`),
+  CONSTRAINT `fk_account` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`),
+  CONSTRAINT `fk_team` FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `hashcodedb`.`solution` (
+  `solution_id` INT          NOT NULL AUTO_INCREMENT,
+  `name`        VARCHAR(100) NOT NULL,
+  `language`    VARCHAR(100) NOT NULL,
+  `solution`    VARCHAR(100) NOT NULL,
+  `version`     FLOAT        NOT NULL,
+  `ranking`     FLOAT        NULL, -- Un ranking null est considéré comme pas évalué
+  `submit_date` DATETIME     NOT NULL,
+  `account_id`  INT          NOT NULL,
+  `team_id`     INT          NOT NULL,
+  PRIMARY KEY (`solution_id`),
+  CONSTRAINT `fk_account_team` FOREIGN KEY (`account_id`, `team_id`) REFERENCES `account_team` (`account_id`, `team_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `hashcodedb`.`data` (
+  `data_id`      INT          NOT NULL AUTO_INCREMENT,
+  `file`         VARCHAR(100) NOT NULL,
+  `challenge_id` INT          NOT NULL,
+  PRIMARY KEY (`data_id`),
+  CONSTRAINT `fk_challenge3` FOREIGN KEY (`challenge_id`) REFERENCES `challenge` (`challenge_id`)
+);
+
 -- Tables needed for spring session
 
 CREATE TABLE IF NOT EXISTS `hashcodedb`.`spring_session` (
@@ -115,14 +145,19 @@ INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `to
 VALUES ('Lucas', 'Hillringhaus', 'hill@email.ch', 'Hillring', 'no_password', NULL, NULL, 2);
 
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-VALUES ('Joé', 'Butty', 'jojo@email.ch', 'jojo', '$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG', NULL, NULL, 1);
+VALUES
+  ('Joé', 'Butty', 'jojo@email.ch', 'jojo', '$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG', NULL, NULL,
+   1);
 
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES ("Organisateur", "En Attente 1 ","orga@email.ch","oratt1","$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG",NULL, NULL,3);
+VALUES ("Organisateur", "En Attente 1 ", "orga@email.ch", "oratt1",
+        "$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG", NULL, NULL, 3);
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES ("Organisateur", "En Attente 2 ","orga@email.ch","oratt2","$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG",NULL, NULL,3);
+VALUES ("Organisateur", "En Attente 2 ", "orga@email.ch", "oratt2",
+        "$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG", NULL, NULL, 3);
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES ("Organisateur", "En Attente 3 ","orga@email.ch","oratt3","$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG",NULL, NULL,3);
+VALUES ("Organisateur", "En Attente 3 ", "orga@email.ch", "oratt3",
+        "$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG", NULL, NULL, 3);
 
 
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
