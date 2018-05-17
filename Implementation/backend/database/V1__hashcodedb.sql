@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`role` (
   `role_id` INT         NOT NULL AUTO_INCREMENT,
   `name`    VARCHAR(30) NOT NULL,
   PRIMARY KEY (`role_id`)
+   -- CHECK (name IN ('Admin', 'validated_organizer', 'waiting_organizer', 'validated_user', 'waiting_user')) -- Contrainte relationnelles CR1
+
 )
   ENGINE = InnoDB;
 
@@ -31,7 +33,9 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`challenge` (
   `begin`            DATETIME     NOT NULL,
   `end`              DATETIME     NOT NULL,
   `media_xml`        TEXT         NOT NULL,
-  PRIMARY KEY (`challenge_id`)
+  PRIMARY KEY (`challenge_id`),
+  CHECK (`inscription_date`<`begin`),  -- Contrainte intégrité C5
+  CHECK (`begin`<`end`) -- Contrainte intégrité C4
 )
   ENGINE = InnoDB;
 
