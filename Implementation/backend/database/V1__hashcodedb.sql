@@ -229,6 +229,137 @@ VALUES (2, 3);
 
 
 
+
+
+delimiter |
+CREATE TRIGGER C6C7 
+BEFORE INSERT ON solution
+FOR EACH ROW
+ BEGIN
+	DECLARE  v_date_begin DATETIME;
+	DECLARE v_date_end DATETIME;
+
+    SELECT challenge.begin, challenge. end 
+    INTO v_date_begin, v_date_end
+        FROM challenge
+      inner join team on challenge.challenge_id = team.challenge_id
+      inner join solution on  team.team_id = solution.team_id
+      where team.team_id = NEW.team_id 
+      group by begin;
+    
+    IF(v_date_begin > NEW.submit_date) THEN
+    -- La date de début du concours est plus récente que la date de soumission de la solution
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT =  'Il est trop tot pour soumettre une solution';
+       
+    END IF;
+    
+    IF(v_date_end < NEW.submit_date) THEN
+    -- La date de fin du concours est plus récente que la date de soumission de la solution
+      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Il est trop tard pour soumettre une solution';
+      
+    END IF;
+END |
+
+
+delimiter |
+CREATE TRIGGER C3 
+BEFORE INSERT ON account_team
+FOR EACH ROW
+
+ BEGIN
+
+	DECLARE v_firstname, v_lastname, v_email varchar(50);
+    DECLARE idChallenge INT;
+    DECLARE otherIdAccount INT;
+	Select team.challenge_id 
+	INTO idChallenge
+    FROM team
+	inner join challenge on  team.challenge_id = challenge.challenge_id
+	where team.team_id = NEW.team_id;
+
+	Select firstname, lastname, email 
+    INTO v_firstname, v_lastname, v_email
+    FROM account 
+    where account_id = NEW.account_id;
+    
+    Select account_id
+    INTO otherIdAccount
+    FROM account 
+    where account_id != NEW.account_id 
+		and firstname = v_firstname 
+		and  lastname = v_lastname
+        and email = v_email;
+
+	IF  EXISTS (Select * FROM challenge_account where challenge_account.challenge_id=idChallenge and challenge_account.account_id=otherIdAccount)
+    THEN
+		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un organisateur ne peut pas participer à son propre concours'; 
+    END IF;
+END |
+
+delimiter ;
+
+
+delimiter |
+CREATE TRIGGER C8 
+BEFORE INSERT ON account_team
+FOR EACH ROW
+ BEGIN
+	DECLARE  idChallenge INT;
+
+    SELECT challenge_id
+    INTO idChallenge
+        FROM team
+      where team.team_id = NEW.team_id;
+      
+      IF EXISTS(Select * from team inner join account_team on team.team_id = account_team.team_id where team.challenge_id=idChallenge and account_team.account_id = NEW.account_id)
+      THEN
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L\'utilisateur participe déjà au concours'; 
+    END IF;
+END |
+
+delimiter ;
+
+-- Procedure stocker pour CR5
+DELIMITER |
+
+CREATE PROCEDURE create_team  (name_team VARCHAR(100), challenge_id INT, leader_id INT)
+BEGIN
+
+INSERT INTO team (`name`, `challenge_id`, `leader_id`) VALUES (name_team, challenge_id, leader_id);
+SELECT team_id INTO @idTeam
+FROM team
+Where `name` = name_team and  `challenge_id`=  challenge_id and leader_id=  `leader_id`  ;
+INSERT INTO account_team ( `account_id`, `team_id`)
+VALUES (leader_id, @idTeam);
+
+END |
+
+DELIMITER ;
+
+
+-- Procedure stocker pour CR6
+CREATE PROCEDURE create_challenge AS
+DELIMITER |
+
+CREATE PROCEDURE create_challenge  (name_challenge VARCHAR(100), nb_teams_challenge INT,
+	inscription_date DATETIME, begin_challenge DATETIME, end_challenge DATETIME, media_xml TEXT, id_organizer INT)
+BEGIN
+INSERT INTO challenge ( `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
+VALUES (name_challenge, nb_teams_challenge, inscription_date, begin_challenge, end_challenge, media_xml);
+SELECT challenge_id INTO @idChallenge
+FROM challenge
+WHERE `name` = name_challenge and  `nb_teams` = nb_teams_challenge
+				and  `inscription_date` = inscription_date and `begin` = begin_challenge
+                and `end` = end_challenge and `media_xml` = media_xml;
+INSERT INTO challenge_account (`challenge_id`, `account_id`) VALUES (@idChallenge, id_organizer);
+END |
+DELIMITER ;
+
+
+
+
+
+
 /*
 -- Remplissage de la base de donnée pour avoir des exemples
 INSERT INTO account (firstname,lastname,email,pseudo,password,token, fk_role)
