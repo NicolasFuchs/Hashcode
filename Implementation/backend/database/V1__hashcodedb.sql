@@ -149,16 +149,24 @@ VALUES
   ('Joé', 'Butty', 'jojo@email.ch', 'jojo', '$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG', NULL, NULL,
    1);
 
-INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-VALUES ("Organisateur", "En Attente 1 ", "orga@email.ch", "oratt1",
-        "$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG", NULL, NULL, 3);
-INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-VALUES ("Organisateur", "En Attente 2 ", "orga@email.ch", "oratt2",
-        "$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG", NULL, NULL, 3);
-INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-VALUES ("Organisateur", "En Attente 3 ", "orga@email.ch", "oratt3",
-        "$2a$10$5DVYE7z1gNNDHHFlk25Nput0h.6sOWt6UFokGcIjApOOoi0wXy2YG", NULL, NULL, 3);
-
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (5, "Cristiano", "Ronaldo","cr7@email.ch","cr7","emf123","a1", NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (6, "Karim", "Benzema","kb9@email.ch","kb9","emf123","a2",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (7, "Valdimir", "Meier","valdm@email.ch","valdm","emf123","a3",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (8, "Justin", "Koestinger","jk@email.ch","juju","emf123","a4",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (9, "Lucas", "Alborghetto","ghetto@email.ch","albo","emf123","a5",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (10, "Karim", "Lemarchand","kl@email.ch","mirak","emf123","a6",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (11, "Donald", "Trump","dodo@email.ch","trump","emf123","a7",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (12, "Raphi", "Burgunder","rb@email.ch","sfl","emf123","a8",NULL,4);
+INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+      VALUES (13, 'Nicolas', 'Fuchs', 'nicolas@email.ch', "fufuuser","emf123","a9",NULL,4);
 
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (1, 'Java Challenge #1', 2, '2018-03-01 16:00:00', '2018-04-01 08:00:00', '2018-04-15 16:00:00', 'provisoire');
@@ -168,24 +176,52 @@ VALUES (2, 'Java Challenge #2', 4, '2018-04-18 16:00:00', '2018-04-23 10:00:00',
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (3, 'PHP Challenge #1', 4, '2018-05-18 10:00:00', '2018-05-20 16:00:00', '2018-05-30 16:00:00', 'provisoire');
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
-VALUES
-  (4, 'Optimisation Challenge', 8, '2018-06-04 23:00:00', '2018-06-07 10:30:00', '2018-06-16 16:30:00', 'provisoire');
+VALUES(4, 'Optimisation Challenge', 8, '2018-06-04 23:00:00', '2018-06-07 10:30:00', '2018-06-16 16:30:00', 'provisoire');
+
+
+
+INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+VALUES (1, 'L\'homme de l\'est', 1, 7);
+INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+VALUES (2, 'Real Madrid', 2, 5);
+INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+VALUES (3, 'Les G-FUEL', 2, 9);
+INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+VALUES (4, 'Les Pros', 3, 11);
+INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+VALUES (5, 'Real Madrid', 4, 5);
+
+
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (7, 1);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (5, 2);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (6, 2);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (8, 3);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (9, 3);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (10, 3);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (11, 4);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (12, 4);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (8, 4);
+  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (5, 5);
+  INSERT INTO account_team (`account_id`, `team_id` ) VALUES (6, 5);
+
 
 INSERT INTO challenge_account (`challenge_id`, `account_id`)
 VALUES (2, 2);
 INSERT INTO challenge_account (`challenge_id`, `account_id`)
 VALUES (2, 3);
 
-INSERT INTO team (`name`, `challenge_id`, `leader_id`)
-VALUES ('L\'homme de l\'est', 2, 2);
-INSERT INTO team (`name`, `challenge_id`, `leader_id`)
-VALUES ('Real Madrid', 2, 2);
-INSERT INTO team (`name`, `challenge_id`, `leader_id`)
-VALUES ('Les G-FUEL', 2, 2);
-INSERT INTO team (`name`, `challenge_id`, `leader_id`)
-VALUES ('Les Pros', 2, 2);
-INSERT INTO team (`name`, `challenge_id`, `leader_id`)
-VALUES ('Real Madrid', 2, 2);
+  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+    VALUES ("Solution 1 java#1 ", "Java", "lien.vers.solution", 1.0, 6.0, "2018-03-15 08:00:00", 7, 1);
+  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+    VALUES ("Solution 2 java#1 ", "Java", "lien.vers.solution", 1.2, 7.5, "2018-03-18 16:00:00", 7, 1);
+  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+    VALUES ("Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 8.0, "2018-04-30 08:00:00", 5, 2);
+  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+    VALUES ("Solution 2 java#2 ", "Java", "lien.vers.solution", 2.0, 6.0, "2018-05-03 10:30:00", 6, 2);
+  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+    VALUES ("Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 7.5, "2018-05-01 16:00:00", 9, 3);
+
+
 
 /*
 -- Remplissage de la base de donnée pour avoir des exemples
