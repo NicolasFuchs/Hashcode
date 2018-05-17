@@ -6,10 +6,8 @@ import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,14 +31,14 @@ public class AccountController {
   public List<Account> getOrganizerPending() {
     return accountService.getAccountsByRole(RoleConst.PENDING_ORGANIZER);
   }
-  @GetMapping("/users/{id}")
+
   public void acceptPending(Account account) {
     // Must be implanted!
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public void refusePending(Account account) {
-    accountService.deleteAccount(account);
+  @DeleteMapping("/{id}")
+  public Account refusePending(@PathVariable int id) {
+    return accountService.refusePending(id);
     // Must be implanted!
   }
 
@@ -62,9 +60,9 @@ public class AccountController {
     // Must be implanted!
   }
 
-  public Account getAccount(Integer id) {
-    // Must be implanted!
-    return null;
+  @GetMapping("/{id}")
+  public Account getAccount(@PathVariable int id) {
+    return accountService.getAccount(id);
   }
 
   public void updateAccount(Account account) {

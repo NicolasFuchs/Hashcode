@@ -32,9 +32,10 @@ public class AccountService implements IAccountService {
     // Must be implanted!
   }
 
-  // Inutile car on supprime le compte donc on utilise deleteAccount()
+// J'utilise plutôt refusePending avec un ID
   @Override
   public void refusePending(Account account) {
+
     // Must be implanted!
   }
 
@@ -52,7 +53,7 @@ public class AccountService implements IAccountService {
 
   @Override
   public void deleteAccount(Account account) {
-     accountRepository.deleteById(account.getAccountId());
+
   }
 
   @Override
@@ -63,7 +64,7 @@ public class AccountService implements IAccountService {
   @Override
   public Account getAccount(Integer id) {
     // Must be implanted!
-    return null;
+    return accountRepository.findByAccountId(id);
   }
 
   @Override
@@ -97,5 +98,20 @@ public class AccountService implements IAccountService {
   @Override
   public List<Account> getAccountsByRole(Role role) {
     return accountRepository.findAllByRole(role);
+  }
+
+  @Override
+  public Account refusePending(int id) {
+    Account accountToDel = accountRepository.findByAccountId(id);
+    if(accountToDel==null){
+      // Retourner une information (déjà supprimer
+    }else{
+      if(accountToDel.getRole().equals(RoleConst.VALIDATED_ORGANIZER)){
+        // Account déjà été valider par quelqu'un d'autre
+      }else{
+        return accountRepository.deleteById(id);
+      }
+    }
+  return null;
   }
 }
