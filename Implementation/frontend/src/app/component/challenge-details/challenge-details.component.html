@@ -38,6 +38,80 @@
   </ul>
   <hr>
   <div class="make-team">
-    <button type="button" class="btn btn-primary btn-lg">Créer une équipe !</button>
+    <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
+  </div>
+</div>
+
+<div #createTeamModal class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Créer une équipe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group row">
+          <label for="teamName" class="col col-form-label">Nom de groupe</label>
+          <input type="text" class="col form-control" id="teamName" placeholder="Entrez un nom de groupe" [value]="team?.name" (keyup)="team.name = $event.target.value">
+        </div>
+        <div class="form-group row">
+          <label for="addMember" class="col col-form-label">Ajouter un membre</label>
+          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre" (focus)="displayPotentialMembers($event.target.value)" (keyup)="displayPotentialMembers($event.target.value)" list=members>
+          <datalist id=members>
+            <option value="English"></option>
+            <option value="Dutch"></option>
+          </datalist>
+
+
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="table-wrapper-2">
+              <div class="container">
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div *ngIf="team" class="form-group row">
+          <button type="button" class="btn btn-primary" (click)="modifyTeam()">Modifier le groupe</button>
+          <button type="button" class="btn btn-primary" (click)="deleteTeam()">Supprimer le groupe</button>
+        </div>
+        <div *ngIf="!team">
+          <button type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,8 +1,12 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import {Challenge} from '../../model/Challenge';
 import {ChallengeService} from '../../service/challenge.service';
 import {Account} from '../../model/Account';
+import {AccountService} from '../../service/account.service';
 import {ZipCollectorHelper} from '../../helper/zip-collector.helper';
+import {Team} from '../../model/Team';
+import * as $ from 'jquery';
+import 'bootstrap';
 
 @Component({
   selector: 'app-challenge-details',
@@ -15,30 +19,62 @@ export class ChallengeDetailsComponent implements OnInit {
   @Input()
   idChallenge: number;
 
+  @ViewChild('createTeamModal') private _createTeamModal: ElementRef;
+  @ViewChild('datalistMembers') private _datalistMembers: ElementRef;
+
+  public team: Team;
   public challenge: Challenge;
   private _mediaXml: XMLDocument;
+  private _isModalShowed: boolean;
 
-  public constructor(private _challengeService: ChallengeService) {
+  public constructor(private _challengeService: ChallengeService, private _accountService: AccountService) {
+    this._isModalShowed = false;
   }
 
   public ngOnInit(): void {
     // this.time = 'actual';
-    if(this.idChallenge == 0){
+    if (this.idChallenge === 0) {
     this._challengeService.getActualChallenge().then(challenge => {
       this.challenge = challenge;
       const parser: DOMParser = new DOMParser();
       this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
     });
 
-  }else{
-    this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
-      this.challenge = challenge;
-      const parser: DOMParser = new DOMParser();
-      this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
-  });
-
+    } else {
+      this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
+        this.challenge = challenge;
+        const parser: DOMParser = new DOMParser();
+        this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
+    });
   }
 }
+
+  public showCreateTeamModal(): void {
+    $(this._createTeamModal.nativeElement).modal('show');
+    this._isModalShowed = true;
+  }
+
+  public createTeam(): void {
+    console.log('Team created!');
+  }
+
+  public modifyTeam(): void {
+    console.log('Team modified!');
+  }
+
+  public deleteTeam(): void {
+    console.log('Team deleted!');
+  }
+
+  public displayPotentialMembers(): void {
+    this._accountService.getAllChallengers().then(accounts => {
+      let options = '';
+      for (let i = 0; i  < accounts.length; i++) {
+        options += '<option value="' + accounts[i].pseudo + '" />';
+      }
+      document.getElementById('members').innerHTML = options;
+    });
+  }
 
   public getDescription(): string {
     if (typeof this._mediaXml !== 'undefined') {

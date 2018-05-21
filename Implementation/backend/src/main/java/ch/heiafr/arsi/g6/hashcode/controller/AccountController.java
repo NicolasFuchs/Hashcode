@@ -69,9 +69,11 @@ public class AccountController {
     // Must be implanted!
   }
 
+  @GetMapping("/all")
   public List<Account> getLoggedUsers() {
+    return accountService.getLoggedUsers();
     // Must be implanted!
-    return null;
+    //return null;
   }
 
   public List<Account> getTeamMembers(Team team) {

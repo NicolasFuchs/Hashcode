@@ -300,7 +300,7 @@ delimiter ;
 
 
 delimiter |
-CREATE TRIGGER C8 
+CREATE TRIGGER C8
 BEFORE INSERT ON account_team
 FOR EACH ROW
  BEGIN
@@ -313,7 +313,7 @@ FOR EACH ROW
       
       IF EXISTS(Select * from team inner join account_team on team.team_id = account_team.team_id where team.challenge_id=idChallenge and account_team.account_id = NEW.account_id)
       THEN
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L\'utilisateur participe déjà au concours'; 
+			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L''utilisateur participe déjà au concours';
     END IF;
 END |
 
@@ -338,7 +338,7 @@ DELIMITER ;
 
 
 -- Procedure stocker pour CR6
-CREATE PROCEDURE create_challenge AS
+/*CREATE PROCEDURE create_challenge AS*/
 DELIMITER |
 
 CREATE PROCEDURE create_challenge  (name_challenge VARCHAR(100), nb_teams_challenge INT,

@@ -16,9 +16,15 @@ export class AccountService {
      return Promise.reject(error);
    }
 
+   public getAllChallengers(): Promise<Account[]> {
+    return this._httpClient.get(baseUrl + '/all')
+      .toPromise()
+      .then(response => response as Account[])
+      .catch(AccountService.handleError);
+   }
 
   public getOrganizerPending(): Promise<Account[]> {
-    return this._httpClient.get(baseUrl+'/organizerpending')
+    return this._httpClient.get(baseUrl + '/organizerpending')
       .toPromise()
       .then(response => response as Account[])
       .catch(AccountService.handleError);

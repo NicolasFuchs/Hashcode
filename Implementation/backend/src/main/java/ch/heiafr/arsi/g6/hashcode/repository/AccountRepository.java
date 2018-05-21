@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
+  List<Account> findAll();
 
   // Maybe need to be rewritten!
    //List<Account> findAllPending();

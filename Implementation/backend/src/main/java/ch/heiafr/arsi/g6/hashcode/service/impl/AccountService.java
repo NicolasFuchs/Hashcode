@@ -80,7 +80,8 @@ public class AccountService implements IAccountService {
   @Override
   public List<Account> getLoggedUsers() {
     // Must be implanted!
-    return null;
+    return accountRepository.findAll();
+    //return null;
   }
 
   @Override
