@@ -32,14 +32,14 @@ public class AccountController {
     return accountService.getAccountsByRole(RoleConst.PENDING_ORGANIZER);
   }
 
-  public void acceptPending(Account account) {
-    // Must be implanted!
+  @PutMapping
+  public void acceptPending(@RequestBody Account account) {
+   accountService.acceptPending(account);
   }
 
   @DeleteMapping("/{id}")
   public Account refusePending(@PathVariable int id) {
     return accountService.refusePending(id);
-    // Must be implanted!
   }
 
   public List<Account> getChallengers(String pseudo) {

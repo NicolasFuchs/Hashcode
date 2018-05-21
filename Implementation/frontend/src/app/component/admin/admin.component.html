@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let account of pendingOrganizer">
+  <tr *ngFor="let account of pendingOrganizer;  let i = index">
     <td>
       <div id="profileContainer">
         <img *ngIf="account" id="profileImage" [src]="account.image">
@@ -29,8 +29,8 @@
     <td> {{account.email}}</td>
     <td> {{account.pseudo}} </td>
     <td>
-      <button type="button" class="btn btn-primary btn-sm" (click)="acceptAccountPending(account)" >Accepter</button>
-      <button type="button" class="btn btn-danger btn-sm" (click)="rejectAccountPending(account)">Refuser</button>
+      <button type="button" class="btn btn-primary btn-sm" (click)="acceptAccountPending(i)" >Accepter</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="rejectAccountPending(i)">Refuser</button>
     </td>
 
   </tr>

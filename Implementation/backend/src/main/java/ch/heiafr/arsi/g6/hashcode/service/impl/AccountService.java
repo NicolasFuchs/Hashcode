@@ -9,6 +9,7 @@ import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import java.util.List;
 
 @Service
@@ -30,6 +31,9 @@ public class AccountService implements IAccountService {
   @Override
   public void acceptPending(Account account) {
     // Must be implanted!
+    Account newAcc = getAccount(account.getAccountId());
+    newAcc.setRole(RoleConst.VALIDATED_ORGANIZER);
+    accountRepository.save(newAcc);
   }
 
 // J'utilise plutôt refusePending avec un ID

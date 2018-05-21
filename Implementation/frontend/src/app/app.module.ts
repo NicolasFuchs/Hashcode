@@ -40,7 +40,7 @@ import {AccountService} from './service/account.service';
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    NgxLocalStorageModule.forRoot({prefix: 'hashcode'})
+    NgxLocalStorageModule.forRoot({prefix: 'hashcode'}),
   ],
   providers: [PersonService,
     AuthenticationService,

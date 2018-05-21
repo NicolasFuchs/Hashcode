@@ -36,12 +36,13 @@ export class AccountService {
         .toPromise()
         .then(response => {
           const accountResp: Account = response as Account;
-          //personResp.birthday = new Date(personResp.birthday);
-          //accountResp.role = new Role();
           return accountResp;
         })
         .catch(this.handleError);
   }
+
+
+
 
   public deleteOrganizerPending(account: Account): Promise<void> {
     const url = `${baseUrl}/${account.accountId}`;
