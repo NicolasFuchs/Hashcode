@@ -174,6 +174,17 @@ INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `p
 INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
       VALUES (13, 'Nicolas', 'Fuchs', 'nicolas@email.ch', "fufuuser","emf123","a9",NULL,4);
 
+   INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES ('Organisateur', 'En attente 1', 'oratt1@email.ch', 'oratt1', 'no_password', NULL, NULL, 3);
+
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES ('Organisateur', 'En attente 2', 'oratt2@email.ch', 'oratt2', 'no_password', NULL, NULL, 3);
+
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES ('Organisateur', 'En attente 3', 'oratt3@email.ch', 'oratt3', 'no_password', NULL, NULL, 3);
+
+
+
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (1, 'Java Challenge #1', 2, '2018-03-01 16:00:00', '2018-04-01 08:00:00', '2018-04-15 16:00:00', 'provisoire');
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
