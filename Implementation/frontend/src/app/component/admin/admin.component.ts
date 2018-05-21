@@ -16,14 +16,14 @@ export class AdminComponent implements OnInit {
   public accountLogged:Account;
   public debug:string;
 
-  constructor(private _authenticationService: AuthenticationService,
+  constructor(/*private _authenticationService: AuthenticationService,*/
     private _accountService: AccountService,
 private router: Router) { }
 
   ngOnInit() {
       this.debug = "default";
-      this.accountLogged = this._authenticationService.actual;
-      this._authenticationService.account.subscribe(accountLogged => this.accountLogged = accountLogged);
+      //this.accountLogged = this._authenticationService.actual;
+      //this._authenticationService.account.subscribe(accountLogged => this.accountLogged = accountLogged);
 
       /*if(this.accountLogged){
           this.debug = "existe";

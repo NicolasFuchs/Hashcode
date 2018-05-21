@@ -103,16 +103,18 @@ public class AccountService implements IAccountService {
 
   @Override
   public Account refusePending(int id) {
-    Account accountToDel = accountRepository.findByAccountId(id);
+    return accountRepository.deleteById(id);
+  }
+   /* Account accountToDel = accountRepository.findByAccountId(id);
     if(accountToDel==null){
       // Retourner une information (déjà supprimer
     }else{
       if(accountToDel.getRole().equals(RoleConst.VALIDATED_ORGANIZER)){
         // Account déjà été valider par quelqu'un d'autre
       }else{
-        return accountRepository.deleteById(id);
+
       }
     }
   return null;
-  }
+  }*/
 }
