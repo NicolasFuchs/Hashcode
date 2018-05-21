@@ -26,6 +26,7 @@ export class ChallengeDetailsComponent implements OnInit {
   public challenge: Challenge;
   private _mediaXml: XMLDocument;
   private _isModalShowed: boolean;
+  private accounts: Account[];
 
   public constructor(private _challengeService: ChallengeService, private _accountService: AccountService) {
     this._isModalShowed = false;
@@ -68,12 +69,30 @@ export class ChallengeDetailsComponent implements OnInit {
 
   public displayPotentialMembers(): void {
     this._accountService.getAllChallengers().then(accounts => {
+      this.accounts = accounts;
       let options = '';
       for (let i = 0; i  < accounts.length; i++) {
         options += '<option value="' + accounts[i].pseudo + '" />';
       }
       document.getElementById('members').innerHTML = options;
     });
+  }
+
+  public addMember(): void {
+    console.log('addMember function');
+    for (let i = 0; i < this.accounts.length; i++) {
+      const pseudo: string = (document.getElementById('addMember') as HTMLInputElement).value;
+      if (this.accounts[i].pseudo === pseudo) {
+        let organizers = '<tr>';
+        organizers += '<td><img src="' + this.accounts[i].image + '"></td>';
+        organizers += '<td>' + this.accounts[i].firstname + '</td>';
+        organizers += '<td>' + this.accounts[i].lastname + '</td>';
+        organizers += '<td>' + this.accounts[i].pseudo + '</td>';
+        organizers += '</tr>';
+        document.getElementById('organizersTableBody').innerHTML += organizers;
+        break;
+      }
+    }
   }
 
   public getDescription(): string {
