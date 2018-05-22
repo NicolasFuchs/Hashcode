@@ -7,8 +7,7 @@
     <div class="row">
       <div class="col">
         <div id="profileContainer">
-          <img *ngIf="account" id="profileImage" [src]="account.image">
-          <img *ngIf="!account" [src]=imgSrc>
+          <img id="profileImage" [src]="getProfilePicture()">
           <div id="profileDarkener">
             <div id="profileIcon">
               <i class="fa fa-picture-o fa-5x" aria-hidden="true"></i>
@@ -23,51 +22,63 @@
           <div class="form-group row">
             <label for="lastname" class="col col-form-label">Nom</label>
             <div class="col">
-              <input type="text" class="form-control" id="lastname" placeholder="Nom" [value]="account?.lastname" (keyup)="account.lastname = $event.target.value">
+              <input type="text" class="form-control" id="lastname" placeholder="Nom" [value]="account?.lastname"
+                     (keyup)="account.lastname = $event.target.value">
             </div>
           </div>
           <div class="form-group row">
             <label for="firstname" class="col">Prénom</label>
             <div class="col">
-            <input type="text" class="form-control" id="firstname" placeholder="Prénom" [value]="account?.firstname" (keyup)="account.firstname = $event.target.value">
+              <input type="text" class="form-control" id="firstname" placeholder="Prénom" [value]="account?.firstname"
+                     (keyup)="account.firstname = $event.target.value">
             </div>
           </div>
           <div class="form-group row">
             <label for="pseudo" class="col">Pseudo</label>
             <div class="col">
-            <input type="text" class="form-control" id="pseudo" placeholder="Pseudo" [value]="account?.pseudo" (keyup)="account.pseudo = $event.target.value">
+              <input type="text" class="form-control" id="pseudo" placeholder="Pseudo" [value]="account?.pseudo"
+                     (keyup)="account.pseudo = $event.target.value">
             </div>
           </div>
           <div class="form-group row">
             <label for="email" class="col">Email</label>
             <div class="col">
-            <input type="email" class="form-control" id="email" placeholder="Email" [value]="account?.email" (keyup)="account.email = $event.target.value">
+              <input type="email" class="form-control" id="email" placeholder="Email" [value]="account?.email"
+                     (keyup)="account.email = $event.target.value">
             </div>
           </div>
           <div class="form-group row">
-            <label class="col">Mot de passe</label>
+            <label for="password" class="col">Mot de passe</label>
             <div class="col">
-            <input *ngIf="!signup" #pass type="password" class="form-control" placeholder="Nouveau mot de passe" (keyup)="account.password = $event.target.value">
-            <input *ngIf="signup" #pass type="password" class="form-control" placeholder="Mot de passe" (keyup)="account.password = $event.target.value">
+              <!--suppress XmlDuplicatedId -->
+              <input *ngIf="!signup" #pass type="password" id="password" class="form-control"
+                     placeholder="Nouveau mot de passe" (keyup)="account.password = $event.target.value">
+              <!--suppress XmlDuplicatedId -->
+              <input *ngIf="signup" #pass type="password" id="password" class="form-control" placeholder="Mot de passe"
+                     (keyup)="account.password = $event.target.value">
             </div>
           </div>
           <div class="form-group row">
-            <label for="passwordConfirmation" class="col">Confirmation</label>
+            <label for="password-confirmation" class="col">Confirmation</label>
             <div class="col">
-            <input #passConf type="password" class="form-control" id="passwordConfirmation" placeholder="Confirmation du mot de passe" (keyup)="checkPasswordConfirmation($event)">
+              <input #passConf type="password" class="form-control" id="password-confirmation"
+                     placeholder="Confirmation du mot de passe" (keyup)="checkPasswordConfirmation($event)">
             </div>
           </div>
           <div *ngIf="signup" class="form-group row">
+            <label class="col">Type de compte</label>
             <div class="btn-group btn-group-toggle col" data-toggle="buttons">
-              <label class="btn btn-success active">
+              <label class="btn btn-secondary active">
                 <input type="radio" name="options" id="cha" autocomplete="off" checked> Challenger
               </label>
-              <label class="btn btn-danger">
-                <input type="radio" name="options" id="org" autocomplete="off"> Organisateur
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" autocomplete="off"> Organisateur
               </label>
             </div>
           </div>
-          <button *ngIf="!signup" type="button" class="btn btn-primary" (click)="submit()">Enregistrer les modifications</button>
+          <button *ngIf="!signup" type="button" class="btn btn-primary" (click)="submit()">Enregistrer les
+            modifications
+          </button>
           <button *ngIf="signup" type="button" class="btn btn-primary" (click)="submit()">S'enregistrer</button>
         </div>
       </div>

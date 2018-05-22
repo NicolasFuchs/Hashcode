@@ -9,4 +9,12 @@ export class Account {
   password: string;
   image: string;
   role: Role;
+
+  constructor() {
+    this.firstname = '';
+    this.lastname = '';
+    this.email = '';
+    this.pseudo = '';
+    this.password = '';
+  }
 }

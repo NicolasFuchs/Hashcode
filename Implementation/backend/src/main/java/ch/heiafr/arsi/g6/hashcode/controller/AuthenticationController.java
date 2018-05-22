@@ -26,7 +26,8 @@ public class AuthenticationController {
   }
 
   @GetMapping("/login")
- // @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VALIDATED_ORGANIZER') or hasRole('ROLE_VALIDATED_USER')")
+  // @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VALIDATED_ORGANIZER') or
+  // hasRole('ROLE_VALIDATED_USER')")
   public Account login(HttpSession session) {
     SecurityContext securityContext =
         (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");

@@ -37,5 +37,4 @@ public interface IAccountService {
   List<Account> getAccountsByRole(Role role);
 
   Account refusePending(int id);
-
 }

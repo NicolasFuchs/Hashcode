@@ -30,7 +30,10 @@
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      {
+        "limit": 140,
+        "ignore-pattern": "/.*test.*;"
+      }
     ],
     "member-access": false,
     "member-ordering": [

@@ -3,7 +3,6 @@ package ch.heiafr.arsi.g6.hashcode.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,13 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.savedrequest.NullRequestCache;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -38,21 +33,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    //http.requestCache().requestCache(new NullRequestCache()).and().httpBasic().and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-    http.requestCache().requestCache(new NullRequestCache()).and().httpBasic().and().csrf().disable();
-
+    http.requestCache()
+        .requestCache(new NullRequestCache())
+        .and()
+        .httpBasic()
+        .and()
+        .csrf()
+        .disable();
   }
 
   @Bean
   public DaoAuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(accountDetailsService);
-    authProvider.setPasswordEncoder(encoder());
+    authProvider.setPasswordEncoder(passwordEncoder());
     return authProvider;
   }
 
   @Bean
-  public PasswordEncoder encoder() {
+  public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
@@ -61,9 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .exposedHeaders("X-Auth-Token")
-                .allowedMethods("GET", "HEAD", "POST","PUT", "DELETE");
+        registry
+            .addMapping("/**")
+            .exposedHeaders("X-Auth-Token")
+            .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE");
       }
     };
   }

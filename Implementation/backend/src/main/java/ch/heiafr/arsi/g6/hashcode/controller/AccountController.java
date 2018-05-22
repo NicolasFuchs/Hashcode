@@ -1,12 +1,10 @@
 package ch.heiafr.arsi.g6.hashcode.controller;
 
-import ch.heiafr.arsi.g6.hashcode.constante.RoleConst;
+import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,18 +21,18 @@ public class AccountController {
   }
 
   public List<Account> getPending() {
-    //return accountService.getPending();
+    // return accountService.getPending();
     return null;
   }
 
   @GetMapping("/organizerpending")
   public List<Account> getOrganizerPending() {
-    return accountService.getAccountsByRole(RoleConst.PENDING_ORGANIZER);
+    return accountService.getAccountsByRole(Roles.PENDING_ORGANIZER);
   }
 
   @PutMapping
   public void acceptPending(@RequestBody Account account) {
-   accountService.acceptPending(account);
+    accountService.acceptPending(account);
   }
 
   @DeleteMapping("/{id}")
@@ -56,8 +54,9 @@ public class AccountController {
     // Must be implanted!
   }
 
-  public void createAccount(Account account) {
-    // Must be implanted!
+  @PutMapping("/signup")
+  public void createAccount(@RequestBody Account account) {
+    accountService.createAccount(account);
   }
 
   @GetMapping("/{id}")
@@ -73,7 +72,7 @@ public class AccountController {
   public List<Account> getLoggedUsers() {
     return accountService.getLoggedUsers();
     // Must be implanted!
-    //return null;
+    // return null;
   }
 
   public List<Account> getTeamMembers(Team team) {
