@@ -28,7 +28,8 @@ export class ProfileComponent implements OnInit {
   @ViewChild('email') private _email: ElementRef;
   @ViewChild('pass') public _password: ElementRef;
   @ViewChild('passConf') public _passwordConfirmation: ElementRef;
-  @ViewChild('submit') private _submit: ElementRef;
+  @ViewChild('updateProfileButton') private _updateProfileButton: ElementRef;
+  @ViewChild('createProfileButton') private _createProfileButton: ElementRef;
 
   constructor(private _authenticationService: AuthenticationService, private _activatedRoute: ActivatedRoute,
               private _accountService: AccountService) {
@@ -61,7 +62,11 @@ export class ProfileComponent implements OnInit {
       if (event.target.value === '' || (account !== null && this.account.accountId !== account.accountId)) {
         $(this._pseudo.nativeElement).removeClass('is-valid');
         $(this._pseudo.nativeElement).addClass('is-invalid');
-        $(this._submit.nativeElement).attr('disabled', 'true');
+        if (!this.signup) {
+          $(this._updateProfileButton.nativeElement).attr('disabled', 'true');
+        } else {
+          $(this._createProfileButton.nativeElement).attr('disabled', 'true');
+        }
         if (!this.pseudoDisabled) {
           this.disabledNumber++;
         }
@@ -70,7 +75,11 @@ export class ProfileComponent implements OnInit {
         $(this._pseudo.nativeElement).removeClass('is-invalid');
         $(this._pseudo.nativeElement).addClass('is-valid');
         if (this.disabledNumber === 1 && this.pseudoDisabled) {
-          $(this._submit.nativeElement).removeAttr('disabled');
+          if (!this.signup) {
+            $(this._updateProfileButton.nativeElement).removeAttr('disabled');
+          } else {
+            $(this._createProfileButton.nativeElement).removeAttr('disabled');
+          }
         }
         if (this.pseudoDisabled) {
           this.disabledNumber--;
@@ -84,7 +93,11 @@ export class ProfileComponent implements OnInit {
     if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(event.target.value)) {
       $(this._email.nativeElement).removeClass('is-valid');
       $(this._email.nativeElement).addClass('is-invalid');
-      $(this._submit.nativeElement).attr('disabled', 'true');
+      if (!this.signup) {
+        $(this._updateProfileButton.nativeElement).attr('disabled', 'true');
+      } else {
+        $(this._createProfileButton.nativeElement).attr('disabled', 'true');
+      }
       if (!this.emailDisabled) {
         this.disabledNumber++;
       }
@@ -93,7 +106,11 @@ export class ProfileComponent implements OnInit {
       $(this._email.nativeElement).removeClass('is-invalid');
       $(this._email.nativeElement).addClass('is-valid');
       if (this.disabledNumber === 1 && this.emailDisabled) {
-        $(this._submit.nativeElement).removeAttr('disabled');
+        if (!this.signup) {
+          $(this._updateProfileButton.nativeElement).removeAttr('disabled');
+        } else {
+          $(this._createProfileButton.nativeElement).removeAttr('disabled');
+        }
       }
       if (this.emailDisabled) {
         this.disabledNumber--;
@@ -108,7 +125,11 @@ export class ProfileComponent implements OnInit {
       $(this._passwordConfirmation.nativeElement).removeClass('is-valid');
       $(this._password.nativeElement).addClass('is-invalid');
       $(this._passwordConfirmation.nativeElement).addClass('is-invalid');
-      $(this._submit.nativeElement).attr('disabled', 'true');
+      if (!this.signup) {
+        $(this._updateProfileButton.nativeElement).attr('disabled', 'true');
+      } else {
+        $(this._createProfileButton.nativeElement).attr('disabled', 'true');
+      }
       if (!this.passwordDisabled) {
         this.disabledNumber++;
       }
@@ -119,7 +140,11 @@ export class ProfileComponent implements OnInit {
       $(this._password.nativeElement).addClass('is-valid');
       $(this._passwordConfirmation.nativeElement).addClass('is-valid');
       if (this.disabledNumber === 1 && this.passwordDisabled) {
-        $(this._submit.nativeElement).removeAttr('disabled');
+        if (!this.signup) {
+          $(this._updateProfileButton.nativeElement).removeAttr('disabled');
+        } else {
+          $(this._createProfileButton.nativeElement).removeAttr('disabled');
+        }
       }
       if (this.passwordDisabled) {
         this.disabledNumber--;
@@ -129,14 +154,14 @@ export class ProfileComponent implements OnInit {
   }
 
   public saveProfile(): void {
-    this.account.pseudo = this._pseudo.nativeElement.value;
-    this.account.email = this._email.nativeElement.value;
-    if (this._password.nativeElement.value !== '') {
-      this.account.password = this._password.nativeElement.value;
-    }
-    this._accountService.updateAccount(this.account);
-    console.log('submit');
-    if (this.signup && this.checkForm()) {
+    if (!this.signup) {
+      this.account.pseudo = this._pseudo.nativeElement.value;
+      this.account.email = this._email.nativeElement.value;
+      if (this._password.nativeElement.value !== '') {
+        this.account.password = this._password.nativeElement.value;
+      }
+      this._accountService.updateAccount(this.account);
+    } else {
       if ((<any>$('#cha')[0]).checked) {
         this.account.role = Roles.PENDING_USER;
       } else {
@@ -153,7 +178,7 @@ export class ProfileComponent implements OnInit {
     return '../../assets/Profile.PNG';
   }
 
-  public checkForm(): boolean {
+  /*public checkForm(): boolean {
     const lastname: JQuery = $('#lastname');
     const firstname: JQuery = $('#firstname');
     const pseudo: JQuery = $('#pseudo');
@@ -189,9 +214,9 @@ export class ProfileComponent implements OnInit {
       isValid = isValid && false;
     }
     return isValid;
-  }
+  }*/
 
-  private isEmailValid(): boolean {
+  /*private isEmailValid(): boolean {
     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.account.email);
-  }
+  }*/
 }
