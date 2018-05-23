@@ -69,8 +69,8 @@
               </label>
             </div>
           </div>
-          <button #submit *ngIf="!signup" type="button" class="btn btn-primary" (click)="saveProfile()">Enregistrer les modifications</button>
-          <button *ngIf="signup" type="button" class="btn btn-primary" (click)="saveProfile()">S'enregistrer</button>
+          <button #updateProfileButton *ngIf="!signup" type="button" class="btn btn-primary" (click)="saveProfile()">Enregistrer les modifications</button>
+          <button #createProfileButton *ngIf="signup" type="button" class="btn btn-primary" (click)="saveProfile()">S'enregistrer</button>
         </div>
       </div>
     </div>

@@ -74,6 +74,12 @@ public class AccountService implements IAccountService {
 
   @Override
   public void updateAccount(Account account) {
+    if (account.getPassword() == null) {
+      Account passwordRetriever = accountRepository.findByAccountId(account.getAccountId());
+      account.setPassword(passwordRetriever.getPassword());
+    } else {
+      account.setPassword(passwordEncoder.encode(account.getPassword()));
+    }
     accountRepository.save(account);
   }
 
