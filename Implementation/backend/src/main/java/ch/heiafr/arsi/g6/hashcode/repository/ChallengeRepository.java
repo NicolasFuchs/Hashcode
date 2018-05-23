@@ -27,7 +27,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Integer> {
   List<Challenge> findByBeginBeforeAndEndAfter(LocalDate beginDate, LocalDate endDate);
 
   // Maybe need to be rewritten!
-   List<Challenge> findByEndBefore(LocalDate date);
+  List<Challenge> findByEndBefore(LocalDate date);
 
   // Maybe need to be rewritten!
   List<Challenge> findByBeginAfter(LocalDate date);

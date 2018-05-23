@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
 
   public pendingOrganizer:Account[];
-  public accountLogged:Account;
   public debug:string;
 
   constructor(/*private _authenticationService: AuthenticationService,*/
@@ -36,12 +35,12 @@ private router: Router) { }
 
 
 
-  public acceptAccountPending(accountToAccept: Account): void {
-
+  public acceptAccountPending(index: number): void {
+    this._accountService.updateOrganizerPending(this.pendingOrganizer[index]).then(() => this.pendingOrganizer.splice(index, 1));
    }
 
-   public rejectAccountPending(accountToReject: Account): void {
-     this._accountService.deleteOrganizerPending(accountToReject);
+   public rejectAccountPending(index: number): void {
+     this._accountService.deleteOrganizerPending(this.pendingOrganizer[index]).then(() => this.pendingOrganizer.splice(index, 1));
 
     }
 

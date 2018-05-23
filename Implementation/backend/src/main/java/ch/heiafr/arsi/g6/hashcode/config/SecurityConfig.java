@@ -33,19 +33,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.requestCache().requestCache(new NullRequestCache()).and().httpBasic().and().cors();
+    http.requestCache()
+        .requestCache(new NullRequestCache())
+        .and()
+        .httpBasic()
+        .and()
+        .csrf()
+        .disable();
   }
 
   @Bean
   public DaoAuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(accountDetailsService);
-    authProvider.setPasswordEncoder(encoder());
+    authProvider.setPasswordEncoder(passwordEncoder());
     return authProvider;
   }
 
   @Bean
-  public PasswordEncoder encoder() {
+  public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
@@ -54,7 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").exposedHeaders("X-Auth-Token");
+        registry
+            .addMapping("/**")
+            .exposedHeaders("X-Auth-Token")
+            .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE");
       }
     };
   }

@@ -1,12 +1,13 @@
 package ch.heiafr.arsi.g6.hashcode.service.impl;
 
-import ch.heiafr.arsi.g6.hashcode.constante.RoleConst;
+import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.repository.AccountRepository;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 public class AccountService implements IAccountService {
 
   private final AccountRepository accountRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public AccountService(AccountRepository accountRepository) {
+  public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
     this.accountRepository = accountRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -30,9 +33,12 @@ public class AccountService implements IAccountService {
   @Override
   public void acceptPending(Account account) {
     // Must be implanted!
+    Account newAcc = getAccount(account.getAccountId());
+    newAcc.setRole(Roles.VALIDATED_ORGANIZER);
+    accountRepository.save(newAcc);
   }
 
-// J'utilise plutôt refusePending avec un ID
+  // J'utilise plutôt refusePending avec un ID
   @Override
   public void refusePending(Account account) {
 
@@ -46,13 +52,12 @@ public class AccountService implements IAccountService {
   }
 
   @Override
-  public void deleteAccount(Account account) {
-
-  }
+  public void deleteAccount(Account account) {}
 
   @Override
   public void createAccount(Account account) {
-    // Must be implanted!
+    account.setPassword(passwordEncoder.encode(account.getPassword()));
+    accountRepository.save(account);
   }
 
   @Override
@@ -75,7 +80,7 @@ public class AccountService implements IAccountService {
   public List<Account> getLoggedUsers() {
     // Must be implanted!
     return accountRepository.findAll();
-    //return null;
+    // return null;
   }
 
   @Override
@@ -93,11 +98,11 @@ public class AccountService implements IAccountService {
   public Account refusePending(int id) {
     return accountRepository.deleteById(id);
   }
-   /* Account accountToDel = accountRepository.findByAccountId(id);
+  /* Account accountToDel = accountRepository.findByAccountId(id);
     if(accountToDel==null){
       // Retourner une information (déjà supprimer
     }else{
-      if(accountToDel.getRole().equals(RoleConst.VALIDATED_ORGANIZER)){
+      if(accountToDel.getRole().equals(Roles.VALIDATED_ORGANIZER)){
         // Account déjà été valider par quelqu'un d'autre
       }else{
 

@@ -29,8 +29,11 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
-      false,
-      140
+      true,
+      {
+        "limit": 140,
+        "ignore-pattern": "/.*test.*;|/.*test.*{"
+      }
     ],
     "member-access": false,
     "member-ordering": [

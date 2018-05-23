@@ -56,3 +56,8 @@
 #profileContainer #fileExplorer:hover {
   cursor: pointer;
 }
+
+.btn-secondary {
+  background-color: #b5babe;
+  border-color: #b5babe;
+}

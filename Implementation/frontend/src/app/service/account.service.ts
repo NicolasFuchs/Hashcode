@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Account} from '../model/Account';
-import {Role} from '../model/Role';
 
 const baseUrl = 'http://localhost:8080/accounts';
 
@@ -9,19 +8,27 @@ const baseUrl = 'http://localhost:8080/accounts';
 export class AccountService {
 
 
-
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) {
+  }
 
   private static handleError(error: any): Promise<any> {
-     return Promise.reject(error);
-   }
+    return Promise.reject(error);
+  }
 
-   public getAllChallengers(): Promise<Account[]> {
+  public signup(account: Account): Promise<void> {
+    return this._httpClient
+      .put(baseUrl + '/signup', JSON.stringify(account), {headers: {'Content-Type': 'application/json'}})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
+  public getAllChallengers(): Promise<Account[]> {
     return this._httpClient.get(baseUrl + '/all')
       .toPromise()
       .then(response => response as Account[])
       .catch(AccountService.handleError);
-   }
+  }
 
    public getAccountByPseudo(pseudo: string): Promise<Account> {
     const params = new HttpParams().set('pseudo', pseudo);
@@ -61,9 +68,9 @@ export class AccountService {
   public deleteOrganizerPending(account: Account): Promise<void> {
     const url = `${baseUrl}/${account.accountId}`;
     return this._httpClient.delete(url, {headers: {'Content-Type': 'application/json'}})
-        .toPromise()
-        .then(() => null)
-        .catch(this.handleError);
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
