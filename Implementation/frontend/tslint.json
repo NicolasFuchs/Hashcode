@@ -32,7 +32,7 @@
       true,
       {
         "limit": 140,
-        "ignore-pattern": "/.*test.*;"
+        "ignore-pattern": "/.*test.*;|/.*test.*{"
       }
     ],
     "member-access": false,

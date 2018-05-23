@@ -59,45 +59,17 @@
         </div>
         <div class="form-group row">
           <label for="addMember" class="col col-form-label">Ajouter un membre</label>
-          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre" (focus)="displayPotentialMembers($event.target.value)" (keyup)="displayPotentialMembers($event.target.value)" list=members>
-          <datalist id=members>
-            <option value="English"></option>
-            <option value="Dutch"></option>
-          </datalist>
-
-
+          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre" (focus)="displayPotentialMembers()" (keyup)="displayPotentialMembers()" list=members>
+          <datalist id=members></datalist>
+          <button type="button" (click)="addMember()">Ajouter</button>
         </div>
 
         <div class="card">
           <div class="card-body">
             <div class="table-wrapper-2">
-              <div class="container">
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-                <div class="row"><div class="col">1 of 3</div><div class="col">2 of 3</div><div class="col">3 of 3</div></div>
-              </div>
+              <table class="table" id="table">
+                <tbody #organizersTableBody id="organizersTableBody"></tbody>
+              </table>
             </div>
           </div>
         </div>

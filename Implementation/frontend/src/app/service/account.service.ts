@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Account} from '../model/Account';
 
 const baseUrl = 'http://localhost:8080/accounts';
@@ -30,6 +30,21 @@ export class AccountService {
       .catch(AccountService.handleError);
   }
 
+   public getAccountByPseudo(pseudo: string): Promise<Account> {
+    const params = new HttpParams().set('pseudo', pseudo);
+    return this._httpClient.get(baseUrl + '/pseudo', {params})
+      .toPromise()
+      .then(response => response as Account)
+      .catch(AccountService.handleError);
+   }
+
+   public updateAccount(account: Account): void {
+    this._httpClient.put(baseUrl + '/profileUpdate', JSON.stringify(account), {headers: {'Content-Type': 'application/json'}})
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+   }
+
   public getOrganizerPending(): Promise<Account[]> {
     return this._httpClient.get(baseUrl + '/organizerpending')
       .toPromise()
@@ -39,13 +54,15 @@ export class AccountService {
 
   public updateOrganizerPending(account: Account): Promise<Account> {
     return this._httpClient
-      .put(baseUrl, JSON.stringify(account), {headers: {'Content-Type': 'application/json'}})
-      .toPromise()
-      .then(response => {
-        const accountResp: Account = response as Account;
-        return accountResp;
-      })
-      .catch(this.handleError);
+        .put(baseUrl, JSON.stringify(account), {headers: {'Content-Type': 'application/json'}})
+        .toPromise()
+        .then(response => {
+          const accountResp: Account = response as Account;
+          // personResp.birthday = new Date(personResp.birthday);
+          // accountResp.role = new Role();
+          return accountResp;
+        })
+        .catch(this.handleError);
   }
 
   public deleteOrganizerPending(account: Account): Promise<void> {

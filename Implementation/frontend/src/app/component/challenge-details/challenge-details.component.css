@@ -76,3 +76,19 @@
   overflow-y: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+img {
+  position: relative;
+}
+
+#profileDarkener {
+  border: 2px solid red;
+  background-color: black;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
