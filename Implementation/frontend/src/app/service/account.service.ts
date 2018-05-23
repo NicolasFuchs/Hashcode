@@ -6,6 +6,7 @@ const baseUrl = 'http://localhost:8080/accounts';
 
 @Injectable()
 export class AccountService {
+    [x: string]: any;
 
 
   constructor(private _httpClient: HttpClient) {
@@ -58,11 +59,10 @@ export class AccountService {
         .toPromise()
         .then(response => {
           const accountResp: Account = response as Account;
-          // personResp.birthday = new Date(personResp.birthday);
-          // accountResp.role = new Role();
           return accountResp;
         })
-        .catch(this.handleError);
+        .catch(this.handleError)
+
   }
 
   public deleteOrganizerPending(account: Account): Promise<void> {
@@ -70,7 +70,7 @@ export class AccountService {
     return this._httpClient.delete(url, {headers: {'Content-Type': 'application/json'}})
       .toPromise()
       .then(() => null)
-      .catch(this.handleError);
+      .catch(this.handleError)
   }
 
   private handleError(error: any): Promise<any> {
