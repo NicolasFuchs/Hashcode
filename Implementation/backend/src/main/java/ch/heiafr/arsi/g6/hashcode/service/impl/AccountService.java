@@ -1,5 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.service.impl;
 
+import ch.heiafr.arsi.g6.hashcode.Exception.AccountException;
 import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
@@ -96,18 +97,20 @@ public class AccountService implements IAccountService {
 
   @Override
   public Account refusePending(int id) {
-    return accountRepository.deleteById(id);
-  }
-  /* Account accountToDel = accountRepository.findByAccountId(id);
+    Account accountToDel = accountRepository.findByAccountId(id);
     if(accountToDel==null){
-      // Retourner une information (déjà supprimer
+      throw new AccountException("C-O1", "La demande de validation du compte à déjà été refusé");
     }else{
       if(accountToDel.getRole().equals(Roles.VALIDATED_ORGANIZER)){
         // Account déjà été valider par quelqu'un d'autre
+        throw new AccountException("C-02", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
       }else{
-
+        return accountRepository.deleteById(id);
       }
     }
-  return null;
+
+  }
+  /*
+
   }*/
 }

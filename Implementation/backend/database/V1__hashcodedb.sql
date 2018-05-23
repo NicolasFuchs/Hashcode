@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`account` (
   `token`      VARCHAR(100) NULL UNIQUE, -- NULL : Contrainte relationnel CR3  + UNIQUE : Contrainte intégrité C2
   `image`      LONGTEXT     NULL, -- NULL : Contrainte relationnel CR3
   `role_id`    INT,
+  update_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 )
