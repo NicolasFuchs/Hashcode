@@ -14,8 +14,6 @@ public interface IAccountService {
 
   void refusePending(Account account);
 
-  List<Account> getChallengers(String pseudo);
-
   List<Account> getOrganizers();
 
   void deleteAccount(Account account);
@@ -31,8 +29,6 @@ public interface IAccountService {
   List<Account> getLoggedUsers();
 
   List<Account> getTeamMembers(Team team);
-
-  List<Account> getOrganizersByPseudo(String pseudo);
 
   List<Account> getAccountsByRole(Role role);
 

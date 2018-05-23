@@ -35,26 +35,26 @@
           <div class="form-group row">
             <label for="pseudo" class="col">Pseudo</label>
             <div class="col">
-            <input type="text" class="form-control" id="pseudo" placeholder="Pseudo" [value]="account?.pseudo" (keyup)="account.pseudo = $event.target.value">
+            <input #pseudo type="text" class="form-control" id="pseudo" placeholder="Pseudo" [value]="account?.pseudo" (keyup)="checkPseudo($event)">
             </div>
           </div>
           <div class="form-group row">
             <label for="email" class="col">Email</label>
             <div class="col">
-            <input type="email" class="form-control" id="email" placeholder="Email" [value]="account?.email" (keyup)="account.email = $event.target.value">
+            <input #email type="email" class="form-control" id="email" placeholder="Email" [value]="account?.email" (keyup)="checkEmail($event)">
             </div>
           </div>
           <div class="form-group row">
             <label class="col">Mot de passe</label>
             <div class="col">
-            <input *ngIf="!signup" #pass type="password" class="form-control" placeholder="Nouveau mot de passe" (keyup)="account.password = $event.target.value">
-            <input *ngIf="signup" #pass type="password" class="form-control" placeholder="Mot de passe" (keyup)="account.password = $event.target.value">
+            <input *ngIf="!signup" #pass type="password" class="form-control" placeholder="Nouveau mot de passe" (keyup)="checkPassword()">
+            <input *ngIf="signup" #pass type="password" class="form-control" placeholder="Mot de passe" (keyup)="checkPassword()">
             </div>
           </div>
           <div class="form-group row">
             <label for="passwordConfirmation" class="col">Confirmation</label>
             <div class="col">
-            <input #passConf type="password" class="form-control" id="passwordConfirmation" placeholder="Confirmation du mot de passe" (keyup)="checkPasswordConfirmation($event)">
+            <input #passConf type="password" class="form-control" id="passwordConfirmation" placeholder="Confirmation du mot de passe" (keyup)="checkPassword()">
             </div>
           </div>
           <div *ngIf="signup" class="form-group row">
@@ -67,8 +67,8 @@
               </label>
             </div>
           </div>
-          <button *ngIf="!signup" type="button" class="btn btn-primary" (click)="submit()">Enregistrer les modifications</button>
-          <button *ngIf="signup" type="button" class="btn btn-primary" (click)="submit()">S'enregistrer</button>
+          <button #submit *ngIf="!signup" type="button" class="btn btn-primary" (click)="saveProfile()">Enregistrer les modifications</button>
+          <button *ngIf="signup" type="button" class="btn btn-primary" (click)="saveProfile()">S'enregistrer</button>
         </div>
       </div>
     </div>

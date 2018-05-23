@@ -40,12 +40,6 @@ public class AccountService implements IAccountService {
   }
 
   @Override
-  public List<Account> getChallengers(String pseudo) {
-    // Must be implanted!
-    return null;
-  }
-
-  @Override
   public List<Account> getOrganizers() {
     // Must be implanted!
     return null;
@@ -74,7 +68,7 @@ public class AccountService implements IAccountService {
 
   @Override
   public void updateAccount(Account account) {
-    // Must be implanted!
+    accountRepository.save(account);
   }
 
   @Override
@@ -86,12 +80,6 @@ public class AccountService implements IAccountService {
 
   @Override
   public List<Account> getTeamMembers(Team team) {
-    // Must be implanted!
-    return null;
-  }
-
-  @Override
-  public List<Account> getOrganizersByPseudo(String pseudo) {
     // Must be implanted!
     return null;
   }

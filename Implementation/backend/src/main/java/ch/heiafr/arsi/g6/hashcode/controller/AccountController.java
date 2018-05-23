@@ -42,9 +42,9 @@ public class AccountController {
     // Must be implanted!
   }
 
-  public List<Account> getChallengers(String pseudo) {
-    // Must be implanted!
-    return null;
+  @GetMapping("/pseudo")
+  public Account getAccountByPseudo(String pseudo) {
+    return accountService.getAccountByPseudo(pseudo);
   }
 
   public List<Account> getOrganizers() {
@@ -65,8 +65,9 @@ public class AccountController {
     return accountService.getAccount(id);
   }
 
-  public void updateAccount(Account account) {
-    // Must be implanted!
+  @PutMapping("/profileUpdate")
+  public void updateAccount(@RequestBody Account account) {
+    accountService.updateAccount(account);
   }
 
   @GetMapping("/all")
@@ -77,11 +78,6 @@ public class AccountController {
   }
 
   public List<Account> getTeamMembers(Team team) {
-    // Must be implanted!
-    return null;
-  }
-
-  public List<Account> getOrganizersByPseudo(String pseudo) {
     // Must be implanted!
     return null;
   }
