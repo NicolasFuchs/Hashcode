@@ -5,6 +5,7 @@ import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
+import ch.heiafr.arsi.g6.hashcode.model.Token;
 import ch.heiafr.arsi.g6.hashcode.repository.AccountRepository;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,5 +128,18 @@ public class AccountService implements IAccountService {
   @Override
   public String generateToken(Account account) {
     return accountRepository.generateToken(account.getAccountId());
+  }
+
+  @Override
+  public void validate(Token token) {
+    Account account = accountRepository.findByToken(token.getValue());
+    if (account != null) {
+      account.setToken(null);
+      account.setRole(Roles.VALIDATED_USER);
+      accountRepository.save(account);
+    } else {
+      throw new RuntimeException(
+          "No account related to the token was found"); // Must be changed !! Waiting on Joé's code
+    }
   }
 }

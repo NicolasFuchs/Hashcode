@@ -35,4 +35,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
   @Procedure("generate_token")
   String generateToken(@Param("pAccountId") int accountId);
+
+  Account findByToken(String token);
 }
