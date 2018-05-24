@@ -58,7 +58,6 @@ export class ProfileComponent implements OnInit {
 
   public checkPseudo(event: any): void {
     this._accountService.getAccountByPseudo(event.target.value).then(account => {
-      console.log(account);
       if (event.target.value === '' || (account !== null && this.account.accountId !== account.accountId)) {
         $(this._pseudo.nativeElement).removeClass('is-valid');
         $(this._pseudo.nativeElement).addClass('is-invalid');
@@ -166,6 +165,11 @@ export class ProfileComponent implements OnInit {
         this.account.role = Roles.PENDING_USER;
       } else {
         this.account.role = Roles.PENDING_ORGANIZER;
+      }
+      this.account.pseudo = this._pseudo.nativeElement.value;
+      this.account.email = this._email.nativeElement.value;
+      if (this._password.nativeElement.value !== '') {
+        this.account.password = this._password.nativeElement.value;
       }
       this._accountService.signup(this.account);
     }
