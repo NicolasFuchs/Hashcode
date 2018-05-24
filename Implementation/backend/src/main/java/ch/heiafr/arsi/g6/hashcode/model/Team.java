@@ -1,9 +1,7 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -21,4 +19,16 @@ public class Team {
   public String getName() {
     return name;
   }
+
+/*
+
+  @ManyToMany
+  @JoinTable(
+          name = "account_team",
+          joinColumns = @JoinColumn(name = "teamId", referencedColumnName = "teamId"),
+          inverseJoinColumns = @JoinColumn(name = "accountId", referencedColumnName = "accountId")
+  )
+  private List<Account> challenger;
+ */
+
 }

@@ -17,7 +17,7 @@
     <td  *ngIf="time=='futur'">{{challenge.inscriptionDate}}</td>
     <td *ngIf="time=='futur'"> {{challenge.nbTeams}}</td>
     <td *ngIf="time=='futur'"><button type="button" class="btn btn-primary btn-sm">Créer une équipe !</button> </td>
-    <td *ngIf="time=='past'"> {{challenge.end}}</td>
+    <td *ngIf="time=='past'"> {{challenge.end | date: 'le dd.MM.yyyy à HH:mm:ss'}}</td>
   </tr>
 </tbody>
 

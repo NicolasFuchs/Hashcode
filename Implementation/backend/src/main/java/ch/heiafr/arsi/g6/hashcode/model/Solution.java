@@ -1,10 +1,8 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Solution {
@@ -24,4 +22,7 @@ public class Solution {
   private Integer ranking;
 
   private LocalDateTime submitDate;
+
+
+
 }

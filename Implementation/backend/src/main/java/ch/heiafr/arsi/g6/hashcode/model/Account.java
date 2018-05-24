@@ -27,7 +27,6 @@ public class Account {
   private String image;
 
 
-
   @ManyToOne
   @JoinColumn(name = "roleId")
   private Role role;

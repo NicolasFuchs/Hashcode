@@ -1,3 +1,4 @@
+<div *ngIf="idChallenge!=0">
 <div class="container component-margin light-subtitles">
   <div class="centered-title">
     <h1>{{challenge?.name}}</h1>
@@ -32,13 +33,51 @@
     </div>
   </div>
   <hr>
+  <!-- Si le concours n'a pas encore commencé -->
+   <div *ngIf="(challenge.begin  | date:'yyyy/MM/dd HH:mm:ss') > (now | date:'yyyy/MM/dd HH:mm:ss')">
   <h4>Participants</h4>
   <ul class="participants">
     <li *ngFor="let participant of challenge?.participants">{{participant.name}}</li>
   </ul>
   <hr>
-  <div class="make-team">
-    <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
+</div>
+
+<!-- Concours en cours et passées-->
+<div *ngIf="(challenge.begin | date:'yyyy/MM/dd HH:mm:ss') < (now | date:'yyyy/MM/dd HH:mm:ss') ">
+<h4>Classement</h4>
+<table class="table" >
+<thead>
+  <tr>
+    <th scope="col">Position</th>
+    <th scope="col">Nom de l'équipe</th>
+    <th scope="col">Nbr de solution déposée</th>
+    <th scope="col">Meilleur ranking</th>
+  </tr>
+</thead>
+
+<tbody>
+
+<tr *ngFor="let participant of challenge?.participants;  let i = index " >
+  <td>{{i}}</td>
+  <td>{{participant.name}}</td>
+  <td></td>
+  <td></td>
+</tr>
+</tbody>
+
+</table>
+<hr>
+</div>
+<div *ngIf="idChallenge==0">
+  <div class="container component-margin ">
+    <div class="row">
+      <div class="lt-md">
+      <p>
+        Il n'y actuellement pas de concours, cliquez sur l'onglet "Passés" pour avoir les infomations des concours qui ont déjà eu lieu
+         ou sur "Futurs" pour avoir les informations des prochains concours.
+      </p>
+    </div>
+    </div>
   </div>
 </div>
 
