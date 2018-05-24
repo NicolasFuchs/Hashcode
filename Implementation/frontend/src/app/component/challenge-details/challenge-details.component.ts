@@ -47,12 +47,13 @@ export class ChallengeDetailsComponent implements OnInit {
   public ngOnInit(): void {
     // this.time = 'actual';
     this.clickedTR = null;
-    if (this.idChallenge === 0) {
+    if (this.idChallenge == 0) {
       this._challengeService.getActualChallenge().then(challenge => {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
       });
+      this.idChallenge = this.challenge.challengeId;
     } else {
       this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
         this.challenge = challenge;

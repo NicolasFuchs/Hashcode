@@ -1,4 +1,4 @@
-<div *ngIf="idChallenge!=0">
+<div *ngIf="challenge">
 <div class="container component-margin light-subtitles">
   <div class="centered-title">
     <h1>{{challenge?.name}}</h1>
@@ -73,16 +73,16 @@
 </table>
 <hr>
 </div>
+</div>
+</div>
 
-
-
-<div *ngIf="idChallenge==0">
+<div *ngIf="!challenge">
   <div class="container component-margin ">
     <div class="row">
       <div class="lt-md">
       <p>
         Il n'y actuellement pas de concours, cliquez sur l'onglet "Passés" pour avoir les infomations des concours qui ont déjà eu lieu
-         ou sur "Futurs" pour avoir les informations des prochains concours.
+         ou sur "Futurs" pour avoir les informations des prochains concours. {{challenge.name}}
       </p>
     </div>
     </div>
@@ -128,7 +128,7 @@
           <button type="button" class="btn btn-primary" (click)="deleteTeam()">Supprimer le groupe</button>
         </div>
         <div *ngIf="!team">
-          <button  #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe</button>
+          <button #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe</button>
         </div>
       </div>
     </div>
