@@ -3,7 +3,11 @@ package ch.heiafr.arsi.g6.hashcode.repository;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,4 +32,9 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
   Account findByPseudo(String pseudo);
 
   Account deleteById(int accountId);
+
+  @Procedure("generate_token")
+  String generateToken(@Param("pAccountId") int accountId);
+
+  Account findByToken(String token);
 }

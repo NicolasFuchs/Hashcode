@@ -1,9 +1,11 @@
 package ch.heiafr.arsi.g6.hashcode.service.impl;
 
+import ch.heiafr.arsi.g6.hashcode.Exception.AccountException;
 import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
+import ch.heiafr.arsi.g6.hashcode.model.Token;
 import ch.heiafr.arsi.g6.hashcode.repository.AccountRepository;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,16 @@ public class AccountService implements IAccountService {
 
   @Override
   public void acceptPending(Account account) {
-    // Must be implanted!
     Account newAcc = getAccount(account.getAccountId());
-    newAcc.setRole(Roles.VALIDATED_ORGANIZER);
-    accountRepository.save(newAcc);
+    if (newAcc == null) {
+      throw new AccountException("C-03", "La demande de validation du compte à déjà été refusé");
+    } else if (newAcc.getRole().getRoleId() == Roles.VALIDATED_ORGANIZER.getRoleId()) {
+      throw new AccountException(
+          "C-04", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
+    } else {
+      newAcc.setRole(Roles.VALIDATED_ORGANIZER);
+      accountRepository.save(newAcc);
+    }
   }
 
   // J'utilise plutôt refusePending avec un ID
@@ -55,14 +63,15 @@ public class AccountService implements IAccountService {
   public void deleteAccount(Account account) {}
 
   @Override
-  public void createAccount(Account account) {
+  public Account createAccount(Account account) {
     account.setPassword(passwordEncoder.encode(account.getPassword()));
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
   public Account getAccount(Integer id) {
     // Must be implanted!
+
     return accountRepository.findByAccountId(id);
   }
 
@@ -102,18 +111,35 @@ public class AccountService implements IAccountService {
 
   @Override
   public Account refusePending(int id) {
-    return accountRepository.deleteById(id);
-  }
-  /* Account accountToDel = accountRepository.findByAccountId(id);
-    if(accountToDel==null){
-      // Retourner une information (déjà supprimer
-    }else{
-      if(accountToDel.getRole().equals(Roles.VALIDATED_ORGANIZER)){
+    Account accountToDel = accountRepository.findByAccountId(id);
+    if (accountToDel == null) {
+      throw new AccountException("C-01", "La demande de validation du compte à déjà été refusé");
+    } else {
+      if (accountToDel.getRole().getRoleId() == Roles.VALIDATED_ORGANIZER.getRoleId()) {
         // Account déjà été valider par quelqu'un d'autre
-      }else{
-
+        throw new AccountException(
+            "C-02", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
+      } else {
+        return accountRepository.deleteById(id);
       }
     }
-  return null;
-  }*/
+  }
+
+  @Override
+  public String generateToken(Account account) {
+    return accountRepository.generateToken(account.getAccountId());
+  }
+
+  @Override
+  public void validate(Token token) {
+    Account account = accountRepository.findByToken(token.getValue());
+    if (account != null) {
+      account.setToken(null);
+      account.setRole(Roles.VALIDATED_USER);
+      accountRepository.save(account);
+    } else {
+      throw new RuntimeException(
+          "No account related to the token was found"); // Must be changed !! Waiting on Joé's code
+    }
+  }
 }

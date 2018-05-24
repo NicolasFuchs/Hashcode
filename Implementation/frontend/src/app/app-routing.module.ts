@@ -2,9 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './component/home/home.component';
 import {ProfileComponent} from './component/profile/profile.component';
-import {ConfirmComponent} from './component/confirm/confirm.component';
 import {ChallengesComponent} from './component/challenges/challenges.component';
 import {AdminComponent} from './component/admin/admin.component';
+import {ValidationComponent} from './component/validation/validation.component';
 
 
 const routes: Routes = [
@@ -27,8 +27,8 @@ const routes: Routes = [
     data: {signup: true}
   },
   {
-    path: 'confirm',
-    component: ConfirmComponent
+    path: 'validation/:token',
+    component: ValidationComponent
   },
   {
     path: 'challenges',

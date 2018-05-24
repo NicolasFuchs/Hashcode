@@ -3,6 +3,7 @@ package ch.heiafr.arsi.g6.hashcode.service;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
+import ch.heiafr.arsi.g6.hashcode.model.Token;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface IAccountService {
 
   void deleteAccount(Account account);
 
-  void createAccount(Account account);
+  Account createAccount(Account account);
 
   Account getAccount(Integer id);
 
@@ -33,4 +34,8 @@ public interface IAccountService {
   List<Account> getAccountsByRole(Role role);
 
   Account refusePending(int id);
+
+  String generateToken(Account account);
+
+  void validate(Token token);
 }

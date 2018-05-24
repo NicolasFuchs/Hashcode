@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, Component} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from './app.component';
 import {PersonComponent} from './component/person/person.component';
@@ -11,19 +11,14 @@ import {AuthenticationInterceptor} from './interceptor/authentication.intercepto
 import {AuthenticationService} from './service/authentication.service';
 import {HomeComponent} from './component/home/home.component';
 import {ProfileComponent} from './component/profile/profile.component';
-
-
-import {ConfirmComponent} from './component/confirm/confirm.component';
 import {ChallengesListComponent} from './component/challenges-list/challenges-list.component';
-
 import {ChallengesComponent} from './component/challenges/challenges.component';
 import {ChallengeDetailsComponent} from './component/challenge-details/challenge-details.component';
 import {NgxLocalStorageModule} from 'ngx-localstorage';
 import {ChallengeService} from './service/challenge.service';
 import {AdminComponent} from './component/admin/admin.component';
 import {AccountService} from './service/account.service';
-
-import{ ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ValidationComponent} from './component/validation/validation.component';
 
 @NgModule({
   declarations: [
@@ -32,11 +27,11 @@ import{ ToastModule} from 'ng2-toastr/ng2-toastr';
     HeaderComponent,
     HomeComponent,
     ProfileComponent,
-    ConfirmComponent,
     ChallengesListComponent,
     ChallengesComponent,
     ChallengeDetailsComponent,
     AdminComponent,
+    ValidationComponent,
   ],
   imports: [
     BrowserModule,

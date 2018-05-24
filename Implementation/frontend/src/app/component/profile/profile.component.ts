@@ -242,6 +242,11 @@ export class ProfileComponent implements OnInit {
       } else {
         this.account.role = Roles.PENDING_ORGANIZER;
       }
+      this.account.pseudo = this._pseudo.nativeElement.value;
+      this.account.email = this._email.nativeElement.value;
+      if (this._password.nativeElement.value !== '') {
+        this.account.password = this._password.nativeElement.value;
+      }
       this._accountService.signup(this.account);
       $(this._instructionsModal.nativeElement).modal('show');
     }
