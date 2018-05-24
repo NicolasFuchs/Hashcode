@@ -236,12 +236,24 @@ export class ProfileComponent implements OnInit {
         this.account.password = this._password.nativeElement.value;
       }
       this._accountService.updateAccount(this.account);
+      $('#updateSuccess').show();
+      $('#updateSuccess').fadeTo(3000, 0, function() {
+        $('#updateSuccess').hide();
+        $('#updateSuccess').css('opacity', 1);
+      });
     } else {
+      let instructionText = '';
       if ((<any>$('#cha')[0]).checked) {
         this.account.role = Roles.PENDING_USER;
+        instructionText = 'Un email de confirmation vous a été envoyé à l\'adresse suivante<br/><br/>' +
+                          '{{account.email}}<br/><br/>' +
+                          'Veuillez cliquer sur le lien dans l\'email pour confirmer la création de votre compte';
       } else {
         this.account.role = Roles.PENDING_ORGANIZER;
+        instructionText = 'Votre demande d\'organisateur a bien été enregistrée.<br/><br/>' +
+                          'Un email vous sera envoyé lorsque votre demande sera validée ou refusée.';
       }
+      document.getElementById('instructionText').innerHTML = instructionText;
       this.account.pseudo = this._pseudo.nativeElement.value;
       this.account.email = this._email.nativeElement.value;
       if (this._password.nativeElement.value !== '') {

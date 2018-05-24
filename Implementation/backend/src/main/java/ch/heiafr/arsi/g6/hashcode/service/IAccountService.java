@@ -15,8 +15,6 @@ public interface IAccountService {
 
   void refusePending(Account account);
 
-  List<Account> getOrganizers();
-
   void deleteAccount(Account account);
 
   Account createAccount(Account account);

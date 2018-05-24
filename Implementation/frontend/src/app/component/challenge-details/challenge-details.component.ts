@@ -30,7 +30,7 @@ export class ChallengeDetailsComponent implements OnInit {
   @ViewChild('modifyTeamButton') private _modifyTeamButton: ElementRef;
   @ViewChild('createTeamModal') private _createTeamModal: ElementRef;
   @ViewChild('datalistMembers') private _datalistMembers: ElementRef;
-  @ViewChild('organizersTableBody') private _organizersTableBody: ElementRef;
+  @ViewChild('membersTableBody') private _membersTableBody: ElementRef;
 
   public account: Account;
   public currentTeam: Team;
@@ -40,6 +40,9 @@ export class ChallengeDetailsComponent implements OnInit {
   private _mediaXml: XMLDocument;
   private _isModalShowed: boolean;
   private accounts: Account[];
+  private accountsToAdd: Account[];
+  private accountsToDel: Account[];
+  private accountsInTeam: Account[];
   private readyToDelete: boolean;
   private now: Date;
 
@@ -66,6 +69,9 @@ export class ChallengeDetailsComponent implements OnInit {
 
     // this.time = 'actual';
     this.clickedTR = null;
+    this.accountsToAdd = [];
+    this.accountsToDel = [];
+    this.accountsInTeam = [];
     if (this.idChallenge == 0) {
       this._challengeService.getActualChallenge().then(challenge => {
         this.challenge = challenge;
@@ -97,6 +103,15 @@ export class ChallengeDetailsComponent implements OnInit {
   public showTrash(event: any): void {
     if ((event.target.tagName === 'I' && event.target.parentElement.parentElement.parentElement.parentElement === this.clickedTR) ||
       (event.target.id === 'profileDarkener' && event.target.parentElement.parentElement.parentElement === this.clickedTR)) {
+      for (let i = 0; i < this.accounts.length; i++) {
+        if (this.accounts[i].pseudo === this.clickedTR.lastChild.nodeValue) {
+          if (this.accountsToAdd.includes(this.accounts[i])) {
+            this.accountsToAdd.splice(this.accountsToAdd.indexOf(this.accounts[i]), 1);
+          } else {
+            this.accountsToDel.push();
+          }
+        }
+      }
       this.clickedTR.remove();
       this.clickedTR = null;
     } else if (this.clickedTR !== null) {
@@ -168,15 +183,21 @@ export class ChallengeDetailsComponent implements OnInit {
   public addMember(): void {
     for (let i = 0; i < this.accounts.length; i++) {
       const pseudo: string = (document.getElementById('addMember') as HTMLInputElement).value;
-      if (this.accounts[i].pseudo === pseudo) {
-        let organizers = '<tr>';
-        organizers += '<td style="vertical-align: middle;"><div style="position: relative; width: fit-content; height: fit-content"><img style="max-height: 50px; max-width: 50px" src="' + this.accounts[i].image + '"/>';
-        organizers += '<div class="table" id="profileDarkener" style="display: none; text-align: center; background-color: black; opacity: 0.5; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%"><i style="vertical-align: middle; color: red" class="fa fa-trash-o fa-2x" aria-hidden="true"></i></div></div></td>';
-        organizers += '<td style="vertical-align: middle;">' + this.accounts[i].firstname + '</td>';
-        organizers += '<td style="vertical-align: middle;">' + this.accounts[i].lastname + '</td>';
-        organizers += '<td style="vertical-align: middle;">' + this.accounts[i].pseudo + '</td>';
-        organizers += '</tr>';
-        document.getElementById('organizersTableBody').innerHTML += organizers;
+      if (this.accounts[i].pseudo === pseudo && !this.accountsInTeam.includes(this.accounts[i])) {
+        if (this.accountsToDel.includes(this.accounts[i])) {
+          this.accountsToDel.splice(this.accountsToDel.indexOf(this.accounts[i]), 1);
+        } else {
+          this.accountsToAdd.push(this.accounts[i]);
+        }
+        this.accountsToAdd.push(this.accounts[i]);
+        let members = '<tr>';
+        members += '<td style="vertical-align: middle;"><div style="position: relative; width: fit-content; height: fit-content"><img style="max-height: 50px; max-width: 50px" src="' + this.accounts[i].image + '"/>';
+        members += '<div class="table" id="profileDarkener" style="display: none; text-align: center; background-color: black; opacity: 0.5; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%"><i style="vertical-align: middle; color: red" class="fa fa-trash-o fa-2x" aria-hidden="true"></i></div></div></td>';
+        members += '<td style="vertical-align: middle;">' + this.accounts[i].firstname + '</td>';
+        members += '<td style="vertical-align: middle;">' + this.accounts[i].lastname + '</td>';
+        members += '<td style="vertical-align: middle;">' + this.accounts[i].pseudo + '</td>';
+        members += '</tr>';
+        document.getElementById('membersTableBody').innerHTML += members;
         break;
       }
     }
@@ -293,7 +314,7 @@ export class ChallengeDetailsComponent implements OnInit {
             if (bestSolutionOfBestTeam.ranking < bestSolutionOfOneTeam.ranking) {
               bestTeam = entry;
               bestSolutionOfBestTeam = bestSolutionOfOneTeam;
-            } else if (bestSolutionOfBestTeam.ranking == bestSolutionOfOneTeam.ranking) {
+            } else if (bestSolutionOfBestTeam.ranking === bestSolutionOfOneTeam.ranking) {
               if (bestTeam.solutions.length > entry.solutions.length) {
                 bestTeam = entry;
                 bestSolutionOfBestTeam = bestSolutionOfOneTeam;
