@@ -72,7 +72,7 @@ export class ChallengeDetailsComponent implements OnInit {
     this.accountsToAdd = [];
     this.accountsToDel = [];
     this.accountsInTeam = [];
-    if (this.idChallenge === 0) {
+    if (this.idChallenge == 0) {
       this._challengeService.getActualChallenge().then(challenge => {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
@@ -313,7 +313,7 @@ export class ChallengeDetailsComponent implements OnInit {
             if (bestSolutionOfBestTeam.ranking < bestSolutionOfOneTeam.ranking) {
               bestTeam = entry;
               bestSolutionOfBestTeam = bestSolutionOfOneTeam;
-            } else if (bestSolutionOfBestTeam.ranking == bestSolutionOfOneTeam.ranking) {
+            } else if (bestSolutionOfBestTeam.ranking === bestSolutionOfOneTeam.ranking) {
               if (bestTeam.solutions.length > entry.solutions.length) {
                 bestTeam = entry;
                 bestSolutionOfBestTeam = bestSolutionOfOneTeam;
