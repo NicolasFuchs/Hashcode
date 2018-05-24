@@ -5,6 +5,8 @@ import {LocalStorageService} from 'ngx-localstorage';
 import {Account} from '../../model/Account';
 import * as $ from 'jquery';
 import 'bootstrap';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +25,8 @@ export class HeaderComponent implements OnInit {
 
   public constructor(private _authenticationService: AuthenticationService,
                      private _authenticationInterceptor: AuthenticationInterceptor,
-                     private _localStorageService: LocalStorageService) {
+                     private _localStorageService: LocalStorageService, private _route: Router,
+                     private _location: Location) {
     this._isModalShowed = false;
   }
 
@@ -56,14 +59,21 @@ export class HeaderComponent implements OnInit {
     this._isModalShowed = true;
   }
 
+  public hideSignModal(): void {
+    $(this._signModal.nativeElement).modal('hide');
+    this._isModalShowed = false;
+  }
+
   public login(): void {
     const pseudo: string = this._pseudoInput.nativeElement.value;
     const password: string = this._passwordInput.nativeElement.value;
     this._authenticationService.login(pseudo, password).then(() => {
-      $(this._signModal.nativeElement).modal('hide');
       $(this._pseudoInput.nativeElement).removeClass('is-invalid');
       $(this._passwordInput.nativeElement).removeClass('is-invalid');
-      this._isModalShowed = false;
+      this.hideSignModal();
+      if (this._location.path() === '/signup') {
+        this._route.navigate(['profile']);
+      }
     });
   }
 

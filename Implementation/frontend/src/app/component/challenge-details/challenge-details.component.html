@@ -42,7 +42,7 @@
   </div>
 </div>
 
-<div #createTeamModal class="modal" tabindex="-1" role="dialog">
+<div #createTeamModal class="modal" tabindex="-1" role="dialog" (click)="hideTrash($event)">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,20 +55,20 @@
 
         <div class="form-group row">
           <label for="teamName" class="col col-form-label">Nom de groupe</label>
-          <input type="text" class="col form-control" id="teamName" placeholder="Entrez un nom de groupe" [value]="team?.name" (keyup)="team.name = $event.target.value">
+          <input #teamName type="text" class="col form-control" id="teamName" placeholder="Entrez un nom de groupe" [value]="team?.name" (keyup)="checkTeamName($event)">
         </div>
         <div class="form-group row">
           <label for="addMember" class="col col-form-label">Ajouter un membre</label>
-          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre" (focus)="displayPotentialMembers()" (keyup)="displayPotentialMembers()" list=members>
+          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre" (focus)="addPotentialMembers()" (keyup)="addPotentialMembers()" list=members>
           <datalist id=members></datalist>
-          <button type="button" (click)="addMember()">Ajouter</button>
+          <button type="button" class="btn btn-primary" (click)="addMember()">Ajouter</button>
         </div>
 
         <div class="card">
           <div class="card-body">
             <div class="table-wrapper-2">
               <table class="table" id="table">
-                <tbody #organizersTableBody id="organizersTableBody"></tbody>
+                <tbody #organizersTableBody id="organizersTableBody" (click)="showTrash($event)"></tbody>
               </table>
             </div>
           </div>
@@ -77,11 +77,11 @@
       </div>
       <div class="modal-footer">
         <div *ngIf="team" class="form-group row">
-          <button type="button" class="btn btn-primary" (click)="modifyTeam()">Modifier le groupe</button>
+          <button #modifyTeamButton type="button" class="btn btn-primary" (click)="modifyTeam()">Modifier le groupe</button>
           <button type="button" class="btn btn-primary" (click)="deleteTeam()">Supprimer le groupe</button>
         </div>
         <div *ngIf="!team">
-          <button type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe</button>
+          <button  #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe</button>
         </div>
       </div>
     </div>
