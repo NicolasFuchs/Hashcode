@@ -5,7 +5,7 @@
   </div>
   <hr>
   <h4>Description</h4>
-  <p class="description">{{getDescription()}}</p>
+  <p class="description"><!--{{getDescription()}}--></p>
   <div class="data">
     <!--<div class="data-button">
       <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -62,11 +62,12 @@
 
 <tbody>
 
-<tr *ngFor="let participant of challenge?.participants;  let i = index " >
+<tr *ngFor="let team of classement;  let i = index " >
   <td>{{i}}</td>
-  <td>{{participant.name}}</td>
-  <td></td>
-  <td></td>
+  <td>{{team.name}}</td>
+  <td>{{team.solutions.length}}</td>
+  <td *ngIf="team.solutions.length>0">{{getBestSolutionOfTeam(team).ranking}}</td>
+  <td *ngIf="team.solutions.length==0">0.0</td>
 </tr>
 </tbody>
 
@@ -82,7 +83,7 @@
       <div class="lt-md">
       <p>
         Il n'y actuellement pas de concours, cliquez sur l'onglet "Passés" pour avoir les infomations des concours qui ont déjà eu lieu
-         ou sur "Futurs" pour avoir les informations des prochains concours. {{challenge.name}}
+         ou sur "Futurs" pour avoir les informations des prochains concours.
       </p>
     </div>
     </div>

@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import 'bootstrap';
 import {runInThisContext} from 'vm';
 import {isNullOrUndefined} from 'util';
+import { Solution } from '../../model/Solution';
 
 @Component({
   selector: 'app-challenge-details',
@@ -36,12 +37,16 @@ export class ChallengeDetailsComponent implements OnInit {
   private readyToDelete: boolean;
   private now: Date;
 
+  public classementProv:Team[];
+  public classement;
+
   private clickedTR: Element;
 
   public constructor(private _challengeService: ChallengeService, private _accountService: AccountService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
     this.now = new Date();
+    this.classement = new Array();
   }
 
   public ngOnInit(): void {
@@ -52,15 +57,17 @@ export class ChallengeDetailsComponent implements OnInit {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
+        this.generateClassement();
       });
-      this.idChallenge = this.challenge.challengeId;
     } else {
       this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
+        this.generateClassement();
       });
     }
+
   }
 
   public hideTrash(event: any): void {
@@ -209,4 +216,54 @@ export class ChallengeDetailsComponent implements OnInit {
     const account: Account = this.challenge.organizers.find(accountEl => accountEl.accountId === accountId);
     return typeof account !== 'undefined' ? account : null;
   }
+
+
+private generateClassement():void{
+
+  if(this.challenge){
+
+    this.classementProv = this.challenge.participants;
+
+    while(this.classementProv.length >0) {
+      var bestTeam : Team = null;
+      var bestSolutionOfBestTeam : Solution = null;
+      for (let entry of this.classementProv) {
+          if(!bestTeam){
+            bestTeam = entry;
+            bestSolutionOfBestTeam = this.getBestSolutionOfTeam(bestTeam);
+          }else{
+            var bestSolutionOfOneTeam : Solution = this.getBestSolutionOfTeam(entry);
+            if(bestSolutionOfBestTeam.ranking<bestSolutionOfOneTeam.ranking){
+              bestTeam = entry;
+              bestSolutionOfBestTeam = bestSolutionOfOneTeam;
+            }else if(bestSolutionOfBestTeam.ranking==bestSolutionOfOneTeam.ranking){
+              if(bestTeam.solutions.length>entry.solutions.length){
+                bestTeam = entry;
+                bestSolutionOfBestTeam = bestSolutionOfOneTeam;
+              }
+            }
+          }
+      }
+      this.classement.push(bestTeam);
+      var index = this.classementProv.indexOf(bestTeam, 0);
+      this.classementProv.splice(index, 1);
+    }
+  }
+}
+
+  private  getBestSolutionOfTeam(team: Team): Solution{
+      var bestSol:  Solution  = null;
+
+      for (let entry of team.solutions) {
+        if(!bestSol){
+          bestSol = entry;
+        }else{
+          if(bestSol.ranking<entry.ranking){
+            bestSol = entry;
+          }
+        }
+      }
+      return bestSol;
+  }
+
 }
