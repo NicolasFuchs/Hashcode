@@ -22,7 +22,10 @@ public class SolutionService implements ISolutionService {
   @Override
   public List<Solution> getSolutions(Team team) {
     // Must be implanted!
-    return null;
+   /* int teamID = team.getTeamId();
+    List<Solution> solutions = solutionRepository.findByTeamId(teamID);
+    return solutions;*/
+   return null;
   }
 
   @Override

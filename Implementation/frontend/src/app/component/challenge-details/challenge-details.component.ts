@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Challenge} from '../../model/Challenge';
 import {ChallengeService} from '../../service/challenge.service';
 import {Account} from '../../model/Account';
@@ -7,8 +7,9 @@ import {ZipCollectorHelper} from '../../helper/zip-collector.helper';
 import {Team} from '../../model/Team';
 import * as $ from 'jquery';
 import 'bootstrap';
-import {runInThisContext} from 'vm';
 import {isNullOrUndefined} from 'util';
+import {AuthenticationService} from '../../service/authentication.service';
+import {Solution} from '../../model/Solution';
 
 @Component({
   selector: 'app-challenge-details',
@@ -21,6 +22,8 @@ export class ChallengeDetailsComponent implements OnInit {
   @Input()
   idChallenge: number;
 
+  @ViewChild('solutionsModal') private _solutionsModal: ElementRef;
+  @ViewChild('uploadModal') private _uploadModal: ElementRef;
   @ViewChild('teamName') private _teamName: ElementRef;
   @ViewChild('createTeamButton') private _createTeamButton: ElementRef;
   @ViewChild('modifyTeamButton') private _modifyTeamButton: ElementRef;
@@ -28,6 +31,9 @@ export class ChallengeDetailsComponent implements OnInit {
   @ViewChild('datalistMembers') private _datalistMembers: ElementRef;
   @ViewChild('membersTableBody') private _membersTableBody: ElementRef;
 
+  public account: Account;
+  public currentTeam: Team;
+  public isPartOfThisChallenge: boolean;
   public team: Team;
   public challenge: Challenge;
   private _mediaXml: XMLDocument;
@@ -37,15 +43,30 @@ export class ChallengeDetailsComponent implements OnInit {
   private accountsToDel: Account[];
   private accountsInTeam: Account[];
   private readyToDelete: boolean;
+  private now: Date;
+
+  public classementProv: Team[];
+  public classement;
 
   private clickedTR: Element;
 
-  public constructor(private _challengeService: ChallengeService, private _accountService: AccountService) {
+  public constructor(private _challengeService: ChallengeService, private _accountService: AccountService,
+                     private _authenticationService: AuthenticationService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
+    this.now = new Date();
+    this.currentTeam = new Team();
+    this.classement = [];
   }
 
   public ngOnInit(): void {
+    // Get account and listen
+    this.account = this._authenticationService.actual;
+    this._authenticationService.account.subscribe(account => {
+      this.account = account;
+      this.checkPartOfThisChallenge();
+    });
+
     // this.time = 'actual';
     this.clickedTR = null;
     this.accountsToAdd = [];
@@ -56,14 +77,20 @@ export class ChallengeDetailsComponent implements OnInit {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
+        this.checkPartOfThisChallenge();
+        this.generateClassement();
       });
     } else {
       this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
+        this.checkPartOfThisChallenge();
+        this.generateClassement();
       });
     }
+
+    this.enableFileEvent();
   }
 
   public hideTrash(event: any): void {
@@ -72,6 +99,7 @@ export class ChallengeDetailsComponent implements OnInit {
       this.clickedTR = null;
     }
   }
+
   public showTrash(event: any): void {
     if ((event.target.tagName === 'I' && event.target.parentElement.parentElement.parentElement.parentElement === this.clickedTR) ||
       (event.target.id === 'profileDarkener' && event.target.parentElement.parentElement.parentElement === this.clickedTR)) {
@@ -223,8 +251,95 @@ export class ChallengeDetailsComponent implements OnInit {
     zip.collect(this.challenge.name.replace(/ /g, '_') + '_videos.zip', names);
   }
 
+  public showSolutionsModal(): void {
+    if (this.currentTeam && this.currentTeam.solutions.length > 0) {
+      $('#no-solutions-text').addClass('hide');
+    } else {
+      $('#solutions-table').addClass('hide');
+    }
+    $(this._solutionsModal.nativeElement).modal('show');
+  }
+
+  public showUploadModal(): void {
+    $(this._solutionsModal.nativeElement).modal('hide');
+    $(this._uploadModal.nativeElement).modal('show');
+  }
+
   private getAccountFromAccountId(accountId: number): Account {
     const account: Account = this.challenge.organizers.find(accountEl => accountEl.accountId === accountId);
     return typeof account !== 'undefined' ? account : null;
+  }
+
+  private checkPartOfThisChallenge(): void {
+    if (typeof this.challenge !== 'undefined' && typeof this.account !== 'undefined') {
+      const teams: Set<number> = new Set(this.account.teams.map(t => t.teamId));
+      const filteredTeams: Team[] = this.challenge.participants.filter(t => teams.has(t.teamId));
+      if (filteredTeams.length > 0) {
+        this.currentTeam = filteredTeams[0];
+        this.isPartOfThisChallenge = true;
+      }
+    }
+  }
+
+  private enableFileEvent(): void {
+    $(document).on('change', ':file', function () {
+      const input: JQuery = $(this);
+      const numFiles = (<any>input.get(0)).files ? (<any>input.get(0)).files.length : 1;
+      const label: string = (<string>input.val()).replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+    });
+
+    $('input:file').on('fileselect', function (event, numFiles, label) {
+      $('#file-name').text(label);
+      console.log(label);
+    });
+  }
+
+  private generateClassement(): void {
+
+    if (this.challenge) {
+
+      this.classementProv = this.challenge.participants;
+
+      while (this.classementProv.length > 0) {
+        let bestTeam: Team = null;
+        let bestSolutionOfBestTeam: Solution = null;
+        for (const entry of this.classementProv) {
+          if (!bestTeam) {
+            bestTeam = entry;
+            bestSolutionOfBestTeam = this.getBestSolutionOfTeam(bestTeam);
+          } else {
+            const bestSolutionOfOneTeam: Solution = this.getBestSolutionOfTeam(entry);
+            if (bestSolutionOfBestTeam.ranking < bestSolutionOfOneTeam.ranking) {
+              bestTeam = entry;
+              bestSolutionOfBestTeam = bestSolutionOfOneTeam;
+            } else if (bestSolutionOfBestTeam.ranking == bestSolutionOfOneTeam.ranking) {
+              if (bestTeam.solutions.length > entry.solutions.length) {
+                bestTeam = entry;
+                bestSolutionOfBestTeam = bestSolutionOfOneTeam;
+              }
+            }
+          }
+        }
+        this.classement.push(bestTeam);
+        const index = this.classementProv.indexOf(bestTeam, 0);
+        this.classementProv.splice(index, 1);
+      }
+    }
+  }
+
+  private getBestSolutionOfTeam(team: Team): Solution {
+    let bestSol: Solution = null;
+
+    for (const entry of team.solutions) {
+      if (!bestSol) {
+        bestSol = entry;
+      } else {
+        if (bestSol.ranking < entry.ranking) {
+          bestSol = entry;
+        }
+      }
+    }
+    return bestSol;
   }
 }

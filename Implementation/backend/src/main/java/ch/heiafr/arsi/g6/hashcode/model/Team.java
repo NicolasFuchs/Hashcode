@@ -1,9 +1,7 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -14,11 +12,19 @@ public class Team {
 
   private String name;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "teamId")
+  private List<Solution> solutions;
+
   public Integer getTeamId() {
     return teamId;
   }
 
   public String getName() {
     return name;
+  }
+
+  public List<Solution> getSolutions() {
+    return solutions;
   }
 }

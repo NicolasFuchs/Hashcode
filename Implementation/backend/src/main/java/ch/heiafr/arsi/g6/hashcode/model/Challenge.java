@@ -2,6 +2,7 @@ package ch.heiafr.arsi.g6.hashcode.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,19 +16,19 @@ public class Challenge {
 
   private Integer nbTeams;
 
-  private LocalDate inscriptionDate;
+  private LocalDateTime inscriptionDate;
 
-  private LocalDate begin;
+  private LocalDateTime  begin;
 
-  private LocalDate end;
+  private LocalDateTime end;
 
   private String mediaXml;
 
   @ManyToMany
   @JoinTable(
     name = "challenge_account",
-    joinColumns = @JoinColumn(name = "challengeId", referencedColumnName = "challengeId"),
-    inverseJoinColumns = @JoinColumn(name = "accountId", referencedColumnName = "accountId")
+    joinColumns = @JoinColumn(name = "challengeId"),
+    inverseJoinColumns = @JoinColumn(name = "accountId")
   )
   private List<Account> organizers;
 
@@ -47,15 +48,15 @@ public class Challenge {
     return nbTeams;
   }
 
-  public LocalDate getInscriptionDate() {
+  public LocalDateTime getInscriptionDate() {
     return inscriptionDate;
   }
 
-  public LocalDate getBegin() {
+  public LocalDateTime getBegin() {
     return begin;
   }
 
-  public LocalDate getEnd() {
+  public LocalDateTime getEnd() {
     return end;
   }
 
@@ -69,5 +70,17 @@ public class Challenge {
 
   public List<Team> getParticipants() {
     return participants;
+  }
+
+  public void setInscriptionDate(LocalDateTime inscriptionDate) {
+    this.inscriptionDate = inscriptionDate;
+  }
+
+  public void setBegin(LocalDateTime begin) {
+    this.begin = begin;
+  }
+
+  public void setEnd(LocalDateTime end) {
+    this.end = end;
   }
 }
