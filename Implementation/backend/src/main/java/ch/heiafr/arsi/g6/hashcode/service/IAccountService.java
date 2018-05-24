@@ -18,7 +18,7 @@ public interface IAccountService {
 
   void deleteAccount(Account account);
 
-  void createAccount(Account account);
+  Account createAccount(Account account);
 
   Account getAccount(Integer id);
 
@@ -33,4 +33,6 @@ public interface IAccountService {
   List<Account> getAccountsByRole(Role role);
 
   Account refusePending(int id);
+
+  String generateToken(Account account);
 }

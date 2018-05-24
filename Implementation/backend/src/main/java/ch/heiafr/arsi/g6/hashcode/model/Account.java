@@ -6,6 +6,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 
 @Entity
+@NamedStoredProcedureQueries({
+  @NamedStoredProcedureQuery(
+    name = "generate_token",
+    procedureName = "generate_token",
+    parameters = {
+      @StoredProcedureParameter(mode = ParameterMode.IN, name = "accountId", type = Integer.class),
+      @StoredProcedureParameter(mode = ParameterMode.OUT, name = "token", type = String.class)
+    }
+  ),
+})
 public class Account {
 
   @Id
@@ -25,8 +35,6 @@ public class Account {
   @JsonIgnore private String token;
 
   private String image;
-
-
 
   @ManyToOne
   @JoinColumn(name = "roleId")

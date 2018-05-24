@@ -27,8 +27,9 @@ public class EmailService implements IEmailService {
   @Override
   public void sendVerificationEmail(Account account) {
     Context context = new Context();
-    context.setVariable("name", "Hello " + account.getFirstname() + " " + account.getLastname() + " !");
-    context.setVariable("validationHash", BASE_URL + "validation/" + "aksdjhfalkjsdakjhdslfkja");
+    context.setVariable(
+        "name", "Hello " + account.getFirstname() + " " + account.getLastname() + " !");
+    context.setVariable("validationHash", BASE_URL + "validation/" + account.getToken());
     String content = templateEngine.process("EmailAccountValidation", context);
     MimeMessagePreparator messagePreparator =
         mimeMessage -> {
