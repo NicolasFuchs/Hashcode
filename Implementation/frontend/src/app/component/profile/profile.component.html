@@ -20,42 +20,47 @@
       <div class="col">
         <div id="profileInfo">
           <div class="form-group row">
-            <label for="lastname" class="col col-form-label">Nom</label>
+            <label for="lastname" class="col">Nom</label>
             <div class="col">
-              <input type="text" class="form-control" id="lastname" placeholder="Nom" [value]="account?.lastname"
-                     (keyup)="account.lastname = $event.target.value">
+              <input #lastname type="text" class="form-control" id="lastname" placeholder="Nom" [value]="account?.lastname"
+                     (keyup)="checkLastname($event)" (click)="checkLastname($event)">
             </div>
           </div>
           <div class="form-group row">
             <label for="firstname" class="col">Prénom</label>
             <div class="col">
-              <input type="text" class="form-control" id="firstname" placeholder="Prénom" [value]="account?.firstname"
-                     (keyup)="account.firstname = $event.target.value">
+              <input #firstname type="text" class="form-control" id="firstname" placeholder="Prénom" [value]="account?.firstname"
+                     (keyup)="checkFirstname($event)" (click)="checkFirstname($event)">
             </div>
           </div>
           <div class="form-group row">
             <label for="pseudo" class="col">Pseudo</label>
             <div class="col">
-            <input #pseudo type="text" class="form-control" id="pseudo" placeholder="Pseudo" [value]="account?.pseudo" (keyup)="checkPseudo($event)">
+              <input #pseudo type="text" class="form-control" id="pseudo" placeholder="Pseudo" [value]="account?.pseudo"
+                     (keyup)="checkPseudo($event)" (click)="checkPseudo($event)">
             </div>
           </div>
           <div class="form-group row">
             <label for="email" class="col">Email</label>
             <div class="col">
-            <input #email type="email" class="form-control" id="email" placeholder="Email" [value]="account?.email" (keyup)="checkEmail($event)">
+              <input #email type="email" class="form-control" id="email" placeholder="Email" [value]="account?.email"
+                     (keyup)="checkEmail($event)" (click)="checkEmail($event)">
             </div>
           </div>
           <div class="form-group row">
             <label class="col">Mot de passe</label>
             <div class="col">
-            <input *ngIf="!signup" #pass type="password" class="form-control" placeholder="Nouveau mot de passe" (keyup)="checkPassword()">
-            <input *ngIf="signup" #pass type="password" class="form-control" placeholder="Mot de passe" (keyup)="checkPassword()">
+              <input *ngIf="!signup" #pass type="password" class="form-control" placeholder="Nouveau mot de passe"
+                     (keyup)="checkPassword()" (click)="checkPassword()">
+              <input *ngIf="signup" #pass type="password" class="form-control" placeholder="Mot de passe"
+                     (keyup)="checkPassword()" (click)="checkPassword()">
             </div>
           </div>
           <div class="form-group row">
             <label for="passwordConfirmation" class="col">Confirmation</label>
             <div class="col">
-            <input #passConf type="password" class="form-control" id="passwordConfirmation" placeholder="Confirmation du mot de passe" (keyup)="checkPassword()">
+              <input #passConf type="password" class="form-control" id="passwordConfirmation"
+                     placeholder="Confirmation du mot de passe" (keyup)="checkPassword()" (click)="checkPassword()">
             </div>
           </div>
           <div *ngIf="signup" class="form-group row">
@@ -69,9 +74,35 @@
               </label>
             </div>
           </div>
-          <button #updateProfileButton *ngIf="!signup" type="button" class="btn btn-primary" (click)="saveProfile()">Enregistrer les modifications</button>
-          <button #createProfileButton *ngIf="signup" type="button" class="btn btn-primary" (click)="saveProfile()">S'enregistrer</button>
+          <button #updateProfileButton *ngIf="!signup" type="button" class="btn btn-primary" (click)="saveProfile()">
+            Enregistrer les modifications
+          </button>
+          <button #createProfileButton *ngIf="signup" type="button" class="btn btn-primary" (click)="saveProfile()">
+            S'enregistrer
+          </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="signup" #accountInstructions class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation de compte</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Un email de confirmation vous a été envoyé à l'adresse suivante<br/><br/>
+            {{account.email}}<br/><br/>
+            Veuillez cliquer sur le lien dans l'email pour confirmer la création de votre compte
+        </h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="instructionsOK()" routerLink="/home">OK</button>
       </div>
     </div>
   </div>

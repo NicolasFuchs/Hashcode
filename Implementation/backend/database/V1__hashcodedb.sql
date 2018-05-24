@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`role` (
   `role_id` INT         NOT NULL AUTO_INCREMENT,
   `name`    VARCHAR(30) NOT NULL,
   PRIMARY KEY (`role_id`)
-   -- CHECK (name IN ('Admin', 'validated_organizer', 'waiting_organizer', 'validated_user', 'waiting_user')) -- Contrainte relationnelles CR1
+  -- CHECK (name IN ('Admin', 'validated_organizer', 'waiting_organizer', 'validated_user', 'waiting_user')) -- Contrainte relationnelles CR1
 
 )
   ENGINE = InnoDB;
@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`account` (
   `token`      VARCHAR(100) NULL UNIQUE, -- NULL : Contrainte relationnel CR3  + UNIQUE : Contrainte intégrité C2
   `image`      LONGTEXT     NULL, -- NULL : Contrainte relationnel CR3
   `role_id`    INT,
-  update_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  update_time  TIMESTAMP    NULL     DEFAULT CURRENT_TIMESTAMP
+  ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`),
   CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 )
@@ -37,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`challenge` (
   `end`              DATETIME     NOT NULL,
   `media_xml`        TEXT         NOT NULL,
   PRIMARY KEY (`challenge_id`),
-  CHECK (`inscription_date`<`begin`),  -- Contrainte intégrité C5
-  CHECK (`begin`<`end`) -- Contrainte intégrité C4
+  CHECK (`inscription_date` < `begin`), -- Contrainte intégrité C5
+  CHECK (`begin` < `end`) -- Contrainte intégrité C4
 )
   ENGINE = InnoDB;
 
@@ -157,25 +158,25 @@ VALUES
    1);
 
 INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (5, "Cristiano", "Ronaldo","cr7@email.ch","cr7","emf123","a1", NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (6, "Karim", "Benzema","kb9@email.ch","kb9","emf123","a2",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (7, "Valdimir", "Meier","valdm@email.ch","valdm","emf123","a3",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (8, "Justin", "Koestinger","jk@email.ch","juju","emf123","a4",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (9, "Lucas", "Alborghetto","ghetto@email.ch","albo","emf123","a5",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (10, "Karim", "Lemarchand","kl@email.ch","mirak","emf123","a6",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (11, "Donald", "Trump","dodo@email.ch","trump","emf123","a7",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (12, "Raphi", "Burgunder","rb@email.ch","sfl","emf123","a8",NULL,4);
-INSERT INTO account (`account_id`,`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
-      VALUES (13, 'Nicolas', 'Fuchs', 'nicolas@email.ch', "fufuuser","emf123","a9",NULL,4);
+VALUES (5, "Cristiano", "Ronaldo", "cr7@email.ch", "cr7", "emf123", "a1", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (6, "Karim", "Benzema", "kb9@email.ch", "kb9", "emf123", "a2", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (7, "Valdimir", "Meier", "valdm@email.ch", "valdm", "emf123", "a3", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (8, "Justin", "Koestinger", "jk@email.ch", "juju", "emf123", "a4", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (9, "Lucas", "Alborghetto", "ghetto@email.ch", "albo", "emf123", "a5", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (10, "Karim", "Lemarchand", "kl@email.ch", "mirak", "emf123", "a6", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (11, "Donald", "Trump", "dodo@email.ch", "trump", "emf123", "a7", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (12, "Raphi", "Burgunder", "rb@email.ch", "sfl", "emf123", "a8", NULL, 4);
+INSERT INTO account (`account_id`, `firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+VALUES (13, 'Nicolas', 'Fuchs', 'nicolas@email.ch', "fufuuser", "emf123", "a9", NULL, 4);
 
-   INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
+INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
 VALUES ('Organisateur', 'En attente 1', 'oratt1@email.ch', 'oratt1', 'no_password', NULL, NULL, 3);
 
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
@@ -183,7 +184,6 @@ VALUES ('Organisateur', 'En attente 2', 'oratt2@email.ch', 'oratt2', 'no_passwor
 
 INSERT INTO account (`firstname`, `lastname`, `email`, `pseudo`, `password`, `token`, `image`, `role_id`)
 VALUES ('Organisateur', 'En attente 3', 'oratt3@email.ch', 'oratt3', 'no_password', NULL, NULL, 3);
-
 
 
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
@@ -194,33 +194,33 @@ VALUES (2, 'Java Challenge #2', 4, '2018-04-18 16:00:00', '2018-04-23 10:00:00',
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
 VALUES (3, 'PHP Challenge #1', 4, '2018-05-18 10:00:00', '2018-05-20 16:00:00', '2018-05-30 16:00:00', 'provisoire');
 INSERT INTO challenge (`challenge_id`, `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
-VALUES(4, 'Optimisation Challenge', 8, '2018-06-04 23:00:00', '2018-06-07 10:30:00', '2018-06-16 16:30:00', 'provisoire');
+VALUES
+  (4, 'Optimisation Challenge', 8, '2018-06-04 23:00:00', '2018-06-07 10:30:00', '2018-06-16 16:30:00', 'provisoire');
 
 
-
-INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+INSERT INTO team (`team_id`, `name`, `challenge_id`, `leader_id`)
 VALUES (1, 'L\'homme de l\'est', 1, 7);
-INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+INSERT INTO team (`team_id`, `name`, `challenge_id`, `leader_id`)
 VALUES (2, 'Real Madrid', 2, 5);
-INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+INSERT INTO team (`team_id`, `name`, `challenge_id`, `leader_id`)
 VALUES (3, 'Les G-FUEL', 2, 9);
-INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+INSERT INTO team (`team_id`, `name`, `challenge_id`, `leader_id`)
 VALUES (4, 'Les Pros', 3, 11);
-INSERT INTO team (`team_id`,`name`, `challenge_id`, `leader_id`)
+INSERT INTO team (`team_id`, `name`, `challenge_id`, `leader_id`)
 VALUES (5, 'Real Madrid', 4, 5);
 
 
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (7, 1);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (5, 2);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (6, 2);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (8, 3);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (9, 3);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (10, 3);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (11, 4);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (12, 4);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (8, 4);
-  INSERT INTO account_team (`account_id`, `team_id`    ) VALUES (5, 5);
-  INSERT INTO account_team (`account_id`, `team_id` ) VALUES (6, 5);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (7, 1);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (5, 2);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (6, 2);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (8, 3);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (9, 3);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (10, 3);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (11, 4);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (12, 4);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (8, 4);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (5, 5);
+INSERT INTO account_team (`account_id`, `team_id`) VALUES (6, 5);
 
 
 INSERT INTO challenge_account (`challenge_id`, `account_id`)
@@ -228,123 +228,140 @@ VALUES (2, 2);
 INSERT INTO challenge_account (`challenge_id`, `account_id`)
 VALUES (2, 3);
 
-  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
-    VALUES ("Solution 1 java#1 ", "Java", "lien.vers.solution", 1.0, 6.0, "2018-03-15 08:00:00", 7, 1);
-  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
-    VALUES ("Solution 2 java#1 ", "Java", "lien.vers.solution", 1.2, 7.5, "2018-03-18 16:00:00", 7, 1);
-  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
-    VALUES ("Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 8.0, "2018-04-30 08:00:00", 5, 2);
-  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
-    VALUES ("Solution 2 java#2 ", "Java", "lien.vers.solution", 2.0, 6.0, "2018-05-03 10:30:00", 6, 2);
-  INSERT INTO solution (  `name` , `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
-    VALUES ("Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 7.5, "2018-05-01 16:00:00", 9, 3);
-
-
-
+INSERT INTO solution (`name`, `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+VALUES ("Solution 1 java#1 ", "Java", "lien.vers.solution", 1.0, 6.0, "2018-03-15 08:00:00", 7, 1);
+INSERT INTO solution (`name`, `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+VALUES ("Solution 2 java#1 ", "Java", "lien.vers.solution", 1.2, 7.5, "2018-03-18 16:00:00", 7, 1);
+INSERT INTO solution (`name`, `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+VALUES ("Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 8.0, "2018-04-30 08:00:00", 5, 2);
+INSERT INTO solution (`name`, `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+VALUES ("Solution 2 java#2 ", "Java", "lien.vers.solution", 2.0, 6.0, "2018-05-03 10:30:00", 6, 2);
+INSERT INTO solution (`name`, `language`, `solution`, `version`, `ranking`, `submit_date`, `account_id`, `team_id`)
+VALUES ("Solution 1 java#2 ", "Java", "lien.vers.solution", 1.0, 7.5, "2018-05-01 16:00:00", 9, 3);
 
 
 delimiter |
-CREATE TRIGGER C6C7 
-BEFORE INSERT ON solution
-FOR EACH ROW
- BEGIN
-	DECLARE  v_date_begin DATETIME;
-	DECLARE v_date_end DATETIME;
+CREATE TRIGGER C6C7
+  BEFORE INSERT
+  ON solution
+  FOR EACH ROW
+  BEGIN
+    DECLARE v_date_begin DATETIME;
+    DECLARE v_date_end DATETIME;
 
-    SELECT challenge.begin, challenge. end 
+    SELECT
+      challenge.begin,
+      challenge.end
     INTO v_date_begin, v_date_end
-        FROM challenge
+    FROM challenge
       inner join team on challenge.challenge_id = team.challenge_id
-      inner join solution on  team.team_id = solution.team_id
-      where team.team_id = NEW.team_id 
-      group by begin;
-    
-    IF(v_date_begin > NEW.submit_date) THEN
-    -- La date de début du concours est plus récente que la date de soumission de la solution
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT =  'Il est trop tot pour soumettre une solution';
-       
+      inner join solution on team.team_id = solution.team_id
+    where team.team_id = NEW.team_id
+    group by begin;
+
+    IF (v_date_begin > NEW.submit_date)
+    THEN
+      -- La date de début du concours est plus récente que la date de soumission de la solution
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT =  'Il est trop tot pour soumettre une solution';
+
     END IF;
-    
-    IF(v_date_end < NEW.submit_date) THEN
-    -- La date de fin du concours est plus récente que la date de soumission de la solution
-      SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Il est trop tard pour soumettre une solution';
-      
+
+    IF (v_date_end < NEW.submit_date)
+    THEN
+      -- La date de fin du concours est plus récente que la date de soumission de la solution
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Il est trop tard pour soumettre une solution';
+
     END IF;
-END |
+  END |
 
 
 delimiter |
-CREATE TRIGGER C3 
-BEFORE INSERT ON account_team
-FOR EACH ROW
+CREATE TRIGGER C3
+  BEFORE INSERT
+  ON account_team
+  FOR EACH ROW
 
- BEGIN
+  BEGIN
 
-	DECLARE v_firstname, v_lastname, v_email varchar(50);
+    DECLARE v_firstname, v_lastname, v_email varchar(50);
     DECLARE idChallenge INT;
     DECLARE otherIdAccount INT;
-	Select team.challenge_id 
-	INTO idChallenge
+    Select team.challenge_id
+    INTO idChallenge
     FROM team
-	inner join challenge on  team.challenge_id = challenge.challenge_id
-	where team.team_id = NEW.team_id;
+      inner join challenge on team.challenge_id = challenge.challenge_id
+    where team.team_id = NEW.team_id;
 
-	Select firstname, lastname, email 
+    Select
+      firstname,
+      lastname,
+      email
     INTO v_firstname, v_lastname, v_email
-    FROM account 
+    FROM account
     where account_id = NEW.account_id;
-    
+
     Select account_id
     INTO otherIdAccount
-    FROM account 
-    where account_id != NEW.account_id 
-		and firstname = v_firstname 
-		and  lastname = v_lastname
-        and email = v_email;
+    FROM account
+    where account_id != NEW.account_id
+          and firstname = v_firstname
+          and lastname = v_lastname
+          and email = v_email;
 
-	IF  EXISTS (Select * FROM challenge_account where challenge_account.challenge_id=idChallenge and challenge_account.account_id=otherIdAccount)
+    IF EXISTS(Select *
+              FROM challenge_account
+              where challenge_account.challenge_id = idChallenge and challenge_account.account_id = otherIdAccount)
     THEN
-		SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un organisateur ne peut pas participer à son propre concours'; 
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Un organisateur ne peut pas participer à son propre concours';
     END IF;
-END |
+  END |
 
 delimiter ;
 
 
 delimiter |
 CREATE TRIGGER C8
-BEFORE INSERT ON account_team
-FOR EACH ROW
- BEGIN
-	DECLARE  idChallenge INT;
+  BEFORE INSERT
+  ON account_team
+  FOR EACH ROW
+  BEGIN
+    DECLARE idChallenge INT;
 
     SELECT challenge_id
     INTO idChallenge
-        FROM team
-      where team.team_id = NEW.team_id;
-      
-      IF EXISTS(Select * from team inner join account_team on team.team_id = account_team.team_id where team.challenge_id=idChallenge and account_team.account_id = NEW.account_id)
-      THEN
-			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'L''utilisateur participe déjà au concours';
+    FROM team
+    where team.team_id = NEW.team_id;
+
+    IF EXISTS(Select *
+              from team
+                inner join account_team on team.team_id = account_team.team_id
+              where team.challenge_id = idChallenge and account_team.account_id = NEW.account_id)
+    THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'L''utilisateur participe déjà au concours';
     END IF;
-END |
+  END |
 
 delimiter ;
 
 -- Procedure stocker pour CR5
 DELIMITER |
 
-CREATE PROCEDURE create_team  (name_team VARCHAR(100), challenge_id INT, leader_id INT)
-BEGIN
+CREATE PROCEDURE create_team(name_team VARCHAR(100), challenge_id INT, leader_id INT)
+  BEGIN
 
-INSERT INTO team (`name`, `challenge_id`, `leader_id`) VALUES (name_team, challenge_id, leader_id);
-SELECT team_id INTO @idTeam
-FROM team
-Where `name` = name_team and  `challenge_id`=  challenge_id and leader_id=  `leader_id`  ;
-INSERT INTO account_team ( `account_id`, `team_id`)
-VALUES (leader_id, @idTeam);
+    INSERT INTO team (`name`, `challenge_id`, `leader_id`) VALUES (name_team, challenge_id, leader_id);
+    SELECT team_id
+    INTO @idTeam
+    FROM team
+    Where `name` = name_team and `challenge_id` = challenge_id and leader_id = `leader_id`;
+    INSERT INTO account_team (`account_id`, `team_id`)
+    VALUES (leader_id, @idTeam);
 
-END |
+  END |
 
 DELIMITER ;
 
@@ -353,23 +370,51 @@ DELIMITER ;
 /*CREATE PROCEDURE create_challenge AS*/
 DELIMITER |
 
-CREATE PROCEDURE create_challenge  (name_challenge VARCHAR(100), nb_teams_challenge INT,
-	inscription_date DATETIME, begin_challenge DATETIME, end_challenge DATETIME, media_xml TEXT, id_organizer INT)
-BEGIN
-INSERT INTO challenge ( `name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
-VALUES (name_challenge, nb_teams_challenge, inscription_date, begin_challenge, end_challenge, media_xml);
-SELECT challenge_id INTO @idChallenge
-FROM challenge
-WHERE `name` = name_challenge and  `nb_teams` = nb_teams_challenge
-				and  `inscription_date` = inscription_date and `begin` = begin_challenge
-                and `end` = end_challenge and `media_xml` = media_xml;
-INSERT INTO challenge_account (`challenge_id`, `account_id`) VALUES (@idChallenge, id_organizer);
-END |
+CREATE PROCEDURE create_challenge(name_challenge   VARCHAR(100), nb_teams_challenge INT,
+                                  inscription_date DATETIME, begin_challenge DATETIME, end_challenge DATETIME,
+                                  media_xml        TEXT, id_organizer INT)
+  BEGIN
+    INSERT INTO challenge (`name`, `nb_teams`, `inscription_date`, `begin`, `end`, `media_xml`)
+    VALUES (name_challenge, nb_teams_challenge, inscription_date, begin_challenge, end_challenge, media_xml);
+    SELECT challenge_id
+    INTO @idChallenge
+    FROM challenge
+    WHERE `name` = name_challenge and `nb_teams` = nb_teams_challenge
+          and `inscription_date` = inscription_date and `begin` = begin_challenge
+          and `end` = end_challenge and `media_xml` = media_xml;
+    INSERT INTO challenge_account (`challenge_id`, `account_id`) VALUES (@idChallenge, id_organizer);
+  END |
 DELIMITER ;
 
+-- Procédure stockée pour générer des tokens
+DELIMITER |
+CREATE PROCEDURE generate_token (IN accountId INT, OUT token VARCHAR(45))
+  BEGIN
+    DECLARE retry INT;
+    DECLARE itr INT;
 
+    DECLARE CONTINUE HANDLER FOR 1062 SET retry = 1;
 
+    REPEAT
+      SET retry = 0;
+      SET itr = 0;
+      SET token = '';
 
+      WHILE itr < 45 DO
+        SET token = concat(token, substring('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+                                              floor(rand() * 62 + 1), 1));
+        SET itr = itr + 1;
+      END WHILE;
+
+      UPDATE `account`
+      SET `token` = token
+      WHERE `account_id` = accountId;
+
+    UNTIL retry = 0
+    END REPEAT;
+
+  END |
+DELIMITER ;
 
 
 /*

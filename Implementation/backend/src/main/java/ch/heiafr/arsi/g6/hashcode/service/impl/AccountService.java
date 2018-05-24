@@ -5,6 +5,7 @@ import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Role;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
+import ch.heiafr.arsi.g6.hashcode.model.Token;
 import ch.heiafr.arsi.g6.hashcode.repository.AccountRepository;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,13 @@ public class AccountService implements IAccountService {
 
   @Override
   public void acceptPending(Account account) {
-   Account newAcc = getAccount(account.getAccountId());
-    if(newAcc == null){
+    Account newAcc = getAccount(account.getAccountId());
+    if (newAcc == null) {
       throw new AccountException("C-03", "La demande de validation du compte à déjà été refusé");
-    }else if(newAcc.getRole().getRoleId() == Roles.VALIDATED_ORGANIZER.getRoleId()){
-      throw new AccountException("C-04", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
-    }else{
+    } else if (newAcc.getRole().getRoleId() == Roles.VALIDATED_ORGANIZER.getRoleId()) {
+      throw new AccountException(
+          "C-04", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
+    } else {
       newAcc.setRole(Roles.VALIDATED_ORGANIZER);
       accountRepository.save(newAcc);
     }
@@ -61,16 +63,16 @@ public class AccountService implements IAccountService {
   public void deleteAccount(Account account) {}
 
   @Override
-  public void createAccount(Account account) {
+  public Account createAccount(Account account) {
     account.setPassword(passwordEncoder.encode(account.getPassword()));
-    accountRepository.save(account);
+    return accountRepository.save(account);
   }
 
   @Override
   public Account getAccount(Integer id) {
     // Must be implanted!
 
-   return accountRepository.findByAccountId(id);
+    return accountRepository.findByAccountId(id);
   }
 
   @Override
@@ -110,15 +112,34 @@ public class AccountService implements IAccountService {
   @Override
   public Account refusePending(int id) {
     Account accountToDel = accountRepository.findByAccountId(id);
-    if(accountToDel==null){
+    if (accountToDel == null) {
       throw new AccountException("C-01", "La demande de validation du compte à déjà été refusé");
-    }else{
-      if(accountToDel.getRole().getRoleId() == Roles.VALIDATED_ORGANIZER.getRoleId()){
+    } else {
+      if (accountToDel.getRole().getRoleId() == Roles.VALIDATED_ORGANIZER.getRoleId()) {
         // Account déjà été valider par quelqu'un d'autre
-        throw new AccountException("C-02", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
-      }else{
+        throw new AccountException(
+            "C-02", "La demande de validation du compte à déjà été validé par quelqu'un d'autre");
+      } else {
         return accountRepository.deleteById(id);
       }
+    }
+  }
+
+  @Override
+  public String generateToken(Account account) {
+    return accountRepository.generateToken(account.getAccountId());
+  }
+
+  @Override
+  public void validate(Token token) {
+    Account account = accountRepository.findByToken(token.getValue());
+    if (account != null) {
+      account.setToken(null);
+      account.setRole(Roles.VALIDATED_USER);
+      accountRepository.save(account);
+    } else {
+      throw new RuntimeException(
+          "No account related to the token was found"); // Must be changed !! Waiting on Joé's code
     }
   }
 }

@@ -18,22 +18,25 @@ export class ProfileComponent implements OnInit {
   public account: Account;
 
   public imgSrc: string;
+  private lastnameDisabled: boolean;
+  private firstnameDisabled: boolean;
   private pseudoDisabled: boolean;
   private emailDisabled: boolean;
   private passwordDisabled: boolean;
   private disabledNumber: number;
 
-
+  @ViewChild('lastname') public _lastname: ElementRef;
+  @ViewChild('firstname') public _firstname: ElementRef;
   @ViewChild('pseudo') private _pseudo: ElementRef;
   @ViewChild('email') private _email: ElementRef;
   @ViewChild('pass') public _password: ElementRef;
   @ViewChild('passConf') public _passwordConfirmation: ElementRef;
   @ViewChild('updateProfileButton') private _updateProfileButton: ElementRef;
   @ViewChild('createProfileButton') private _createProfileButton: ElementRef;
+  @ViewChild('accountInstructions') private _instructionsModal: ElementRef;
 
   constructor(private _authenticationService: AuthenticationService, private _activatedRoute: ActivatedRoute,
               private _accountService: AccountService) {
-    this.pseudoDisabled = this.emailDisabled = this.passwordDisabled = false;
     this.disabledNumber = 0;
     this.imgSrc = '../../assets/Profile.PNG';
   }
@@ -44,6 +47,16 @@ export class ProfileComponent implements OnInit {
     this._authenticationService.account.subscribe(account => this.account = account);
     if (typeof this.account === 'undefined') {
       this.account = new Account();
+    }
+    if (this.signup) {
+      this.lastnameDisabled = this.firstnameDisabled = this.pseudoDisabled = this.emailDisabled = this.passwordDisabled = true;
+      this.disabledNumber = 5;
+      const componentThis = this;
+      $(function () {
+        $(componentThis._createProfileButton.nativeElement).attr('disabled', 'true');
+      });
+    } else {
+      this.lastnameDisabled = this.firstnameDisabled = this.pseudoDisabled = this.emailDisabled = this.passwordDisabled = false;
     }
   }
 
@@ -56,9 +69,68 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  public checkLastname(event: any): void {
+    if (event.target.value === '') {
+      $(this._lastname.nativeElement).removeClass('is-valid');
+      $(this._lastname.nativeElement).addClass('is-invalid');
+      if (!this.signup) {
+        $(this._updateProfileButton.nativeElement).attr('disabled', 'true');
+      } else {
+        $(this._createProfileButton.nativeElement).attr('disabled', 'true');
+      }
+      if (!this.lastnameDisabled) {
+        this.disabledNumber++;
+      }
+      this.lastnameDisabled = true;
+    } else {
+      $(this._lastname.nativeElement).removeClass('is-invalid');
+      $(this._lastname.nativeElement).addClass('is-valid');
+      if (this.disabledNumber === 1 && this.lastnameDisabled) {
+        if (!this.signup) {
+          $(this._updateProfileButton.nativeElement).removeAttr('disabled');
+        } else {
+          $(this._createProfileButton.nativeElement).removeAttr('disabled');
+        }
+      }
+      if (this.lastnameDisabled) {
+        this.disabledNumber--;
+      }
+      this.lastnameDisabled = false;
+    }
+  }
+
+  public checkFirstname(event: any): void {
+    if (event.target.value === '') {
+      $(this._firstname.nativeElement).removeClass('is-valid');
+      $(this._firstname.nativeElement).addClass('is-invalid');
+      if (!this.signup) {
+        $(this._updateProfileButton.nativeElement).attr('disabled', 'true');
+      } else {
+        $(this._createProfileButton.nativeElement).attr('disabled', 'true');
+      }
+      if (!this.firstnameDisabled) {
+        this.disabledNumber++;
+      }
+      this.firstnameDisabled = true;
+    } else {
+      $(this._firstname.nativeElement).removeClass('is-invalid');
+      $(this._firstname.nativeElement).addClass('is-valid');
+      if (this.disabledNumber === 1 && this.firstnameDisabled) {
+        if (!this.signup) {
+          $(this._updateProfileButton.nativeElement).removeAttr('disabled');
+        } else {
+          $(this._createProfileButton.nativeElement).removeAttr('disabled');
+        }
+      }
+      if (this.firstnameDisabled) {
+        this.disabledNumber--;
+      }
+      this.firstnameDisabled = false;
+    }
+  }
+
   public checkPseudo(event: any): void {
     this._accountService.getAccountByPseudo(event.target.value).then(account => {
-      console.log(account);
       if (event.target.value === '' || (account !== null && this.account.accountId !== account.accountId)) {
         $(this._pseudo.nativeElement).removeClass('is-valid');
         $(this._pseudo.nativeElement).addClass('is-invalid');
@@ -120,7 +192,8 @@ export class ProfileComponent implements OnInit {
   }
 
   public checkPassword(): void {
-    if (this._password.nativeElement.value !== this._passwordConfirmation.nativeElement.value) {
+    if ((this._password.nativeElement.value !== this._passwordConfirmation.nativeElement.value) ||
+      (this.signup && this._password.nativeElement.value === '')) {
       $(this._password.nativeElement).removeClass('is-valid');
       $(this._passwordConfirmation.nativeElement).removeClass('is-valid');
       $(this._password.nativeElement).addClass('is-invalid');
@@ -154,9 +227,11 @@ export class ProfileComponent implements OnInit {
   }
 
   public saveProfile(): void {
+    this.account.lastname = this._lastname.nativeElement.value;
+    this.account.firstname = this._firstname.nativeElement.value;
+    this.account.pseudo = this._pseudo.nativeElement.value;
+    this.account.email = this._email.nativeElement.value;
     if (!this.signup) {
-      this.account.pseudo = this._pseudo.nativeElement.value;
-      this.account.email = this._email.nativeElement.value;
       if (this._password.nativeElement.value !== '') {
         this.account.password = this._password.nativeElement.value;
       }
@@ -167,8 +242,18 @@ export class ProfileComponent implements OnInit {
       } else {
         this.account.role = Roles.PENDING_ORGANIZER;
       }
+      this.account.pseudo = this._pseudo.nativeElement.value;
+      this.account.email = this._email.nativeElement.value;
+      if (this._password.nativeElement.value !== '') {
+        this.account.password = this._password.nativeElement.value;
+      }
       this._accountService.signup(this.account);
+      $(this._instructionsModal.nativeElement).modal('show');
     }
+  }
+
+  public instructionsOK(): void {
+    $(this._instructionsModal.nativeElement).modal('hide');
   }
 
   public getProfilePicture(): string {
@@ -177,46 +262,4 @@ export class ProfileComponent implements OnInit {
     }
     return '../../assets/Profile.PNG';
   }
-
-  /*public checkForm(): boolean {
-    const lastname: JQuery = $('#lastname');
-    const firstname: JQuery = $('#firstname');
-    const pseudo: JQuery = $('#pseudo');
-    const email: JQuery = $('#email');
-    const password: JQuery = $('#password');
-    const passwordConfirmation: JQuery = $('#password-confirmation');
-
-    lastname.removeClass('is-invalid');
-    firstname.removeClass('is-invalid');
-    pseudo.removeClass('is-invalid');
-    email.removeClass('is-invalid');
-
-    let isValid = true;
-    if (this.account.lastname === '') {
-      lastname.addClass('is-invalid');
-      isValid = isValid && false;
-    }
-    if (this.account.firstname === '') {
-      firstname.addClass('is-invalid');
-      isValid = isValid && false;
-    }
-    if (this.account.pseudo === '') {
-      pseudo.addClass('is-invalid');
-      isValid = isValid && false;
-    }
-    if (!this.isEmailValid()) {
-      email.addClass('is-invalid');
-      isValid = isValid && false;
-    }
-    if (this.account.password === '' || password.val() !== passwordConfirmation.val()) {
-      password.addClass('is-invalid');
-      passwordConfirmation.addClass('is-invalid');
-      isValid = isValid && false;
-    }
-    return isValid;
-  }*/
-
-  /*private isEmailValid(): boolean {
-    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.account.email);
-  }*/
 }

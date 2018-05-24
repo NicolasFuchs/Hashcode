@@ -8,6 +8,7 @@ import {Team} from '../../model/Team';
 import * as $ from 'jquery';
 import 'bootstrap';
 import {runInThisContext} from 'vm';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-challenge-details',
@@ -20,6 +21,9 @@ export class ChallengeDetailsComponent implements OnInit {
   @Input()
   idChallenge: number;
 
+  @ViewChild('teamName') private _teamName: ElementRef;
+  @ViewChild('createTeamButton') private _createTeamButton: ElementRef;
+  @ViewChild('modifyTeamButton') private _modifyTeamButton: ElementRef;
   @ViewChild('createTeamModal') private _createTeamModal: ElementRef;
   @ViewChild('datalistMembers') private _datalistMembers: ElementRef;
   @ViewChild('organizersTableBody') private _organizersTableBody: ElementRef;
@@ -32,6 +36,8 @@ export class ChallengeDetailsComponent implements OnInit {
   private readyToDelete: boolean;
   private now: Date;
 
+  private clickedTR: Element;
+
   public constructor(private _challengeService: ChallengeService, private _accountService: AccountService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
@@ -40,6 +46,7 @@ export class ChallengeDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     // this.time = 'actual';
+    this.clickedTR = null;
     if (this.idChallenge === 0) {
       this._challengeService.getActualChallenge().then(challenge => {
         this.challenge = challenge;
@@ -51,61 +58,61 @@ export class ChallengeDetailsComponent implements OnInit {
         this.challenge = challenge;
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
-    });
-    const newThis = this;
-    $(':not(#profileDarkener)').on('click', function (e) {
-      if (newThis.readyToDelete) {
-        console.log('9');
-        document.getElementById('profileDarkener').style.display = 'none';
-        console.log('10');
-        newThis.readyToDelete = false;
-        console.log('11');
-      }
-    });
-    $('#organizersTableBody').on('click', 'tr', function(e) {
-      console.log('0');
-      e.stopPropagation();
-      debugger;
-      if (!newThis.readyToDelete) {
-        // console.log($(this).closest('tr').find('td:last-child').text());
-        console.log('1');
-        $(this).closest('tr').find('td:first-child #profileDarkener').css('display', 'inline-block');
-        console.log('2');
-        newThis.readyToDelete = true;
-        console.log('3');
-        $(this).closest('tr').find('td:first-child #profileDarkener').one('click', function() {
-          console.log('4');
-          $(this).closest('tr').remove();
-          console.log('5');
-          newThis.readyToDelete = false;
-          console.log('6');
-        });
-      }
-      /*$(this).closest('tr').find('td:first-child #profileDarkener').on('click', function() {
-        $(this).closest('tr').remove();
-        newThis.readyToDelete = true;
-      });*/
-      /*$('tr:not(td:first-child #profileDarkener)').on('click', function() {
-        if (newThis.readyToDelete) {
-          console.log('display = none');
-          document.getElementById('profileDarkener').style.display = 'none';
-          newThis.readyToDelete = false;
-        }
-      });*/
-    });
-    /*$('body').on('click', 'tr:not(td:first-child #profileDarkener)',  function() {
-      if (newThis.readyToDelete) {
-        console.log('display = none');
-        document.getElementById('profileDarkener').style.display = 'none';
-        newThis.readyToDelete = false;
-      }
-    });*/
+      });
+    }
   }
-}
+
+  public hideTrash(event: any): void {
+    if (this.clickedTR !== null && $(event.target).parents('.card').length === 0) {
+      $(this.clickedTR.firstChild.firstChild).children().eq(1).css('display', 'none');
+      this.clickedTR = null;
+    }
+  }
+  public showTrash(event: any): void {
+    if ((event.target.tagName === 'I' && event.target.parentElement.parentElement.parentElement.parentElement === this.clickedTR) ||
+      (event.target.id === 'profileDarkener' && event.target.parentElement.parentElement.parentElement === this.clickedTR)) {
+      this.clickedTR.remove();
+      this.clickedTR = null;
+    } else if (this.clickedTR !== null) {
+      $(this.clickedTR.firstChild.firstChild).children().eq(1).css('display', 'none');
+      this.clickedTR = null;
+    } else if (event.target.tagName === 'IMG') {
+      this.clickedTR = event.target.parentElement.parentElement.parentElement;
+      $(this.clickedTR.firstChild.firstChild).children().eq(1).css('display', 'inline-block');
+    } else {
+      this.clickedTR = event.target.parentElement;
+      $(this.clickedTR.firstChild.firstChild).children().eq(1).css('display', 'inline-block');
+    }
+  }
 
   public showCreateTeamModal(): void {
     $(this._createTeamModal.nativeElement).modal('show');
     this._isModalShowed = true;
+    if (isNullOrUndefined(this.team) && this._teamName.nativeElement.value === '') {
+      $(this._createTeamButton.nativeElement).attr('disabled', 'true');
+    } else if (!isNullOrUndefined(this.team) && this._teamName.nativeElement.value === '') {
+      $(this._modifyTeamButton.nativeElement).attr('disabled', 'true');
+    }
+  }
+
+  checkTeamName(): void {
+    if (this._teamName.nativeElement.value === '') {
+      if (isNullOrUndefined(this.team)) {
+        $(this._createTeamButton.nativeElement).attr('disabled', 'true');
+      } else {
+        $(this._modifyTeamButton.nativeElement).attr('disabled', 'true');
+      }
+      $(this._teamName.nativeElement).removeClass('is-valid');
+      $(this._teamName.nativeElement).addClass('is-invalid');
+    } else {
+      if (isNullOrUndefined(this.team)) {
+        $(this._createTeamButton.nativeElement).removeAttr('disabled');
+      } else {
+        $(this._modifyTeamButton.nativeElement).removeAttr('disabled');
+      }
+      $(this._teamName.nativeElement).removeClass('is-invalid');
+      $(this._teamName.nativeElement).addClass('is-valid');
+    }
   }
 
   public createTeam(): void {
@@ -120,11 +127,11 @@ export class ChallengeDetailsComponent implements OnInit {
     console.log('Team deleted!');
   }
 
-  public displayPotentialMembers(): void {
+  public addPotentialMembers(): void {
     this._accountService.getAllChallengers().then(accounts => {
       this.accounts = accounts;
       let options = '';
-      for (let i = 0; i  < accounts.length; i++) {
+      for (let i = 0; i < accounts.length; i++) {
         options += '<option value="' + accounts[i].pseudo + '" />';
       }
       document.getElementById('members').innerHTML = options;
@@ -143,13 +150,6 @@ export class ChallengeDetailsComponent implements OnInit {
         organizers += '<td style="vertical-align: middle;">' + this.accounts[i].pseudo + '</td>';
         organizers += '</tr>';
         document.getElementById('organizersTableBody').innerHTML += organizers;
-        /*$('#organizersTableBody').on('click', 'tr', function() {
-          console.log(this);
-          console.log($(this).closest('tr').find('td:last-child').text());
-          $(this).closest('tr').find('td:first-child IMG').on('click', function() {
-            $(this).closest('tr').remove();
-          });
-        });*/
         break;
       }
     }
