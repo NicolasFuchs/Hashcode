@@ -49,14 +49,7 @@ public class AccountService implements IAccountService {
   // J'utilise plutôt refusePending avec un ID
   @Override
   public void refusePending(Account account) {
-
     // Must be implanted!
-  }
-
-  @Override
-  public List<Account> getOrganizers() {
-    // Must be implanted!
-    return null;
   }
 
   @Override

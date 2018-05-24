@@ -12,7 +12,198 @@
   </div>
 </div>
 
+<div>
+  <button type="button" class="btn btn-primary" (click)="showCreateChallengeModal()">Créer un concours</button>
+</div>
 
 <app-challenges-list time="past" *ngIf="time=='past'"></app-challenges-list>
 <app-challenge-details idChallenge=0 *ngIf="time=='actual'"></app-challenge-details>
 <app-challenges-list time="futur" *ngIf="time=='futur'"></app-challenges-list>
+
+<div #createChallengeModal id="createChallengeModal" class="modal" tabindex="-1" role="dialog" (click)="hideTrash($event)">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width: 200%; height: 80%; margin-left: -50%">
+      <div class="modal-header">
+        <h5 class="modal-title">Créer un concours</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+
+        <div class="container">
+          <div class="row" stlye="float: none; margin: auto">
+            <div class="form-group row">
+              <label for="challengeName" class="col col-form-label">Nom du concours</label>
+              <input #challengeName type="text" class="col form-control" id="challengeName" placeholder="Entrez le nom de votre concours" (keyup)="checkChallengeName()">
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="container">
+              <div class="row">
+                <div class="col">
+
+
+                  <div class="form-group row">
+                    <label for="addOrganizer" class="col col-form-label">Ajouter un organisateur</label>
+                    <input type="text" class="col form-control" id="addOrganizer" placeholder="Entrez le nom d'un organisateur" (focus)="addPotentialOrganizers()" (keyup)="addPotentialOrganizers()" list=organizers>
+                    <datalist id="organizers"></datalist>
+                    <button type="button" class="btn btn-primary" (click)="addOrganizer()">Ajouter</button>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-wrapper-2">
+                        <table class="table" id="table">
+                          <tbody #organizersTableBody id="organizersTableBody" (click)="showTrash($event)"></tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="col">
+
+                  <label for="description">Description</label>
+                  <textarea class="form-control" id="description"></textarea>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="row">
+                    <label for="inscriptionDate">Date inscription</label>
+                    <input #inscriptionDate type="date" id="inscriptionDate" (click)="setInscriptionDateConstraint()">
+                  </div>
+
+                  <div class="row">
+                    <label for="beginDate">Date début</label>
+                    <input #beginDate type="date" id="beginDate" (click)="setBeginDateConstraint()">
+                  </div>
+
+                  <div class="row">
+                    <label for="endDate">Date fin</label>
+                    <input #endDate type="date" id="endDate" (click)="setEndDateConstraint()">
+                  </div>
+                </div>
+
+                <div class="col">
+
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-3">
+                        <label for="data" class="col">Données</label>
+                      </div>
+                      <div class="col-8">
+                        <div class="card" id="data">
+                          <div class="card-body">
+                            <div class="table-wrapper-2">
+                              <table class="table" id="dataTable">
+                                <tbody #dataTableBody id="dataTableBody"></tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-1">
+                        <div class="col">
+                          <div class="row">
+                            <div class="plusContainer">
+                              <button type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                              <input type="file" id="datafileExplorer" title=" " (change)="addDataFile($event)">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <button type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-3">
+                        <label for="data" class="col">Figures</label>
+                      </div>
+                      <div class="col-8">
+                        <div class="card" id="pictures">
+                          <div class="card-body">
+                            <div class="table-wrapper-2">
+                              <table class="table" id="pictureTable">
+                                <tbody #pictureTableBody id="pictureTableBody"></tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-1">
+                        <div class="col">
+                          <div class="row">
+                            <div class="plusContainer">
+                              <button type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                              <input type="file" id="picturefileExplorer" title=" " accept="image/png,image/jpg,image/jpeg"
+                                     (change)="addPictureFile($event)">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <button type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-3">
+                        <label for="data" class="col">Vidéos</label>
+                      </div>
+                      <div class="col-8">
+                        <div class="card" id="videos">
+                          <div class="card-body">
+                            <div class="table-wrapper-2">
+                              <table class="table" id="videoTable">
+                                <tbody #videoTableBody id="videoTableBody"></tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-1">
+                        <div class="col">
+                          <div class="row">
+                            <div class="plusContainer">
+                              <button type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                              <input type="file" id="videofileExplorer" title=" " accept="video/mp4,video/m4v,video/mov"
+                                     (change)="addVideoFile($event)">
+                            </div>
+                          </div>
+                          <div class="row">
+                            <button type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createChallenge()">Créer</button>
+      </div>
+    </div>
+  </div>
+</div>

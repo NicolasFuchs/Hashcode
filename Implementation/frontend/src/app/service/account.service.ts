@@ -40,6 +40,13 @@ export class AccountService {
       .catch(AccountService.handleError);
   }
 
+  public getAllOrganizers(): Promise<Account[]> {
+    return this._httpClient.get(baseUrl + '/organizers')
+      .toPromise()
+      .then(response => response as Account[])
+      .catch(AccountService.handleError);
+  }
+
   public getAccountByPseudo(pseudo: string): Promise<Account> {
     const params = new HttpParams().set('pseudo', pseudo);
     return this._httpClient.get(baseUrl + '/pseudo', {params})

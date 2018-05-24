@@ -50,9 +50,10 @@ public class AccountController {
     return accountService.getAccountByPseudo(pseudo);
   }
 
+  @GetMapping("/organizers")
   public List<Account> getOrganizers() {
-    // Must be implanted!
-    return null;
+    System.out.println("I received the request /organizers correctly!");
+    return accountService.getAccountsByRole(Roles.VALIDATED_ORGANIZER);
   }
 
   public void deleteAccount(Account account) {
@@ -85,8 +86,6 @@ public class AccountController {
   @GetMapping("/all")
   public List<Account> getLoggedUsers() {
     return accountService.getLoggedUsers();
-    // Must be implanted!
-    // return null;
   }
 
   public List<Account> getTeamMembers(Team team) {
