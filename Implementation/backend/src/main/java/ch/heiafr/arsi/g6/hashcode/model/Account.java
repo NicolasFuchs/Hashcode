@@ -35,7 +35,7 @@ public class Account {
   @JsonIgnore private String token;
 
   private String image;
-  
+
   @ManyToOne
   @JoinColumn(name = "roleId")
   private Role role;

@@ -40,6 +40,11 @@
     <li *ngFor="let participant of challenge?.participants">{{participant.name}}</li>
   </ul>
   <hr>
+
+  <div class="make-team">
+  <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
+  </div>
+
 </div>
 
 <!-- Concours en cours et passées-->
