@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     // Listening events
     this._authenticationService.account.subscribe(account => this.account = account);
     this._authenticationInterceptor.errors.subscribe(err => {
-      if (err.status === 401) {
+      if (err.status === 401 || err.status === 403) {
         if (this._isModalShowed) {
           $(this._pseudoInput.nativeElement).addClass('is-invalid');
           $(this._passwordInput.nativeElement).addClass('is-invalid');
