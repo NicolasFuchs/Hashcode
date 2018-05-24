@@ -15,13 +15,41 @@ public class Solution {
 
   private String name;
 
-  private String description;
-
   private String language;
+
+  private String solution;
 
   private Float version;
 
-  private Integer ranking;
+  private Float ranking;
 
   private LocalDateTime submitDate;
+
+  public Integer getSolutionId() {
+    return solutionId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public String getSolution() {
+    return solution;
+  }
+
+  public Float getVersion() {
+    return version;
+  }
+
+  public Float getRanking() {
+    return ranking;
+  }
+
+  public LocalDateTime getSubmitDate() {
+    return submitDate;
+  }
 }
