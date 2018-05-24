@@ -25,14 +25,16 @@ public class SolutionController {
 
     return null;
   }
-/*
-  @GetMapping("/teamSolution")
+
+  //
+  //
+   @GetMapping("/teamSolution")
   public List<Solution> getSolutions(@RequestBody Team team) {
     // Must be implanted!
     //return solutionService.getSolutions(team);
-    return null;
+   return null;
   }
-*/
+
   public void createSolution(Solution solution) {
     // Must be implanted!
   }

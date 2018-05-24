@@ -62,11 +62,12 @@
 
         <tbody>
 
-        <tr *ngFor="let participant of challenge?.participants;  let i = index ">
-          <td>{{i}}</td>
-          <td>{{participant.name}}</td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let team of classement;  let i = index ">
+          <td>{{i+1}}</td>
+          <td>{{team.name}}</td>
+          <td>{{team.solutions.length}}</td>
+          <td *ngIf="team.solutions.length>0">{{getBestSolutionOfTeam(team).ranking}}</td>
+          <td *ngIf="team.solutions.length==0">0.0</td>
         </tr>
         </tbody>
 

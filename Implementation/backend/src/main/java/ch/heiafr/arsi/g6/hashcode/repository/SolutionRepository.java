@@ -14,5 +14,5 @@ public interface SolutionRepository extends JpaRepository<Solution, Integer> {
 
   //
     //
-   //  List<Solution> findByTeamId(int teamId);
+    // List<Solution> findByTeamId(int teamId);
 }

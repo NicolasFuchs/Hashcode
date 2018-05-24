@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 import 'bootstrap';
 import {isNullOrUndefined} from 'util';
 import {AuthenticationService} from '../../service/authentication.service';
+import {Solution} from '../../model/Solution';
 
 @Component({
   selector: 'app-challenge-details',
@@ -41,6 +42,9 @@ export class ChallengeDetailsComponent implements OnInit {
   private readyToDelete: boolean;
   private now: Date;
 
+  public classementProv: Team[];
+  public classement;
+
   private clickedTR: Element;
 
   public constructor(private _challengeService: ChallengeService, private _accountService: AccountService,
@@ -49,6 +53,7 @@ export class ChallengeDetailsComponent implements OnInit {
     this.readyToDelete = false;
     this.now = new Date();
     this.currentTeam = new Team();
+    this.classement = [];
   }
 
   public ngOnInit(): void {
@@ -67,6 +72,7 @@ export class ChallengeDetailsComponent implements OnInit {
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
         this.checkPartOfThisChallenge();
+        this.generateClassement();
       });
     } else {
       this._challengeService.getChallengeById(this.idChallenge).then(challenge => {
@@ -74,6 +80,7 @@ export class ChallengeDetailsComponent implements OnInit {
         const parser: DOMParser = new DOMParser();
         this._mediaXml = parser.parseFromString(this.challenge.mediaXml, 'text/xml');
         this.checkPartOfThisChallenge();
+        this.generateClassement();
       });
     }
 
@@ -265,5 +272,53 @@ export class ChallengeDetailsComponent implements OnInit {
       $('#file-name').text(label);
       console.log(label);
     });
+  }
+
+  private generateClassement(): void {
+
+    if (this.challenge) {
+
+      this.classementProv = this.challenge.participants;
+
+      while (this.classementProv.length > 0) {
+        let bestTeam: Team = null;
+        let bestSolutionOfBestTeam: Solution = null;
+        for (const entry of this.classementProv) {
+          if (!bestTeam) {
+            bestTeam = entry;
+            bestSolutionOfBestTeam = this.getBestSolutionOfTeam(bestTeam);
+          } else {
+            const bestSolutionOfOneTeam: Solution = this.getBestSolutionOfTeam(entry);
+            if (bestSolutionOfBestTeam.ranking < bestSolutionOfOneTeam.ranking) {
+              bestTeam = entry;
+              bestSolutionOfBestTeam = bestSolutionOfOneTeam;
+            } else if (bestSolutionOfBestTeam.ranking == bestSolutionOfOneTeam.ranking) {
+              if (bestTeam.solutions.length > entry.solutions.length) {
+                bestTeam = entry;
+                bestSolutionOfBestTeam = bestSolutionOfOneTeam;
+              }
+            }
+          }
+        }
+        this.classement.push(bestTeam);
+        const index = this.classementProv.indexOf(bestTeam, 0);
+        this.classementProv.splice(index, 1);
+      }
+    }
+  }
+
+  private getBestSolutionOfTeam(team: Team): Solution {
+    let bestSol: Solution = null;
+
+    for (const entry of team.solutions) {
+      if (!bestSol) {
+        bestSol = entry;
+      } else {
+        if (bestSol.ranking < entry.ranking) {
+          bestSol = entry;
+        }
+      }
+    }
+    return bestSol;
   }
 }
