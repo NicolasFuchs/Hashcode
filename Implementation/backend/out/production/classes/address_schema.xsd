@@ -1,0 +1,19 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="address" type="addressType"/>
+
+    <xs:complexType name="addressType">
+        <xs:all>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="building" type="xs:positiveInteger"/>
+            <xs:element name="postalCode" type="postalCodeType"/>
+            <xs:element name="city" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:simpleType name="postalCodeType">
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="\d{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

@@ -34,12 +34,14 @@ export class ChallengeDetailsComponent implements OnInit {
   private _isModalShowed: boolean;
   private accounts: Account[];
   private readyToDelete: boolean;
+  private now: Date;
 
   private clickedTR: Element;
 
   public constructor(private _challengeService: ChallengeService, private _accountService: AccountService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
+    this.now = new Date();
   }
 
   public ngOnInit(): void {
