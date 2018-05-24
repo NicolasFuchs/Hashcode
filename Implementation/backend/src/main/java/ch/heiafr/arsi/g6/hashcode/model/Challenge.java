@@ -27,8 +27,8 @@ public class Challenge {
   @ManyToMany
   @JoinTable(
     name = "challenge_account",
-    joinColumns = @JoinColumn(name = "challengeId", referencedColumnName = "challengeId"),
-    inverseJoinColumns = @JoinColumn(name = "accountId", referencedColumnName = "accountId")
+    joinColumns = @JoinColumn(name = "challengeId"),
+    inverseJoinColumns = @JoinColumn(name = "accountId")
   )
   private List<Account> organizers;
 

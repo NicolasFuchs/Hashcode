@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NamedStoredProcedureQueries({
@@ -39,6 +40,14 @@ public class Account {
   @ManyToOne
   @JoinColumn(name = "roleId")
   private Role role;
+
+  @ManyToMany
+  @JoinTable(
+    name = "account_team",
+    joinColumns = @JoinColumn(name = "accountId"),
+    inverseJoinColumns = @JoinColumn(name = "teamId")
+  )
+  private List<Team> teams;
 
   public Integer getAccountId() {
     return accountId;
@@ -112,5 +121,13 @@ public class Account {
 
   public void setRole(Role role) {
     this.role = role;
+  }
+
+  public List<Team> getTeams() {
+    return teams;
+  }
+
+  public void setTeams(List<Team> teams) {
+    this.teams = teams;
   }
 }

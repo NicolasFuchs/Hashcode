@@ -1,90 +1,99 @@
 <div *ngIf="challenge">
-<div class="container component-margin light-subtitles">
-  <div class="centered-title">
-    <h1>{{challenge?.name}}</h1>
-  </div>
-  <hr>
-  <h4>Description</h4>
-  <p class="description">{{getDescription()}}</p>
-  <div class="data">
-    <!--<div class="data-button">
-      <i class="fa fa-file-text-o" aria-hidden="true"></i>
-      <p>Données</p>
-    </div>-->
-    <div class="data-button">
-      <i class="fa fa-trophy" aria-hidden="true"></i>
-      <p>Classement</p>
+  <div class="container component-margin light-subtitles">
+    <div class="centered-title">
+      <h1>{{challenge?.name}}</h1>
     </div>
-    <div *ngIf="hasFigures()" class="data-button" (click)="downloadFigures()">
-      <i class="fa fa-file-image-o" aria-hidden="true"></i>
-      <p>Figures</p>
+    <hr>
+    <h4>Description</h4>
+    <p class="description">{{getDescription()}}</p>
+    <div class="data">
+      <!--<div class="data-button">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <p>Données</p>
+      </div>-->
+      <div class="data-button">
+        <i class="fa fa-trophy" aria-hidden="true"></i>
+        <p>Classement</p>
+      </div>
+      <div *ngIf="hasFigures()" class="data-button" (click)="downloadFigures()">
+        <i class="fa fa-file-image-o" aria-hidden="true"></i>
+        <p>Figures</p>
+      </div>
+      <div *ngIf="hasVideos()" class="data-button" (click)="downloadVideos()">
+        <i class="fa fa-file-video-o" aria-hidden="true"></i>
+        <p>Vidéos</p>
+      </div>
     </div>
-    <div *ngIf="hasVideos()" class="data-button" (click)="downloadVideos()">
-      <i class="fa fa-file-video-o" aria-hidden="true"></i>
-      <p>Vidéos</p>
+    <hr>
+    <h4>Organisateurs</h4>
+    <div class="organizers">
+      <div *ngFor="let organizer of challenge?.organizers" class="organizer-profile">
+        <img [src]="getProfilePicture(organizer.accountId)"/>
+        <p>{{organizer.pseudo}}</p>
+      </div>
     </div>
-  </div>
-  <hr>
-  <h4>Organisateurs</h4>
-  <div class="organizers">
-    <div *ngFor="let organizer of challenge?.organizers" class="organizer-profile">
-      <img [src]="getProfilePicture(organizer.accountId)"/>
-      <p>{{organizer.pseudo}}</p>
+    <hr>
+    <!-- Si le concours n'a pas encore commencé -->
+    <div *ngIf="(challenge.begin  | date:'yyyy/MM/dd HH:mm:ss') > (now | date:'yyyy/MM/dd HH:mm:ss')">
+      <h4>Participants</h4>
+      <ul class="participants">
+        <li *ngFor="let participant of challenge?.participants">{{participant.name}}</li>
+      </ul>
+      <hr>
+
+      <div class="make-team">
+        <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
+      </div>
+
     </div>
+
+    <!-- Concours en cours et passées-->
+    <div *ngIf="(challenge.begin | date:'yyyy/MM/dd HH:mm:ss') < (now | date:'yyyy/MM/dd HH:mm:ss') ">
+      <h4>Classement</h4>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Position</th>
+          <th scope="col">Nom de l'équipe</th>
+          <th scope="col">Nbr de solution déposée</th>
+          <th scope="col">Meilleur ranking</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let participant of challenge?.participants;  let i = index ">
+          <td>{{i}}</td>
+          <td>{{participant.name}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+
+      </table>
+      <hr>
+    </div>
+
+    <!-- Button gérer solutions -->
+    <div class="row justify-content-center">
+      <button *ngIf="isPartOfThisChallenge" type="button" class="btn btn-primary"
+              (click)="showSolutionsModal()">Gérer les solutions
+      </button>
+    </div>
+
   </div>
-  <hr>
-  <!-- Si le concours n'a pas encore commencé -->
-   <div *ngIf="(challenge.begin  | date:'yyyy/MM/dd HH:mm:ss') > (now | date:'yyyy/MM/dd HH:mm:ss')">
-  <h4>Participants</h4>
-  <ul class="participants">
-    <li *ngFor="let participant of challenge?.participants">{{participant.name}}</li>
-  </ul>
-  <hr>
-
-  <div class="make-team">
-  <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
-  </div>
-
-</div>
-
-<!-- Concours en cours et passées-->
-<div *ngIf="(challenge.begin | date:'yyyy/MM/dd HH:mm:ss') < (now | date:'yyyy/MM/dd HH:mm:ss') ">
-<h4>Classement</h4>
-<table class="table" >
-<thead>
-  <tr>
-    <th scope="col">Position</th>
-    <th scope="col">Nom de l'équipe</th>
-    <th scope="col">Nbr de solution déposée</th>
-    <th scope="col">Meilleur ranking</th>
-  </tr>
-</thead>
-
-<tbody>
-
-<tr *ngFor="let participant of challenge?.participants;  let i = index " >
-  <td>{{i}}</td>
-  <td>{{participant.name}}</td>
-  <td></td>
-  <td></td>
-</tr>
-</tbody>
-
-</table>
-<hr>
-</div>
-</div>
 </div>
 
 <div *ngIf="!challenge">
   <div class="container component-margin ">
     <div class="row">
       <div class="lt-md">
-      <p>
-        Il n'y actuellement pas de concours, cliquez sur l'onglet "Passés" pour avoir les infomations des concours qui ont déjà eu lieu
-         ou sur "Futurs" pour avoir les informations des prochains concours. {{challenge.name}}
-      </p>
-    </div>
+        <p>
+          Il n'y actuellement pas de concours, cliquez sur l'onglet "Passés" pour avoir les infomations des concours qui
+          ont déjà eu lieu
+          ou sur "Futurs" pour avoir les informations des prochains concours.
+        </p>
+      </div>
     </div>
   </div>
 </div>
@@ -102,11 +111,13 @@
 
         <div class="form-group row">
           <label for="teamName" class="col col-form-label">Nom de groupe</label>
-          <input #teamName type="text" class="col form-control" id="teamName" placeholder="Entrez un nom de groupe" [value]="team?.name" (keyup)="checkTeamName($event)">
+          <input #teamName type="text" class="col form-control" id="teamName" placeholder="Entrez un nom de groupe"
+                 [value]="team?.name" (keyup)="checkTeamName($event)">
         </div>
         <div class="form-group row">
           <label for="addMember" class="col col-form-label">Ajouter un membre</label>
-          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre" (focus)="addPotentialMembers()" (keyup)="addPotentialMembers()" list=members>
+          <input type="text" class="col form-control" id="addMember" placeholder="Entrez le nom d'un membre"
+                 (focus)="addPotentialMembers()" (keyup)="addPotentialMembers()" list=members>
           <datalist id=members></datalist>
           <button type="button" class="btn btn-primary" (click)="addMember()">Ajouter</button>
         </div>
@@ -124,12 +135,92 @@
       </div>
       <div class="modal-footer">
         <div *ngIf="team" class="form-group row">
-          <button #modifyTeamButton type="button" class="btn btn-primary" (click)="modifyTeam()">Modifier le groupe</button>
+          <button #modifyTeamButton type="button" class="btn btn-primary" (click)="modifyTeam()">Modifier le groupe
+          </button>
           <button type="button" class="btn btn-primary" (click)="deleteTeam()">Supprimer le groupe</button>
         </div>
         <div *ngIf="!team">
-          <button #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe</button>
+          <button #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe
+          </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #solutionsModal class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog solutions-modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Gérer les solutions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row justify-content-center">
+            <p id="no-solutions-text" class="text-muted">Aucune solution n'a été déposée</p>
+            <table id="solutions-table" class="table">
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Nom du fichier</th>
+                <th scope="col">Langage</th>
+                <th scope="col">Note</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let solution of currentTeam?.solutions">
+                <td>{{solution.submitDate | date: 'dd.MM.yyyy HH:mm:ss'}}</td>
+                <td>{{solution.solution}}</td>
+                <td>{{solution.language}}</td>
+                <td>{{solution.ranking}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="showUploadModal()">Déposer une solution</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #uploadModal class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Déposer une solution</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputName">Name</label>
+            <input type="text" class="form-control" id="inputName">
+          </div>
+          <div class="form-group">
+            <label for="inputLanguage">Language</label>
+            <input type="text" class="form-control" id="inputLanguage">
+          </div>
+          <div class="form-group">
+            <label for="inputName" class="smaller-margin">Solution</label>
+            <div>
+              <label id="file-name" class="file-label">Veuillez sélectionner un fichier...</label>
+              <label class="btn btn-secondary btn-select">
+                Sélectionner <input type="file" style="display: none;">
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Déposer</button>
       </div>
     </div>
   </div>
