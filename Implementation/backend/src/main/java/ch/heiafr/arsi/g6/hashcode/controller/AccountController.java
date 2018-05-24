@@ -4,6 +4,7 @@ import ch.heiafr.arsi.g6.hashcode.constant.Roles;
 import ch.heiafr.arsi.g6.hashcode.model.Account;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.IAccountService;
+import ch.heiafr.arsi.g6.hashcode.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,12 @@ import java.util.List;
 public class AccountController {
 
   private final IAccountService accountService;
+  private final IEmailService emailService;
 
   @Autowired
-  public AccountController(IAccountService accountService) {
+  public AccountController(IAccountService accountService, IEmailService emailService) {
     this.accountService = accountService;
+    this.emailService = emailService;
   }
 
   public List<Account> getPending() {
@@ -56,6 +59,7 @@ public class AccountController {
 
   @PutMapping("/signup")
   public void createAccount(@RequestBody Account account) {
+    emailService.sendVerificationEmail(account);
     accountService.createAccount(account);
   }
 
