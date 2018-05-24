@@ -63,7 +63,7 @@
 <tbody>
 
 <tr *ngFor="let team of classement;  let i = index " >
-  <td>{{i}}</td>
+  <td>{{i+1}}</td>
   <td>{{team.name}}</td>
   <td>{{team.solutions.length}}</td>
   <td *ngIf="team.solutions.length>0">{{getBestSolutionOfTeam(team).ranking}}</td>
