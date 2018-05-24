@@ -10,6 +10,7 @@ import 'bootstrap';
 import {isNullOrUndefined} from 'util';
 import {AuthenticationService} from '../../service/authentication.service';
 import {Solution} from '../../model/Solution';
+import {TeamService} from '../../service/team.service';
 
 @Component({
   selector: 'app-challenge-details',
@@ -48,11 +49,10 @@ export class ChallengeDetailsComponent implements OnInit {
   private clickedTR: Element;
 
   public constructor(private _challengeService: ChallengeService, private _accountService: AccountService,
-                     private _authenticationService: AuthenticationService) {
+                     private _authenticationService: AuthenticationService, private _teamService: TeamService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
     this.now = new Date();
-    this.currentTeam = new Team();
     this.classement = [];
   }
 
@@ -142,6 +142,7 @@ export class ChallengeDetailsComponent implements OnInit {
   }
 
   public createTeam(): void {
+    this._teamService.createTeam(new Team(this._teamName.nativeElement.value, this._));
     console.log('Team created!');
   }
 
