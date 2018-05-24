@@ -12,6 +12,10 @@ public class Team {
 
   private String name;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JoinColumn(name = "teamId")
+  private List<Solution> solutions;
+
   public Integer getTeamId() {
     return teamId;
   }
@@ -20,15 +24,7 @@ public class Team {
     return name;
   }
 
-/*
-
-  @ManyToMany
-  @JoinTable(
-          name = "account_team",
-          joinColumns = @JoinColumn(name = "teamId", referencedColumnName = "teamId"),
-          inverseJoinColumns = @JoinColumn(name = "accountId", referencedColumnName = "accountId")
-  )
-  private List<Account> challenger;
- */
-
+  public List<Solution> getSolutions() {
+    return solutions;
+  }
 }
