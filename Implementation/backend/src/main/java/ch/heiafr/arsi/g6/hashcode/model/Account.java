@@ -130,6 +130,7 @@ public class Account {
     return teams;
   }
 
+  @JsonIgnore
   public void setTeams(List<Team> teams) {
     this.teams = teams;
   }
