@@ -58,6 +58,7 @@
           <input #passwordInput type="password" class="form-control" id="passwordInput"
                  (keypress)="$event.code === 'Enter' ? login() : any">
         </div>
+        <div class="text-danger">{{msgError}}</div>
       </div>
       <div class="modal-footer">
         <a class="form-text text-muted" (click)="hideSignModal()" routerLink="/signup">Pas de compte ?</a>

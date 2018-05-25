@@ -11,6 +11,8 @@ import {isNullOrUndefined} from 'util';
 import {AuthenticationService} from '../../service/authentication.service';
 import {Solution} from '../../model/Solution';
 import {TeamService} from '../../service/team.service';
+import {Roles} from '../../constant/roles';
+import { Role } from '../../model/Role';
 
 @Component({
   selector: 'app-challenge-details',
@@ -46,17 +48,24 @@ export class ChallengeDetailsComponent implements OnInit {
   private readyToDelete: boolean;
   private now: Date;
 
+  public roleValidatedUser:Role;
+  public roleValidatedOrganizer:Role;
+
   public classementProv: Team[];
   public classement;
 
   private clickedTR: Element;
 
-  public constructor(private _challengeService: ChallengeService, private _accountService: AccountService,
-                     private _authenticationService: AuthenticationService, private _teamService: TeamService) {
+  public constructor(private _challengeService: ChallengeService,
+                     private _accountService: AccountService,
+                     private _authenticationService: AuthenticationService,
+                     private _teamService: TeamService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
     this.now = new Date();
     this.classement = [];
+    this.roleValidatedUser = Roles.VALIDATED_USER;
+    this.roleValidatedOrganizer = Roles.VALIDATED_ORGANIZER;
   }
 
   public ngOnInit(): void {
@@ -66,7 +75,7 @@ export class ChallengeDetailsComponent implements OnInit {
       this.account = account;
       this.checkPartOfThisChallenge();
     });
-
+    this.now = new Date();
     // this.time = 'actual';
     this.clickedTR = null;
     this.accountsToAdd = [];

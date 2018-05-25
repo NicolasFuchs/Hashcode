@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
 
   public account: Account;
 
+  public msgError:string;
+
   private _isModalShowed: boolean;
 
   @ViewChild('signModal') private _signModal: ElementRef;
@@ -32,12 +34,18 @@ export class HeaderComponent implements OnInit {
 
   public ngOnInit(): void {
     // Listening events
+    this.msgError = "";
     this._authenticationService.account.subscribe(account => this.account = account);
     this._authenticationInterceptor.errors.subscribe(err => {
       if (err.status === 401 || err.status === 403) {
         if (this._isModalShowed) {
           $(this._pseudoInput.nativeElement).addClass('is-invalid');
           $(this._passwordInput.nativeElement).addClass('is-invalid');
+          if(err.status === 401){
+            this.msgError = "Nom d'utilisateur et/ou mot de passe incorrect";
+          }else{
+            this.msgError = "Votre compte n'a pas été encore validé, si vous êtes un challengeur veuillez vérifier votre messagerie";
+          }
         } else {
           this.showSignModal();
         }

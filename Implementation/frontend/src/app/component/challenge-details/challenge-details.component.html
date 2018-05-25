@@ -40,11 +40,6 @@
         <li *ngFor="let participant of challenge?.participants">{{participant.name}}</li>
       </ul>
       <hr>
-
-      <div class="make-team">
-        <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
-      </div>
-
     </div>
 
     <!-- Concours en cours et passées-->
@@ -73,6 +68,11 @@
 
       </table>
       <hr>
+    </div>
+<!-- *ngIf="account.role == roleValidatedUser" -->
+    <div class="make-team" *ngIf="(account?.role.name == roleValidatedUser.name)
+            && (challenge.inscriptionDate | date:'yyyy/MM/dd HH:mm:ss') > (now | date:'yyyy/MM/dd HH:mm:ss')" >
+      <button type="button" class="btn btn-primary btn-lg" (click)="showCreateTeamModal()">Créer une équipe !</button>
     </div>
 
     <!-- Button gérer solutions -->
