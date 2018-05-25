@@ -20,6 +20,7 @@ import {AdminComponent} from './component/admin/admin.component';
 import {AccountService} from './service/account.service';
 import {ValidationComponent} from './component/validation/validation.component';
 import {TeamService} from './service/team.service';
+import {FileService} from './service/file.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {TeamService} from './service/team.service';
     ChallengeService,
     AccountService,
     TeamService,
+    FileService,
     AuthenticationInterceptor,
     {
       provide: HTTP_INTERCEPTORS,

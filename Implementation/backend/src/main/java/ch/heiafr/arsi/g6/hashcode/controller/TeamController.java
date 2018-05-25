@@ -32,7 +32,6 @@ public class TeamController {
 
   @PutMapping
   public void createTeam(@RequestBody Team team) {
-    System.out.println("----------------- " + team.getLeader());
     teamService.createTeam(team);
   }
 

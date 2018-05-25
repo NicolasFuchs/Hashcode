@@ -203,25 +203,25 @@
         <form>
           <div class="form-group">
             <label for="inputName">Name</label>
-            <input type="text" class="form-control" id="inputName">
+            <input #solutionName type="text" class="form-control" id="inputName">
           </div>
           <div class="form-group">
             <label for="inputLanguage">Language</label>
-            <input type="text" class="form-control" id="inputLanguage">
+            <input #solutionLanguage type="text" class="form-control" id="inputLanguage">
           </div>
           <div class="form-group">
             <label for="inputName" class="smaller-margin">Solution</label>
             <div>
               <label id="file-name" class="file-label">Veuillez sélectionner un fichier...</label>
               <label class="btn btn-secondary btn-select">
-                Sélectionner <input type="file" style="display: none;">
+                Sélectionner <input type="file" style="display: none;" (change)="retrieveSolution($event)">
               </label>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Déposer</button>
+        <button type="button" class="btn btn-primary" (click)="uploadSolution()">Déposer</button>
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/solutions")
 public class SolutionController {
 
-  private final ISolutionService solutionService;
+  public ISolutionService solutionService;
 
   @Autowired
   public SolutionController(ISolutionService solutionService) {

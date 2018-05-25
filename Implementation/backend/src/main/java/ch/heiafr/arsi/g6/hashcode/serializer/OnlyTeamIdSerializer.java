@@ -15,7 +15,9 @@ public class OnlyTeamIdSerializer extends JsonSerializer<List<Team>> {
       throws IOException {
     gen.writeStartArray();
     for (Team team : value) {
-      gen.writeNumber(team.getTeamId());
+      gen.writeStartObject();
+      gen.writeNumberField("teamId", team.getTeamId());
+      gen.writeEndObject();
     }
     gen.writeEndArray();
   }

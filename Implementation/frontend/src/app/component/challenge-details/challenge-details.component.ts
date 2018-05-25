@@ -13,6 +13,7 @@ import {Solution} from '../../model/Solution';
 import {TeamService} from '../../service/team.service';
 import {Roles} from '../../constant/roles';
 import { Role } from '../../model/Role';
+import {FileService} from '../../service/file.service';
 
 @Component({
   selector: 'app-challenge-details',
@@ -25,6 +26,8 @@ export class ChallengeDetailsComponent implements OnInit {
   @Input()
   idChallenge: number;
 
+  @ViewChild('solutionName') private _solutionName: ElementRef;
+  @ViewChild('solutionLanguage') private  _solutionLanguage: ElementRef;
   @ViewChild('solutionsModal') private _solutionsModal: ElementRef;
   @ViewChild('uploadModal') private _uploadModal: ElementRef;
   @ViewChild('teamName') private _teamName: ElementRef;
@@ -47,9 +50,10 @@ export class ChallengeDetailsComponent implements OnInit {
   private accountsInTeam: Account[];
   private readyToDelete: boolean;
   private now: Date;
+  private solution: Solution;
 
-  public roleValidatedUser:Role;
-  public roleValidatedOrganizer:Role;
+  public roleValidatedUser: Role;
+  public roleValidatedOrganizer: Role;
 
   public classementProv: Team[];
   public classement;
@@ -59,7 +63,8 @@ export class ChallengeDetailsComponent implements OnInit {
   public constructor(private _challengeService: ChallengeService,
                      private _accountService: AccountService,
                      private _authenticationService: AuthenticationService,
-                     private _teamService: TeamService) {
+                     private _teamService: TeamService,
+                     private _fileService: FileService) {
     this._isModalShowed = false;
     this.readyToDelete = false;
     this.now = new Date();
@@ -357,4 +362,30 @@ export class ChallengeDetailsComponent implements OnInit {
     }
     return bestSol;
   }
+
+  public retrieveSolution(event: any): void {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      const componentThis = this;
+      reader.onload = function() {
+        componentThis.solution = new Solution();
+        componentThis.solution.name = componentThis._solutionName.nativeElement.value;
+        componentThis.solution.language = componentThis._solutionLanguage.nativeElement.value;
+        componentThis.solution.solution = reader.result;
+        componentThis.solution.version = 1.0;
+        componentThis.solution.ranking = Math.random() * 10;
+        componentThis.solution.submitDate = new Date();
+        componentThis.solution.solutionId = 0;
+      };
+    }
+  }
+
+  public uploadSolution(): void {
+    this._fileService.uploadFile(this.solution);
+    console.log(this.solution.solutionId);
+    $(this._uploadModal.nativeElement).modal('hide');
+  }
+
 }

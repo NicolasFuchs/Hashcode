@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `hashcodedb`.`solution` (
   `solution_id` INT          NOT NULL AUTO_INCREMENT,
   `name`        VARCHAR(100) NOT NULL,
   `language`    VARCHAR(100) NOT NULL,
-  `solution`    VARCHAR(100) NOT NULL,
+  `solution`    TEXT         NOT NULL,
   `version`     FLOAT        NOT NULL,
   `ranking`     FLOAT        NULL, -- Un ranking null est considéré comme pas évalué
   `submit_date` DATETIME     NOT NULL,

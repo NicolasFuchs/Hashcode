@@ -49,4 +49,8 @@ public class Solution {
   public LocalDateTime getSubmitDate() {
     return submitDate;
   }
+
+    public void setSolutionId(Integer solutionId) {
+        this.solutionId = solutionId;
+    }
 }

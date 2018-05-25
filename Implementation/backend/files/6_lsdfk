@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Quantum Composer</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/composer.css">
+    <link rel="stylesheet" type="text/css" href="css/context-menu.css">
+</head>
+
+<body>
+
+<div class="gate-box"></div>
+
+<div class="composer-wrapper">
+    <table class="composer-header">
+        <tr>
+            <td>Qubit 0</td>
+            <td><img src="img/init.svg"/></td>
+        </tr>
+        <tr>
+            <td>Qubit 1</td>
+            <td><img src="img/init.svg"/></td>
+        </tr>
+        <tr>
+            <td>Qubit 2</td>
+            <td><img src="img/init.svg"/></td>
+        </tr>
+        <tr>
+            <td>Qubit 3</td>
+            <td><img src="img/init.svg"/></td>
+        </tr>
+    </table>
+    <table class="composer" id="composer">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
+<div class="execute">
+    <button id="buttonExec" type="button">Execute</button>
+</div>
+
+<div id="result" class="result">
+    <table>
+        <tr>
+            <td>Qubit 0</td>
+            <td>Qubit 1</td>
+            <td>Qubit 2</td>
+            <td>Qubit 3</td>
+        </tr>
+        <tr>
+            <td>
+                <canvas width="250" height="250" id="canvas-qubit0"></canvas>
+            </td>
+            <td>
+                <canvas width="250" height="250" id="canvas-qubit1"></canvas>
+            </td>
+            <td>
+                <canvas width="250" height="250" id="canvas-qubit2"></canvas>
+            </td>
+            <td>
+                <canvas width="250" height="250" id="canvas-qubit3"></canvas>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Context menu -->
+<div class="context-menu">
+    <div class="context-menu-item">
+        <span>Remove</span>
+    </div>
+</div>
+
+</body>
+
+<script src="main-bundle.js"></script>
+
+</html>

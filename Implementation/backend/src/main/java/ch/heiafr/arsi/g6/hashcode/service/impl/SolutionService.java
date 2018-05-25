@@ -30,7 +30,9 @@ public class SolutionService implements ISolutionService {
 
   @Override
   public void createSolution(Solution solution) {
-    // Must be implanted!
+    List<Solution> sol = solutionRepository.findAll();
+    solution.setSolutionId(sol.get(sol.size()-1).getSolutionId() + 1);
+    //solutionRepository.save(solution);
   }
 
   @Override
