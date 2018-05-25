@@ -113,7 +113,7 @@
         <div class="form-group row">
           <label for="teamName" class="col col-form-label">Nom de groupe</label>
           <input #teamName type="text" class="col form-control" id="teamName" placeholder="Entrez un nom de groupe"
-                 [value]="team?.name" (keyup)="checkTeamName($event)">
+                 [value]="team?.name" (keyup)="checkTeamName()">
         </div>
         <div class="form-group row">
           <label for="addMember" class="col col-form-label">Ajouter un membre</label>
@@ -141,7 +141,7 @@
           <button type="button" class="btn btn-primary" (click)="deleteTeam()">Supprimer le groupe</button>
         </div>
         <div *ngIf="!team">
-          <button #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()">Inscrire le groupe
+          <button #createTeamButton type="button" class="btn btn-primary" (click)="createTeam()" data-dismiss="modal">Inscrire le groupe
           </button>
         </div>
       </div>

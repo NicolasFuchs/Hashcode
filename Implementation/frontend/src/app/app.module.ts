@@ -2,7 +2,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AppComponent} from './app.component';
-import {PersonComponent} from './component/person/person.component';
 import {AppRoutingModule} from './app-routing.module';
 import {PersonService} from './service/person.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -25,7 +24,6 @@ import {FileService} from './service/file.service';
 @NgModule({
   declarations: [
     AppComponent,
-    PersonComponent,
     HeaderComponent,
     HomeComponent,
     ProfileComponent,
