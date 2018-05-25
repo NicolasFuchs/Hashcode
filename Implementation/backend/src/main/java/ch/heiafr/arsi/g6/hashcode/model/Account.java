@@ -1,7 +1,9 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
+import ch.heiafr.arsi.g6.hashcode.serializer.OnlyTeamIdSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.util.List;
@@ -47,6 +49,7 @@ public class Account {
     joinColumns = @JoinColumn(name = "accountId"),
     inverseJoinColumns = @JoinColumn(name = "teamId")
   )
+  @JsonSerialize(using = OnlyTeamIdSerializer.class)
   private List<Team> teams;
 
   public Integer getAccountId() {

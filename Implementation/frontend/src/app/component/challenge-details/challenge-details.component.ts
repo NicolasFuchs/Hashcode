@@ -157,7 +157,12 @@ export class ChallengeDetailsComponent implements OnInit {
   }
 
   public createTeam(): void {
-    this._teamService.createTeam(new Team(this._teamName.nativeElement.value, this._));
+    console.log(this._teamName.nativeElement.value);
+    console.log(this.account);
+    this._teamService.createTeam(new Team(this._teamName.nativeElement.value,
+      this.challenge,
+      this.account,
+      this.accountsToAdd));
     console.log('Team created!');
   }
 

@@ -29,7 +29,7 @@ public class TeamService implements ITeamService {
 
   @Override
   public void createTeam(Team team) {
-    // Must be implanted!
+      teamRepository.save(team);
   }
 
   @Override

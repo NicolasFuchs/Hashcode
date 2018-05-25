@@ -1,7 +1,6 @@
 package ch.heiafr.arsi.g6.hashcode.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class Challenge {
 
   private LocalDateTime inscriptionDate;
 
-  private LocalDateTime  begin;
+  private LocalDateTime begin;
 
   private LocalDateTime end;
 
@@ -40,47 +39,71 @@ public class Challenge {
     return challengeId;
   }
 
+  public void setChallengeId(Integer challengeId) {
+    this.challengeId = challengeId;
+  }
+
   public String getName() {
     return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public Integer getNbTeams() {
     return nbTeams;
   }
 
+  public void setNbTeams(Integer nbTeams) {
+    this.nbTeams = nbTeams;
+  }
+
   public LocalDateTime getInscriptionDate() {
     return inscriptionDate;
-  }
-
-  public LocalDateTime getBegin() {
-    return begin;
-  }
-
-  public LocalDateTime getEnd() {
-    return end;
-  }
-
-  public String getMediaXml() {
-    return mediaXml;
-  }
-
-  public List<Account> getOrganizers() {
-    return organizers;
-  }
-
-  public List<Team> getParticipants() {
-    return participants;
   }
 
   public void setInscriptionDate(LocalDateTime inscriptionDate) {
     this.inscriptionDate = inscriptionDate;
   }
 
+  public LocalDateTime getBegin() {
+    return begin;
+  }
+
   public void setBegin(LocalDateTime begin) {
     this.begin = begin;
   }
 
+  public LocalDateTime getEnd() {
+    return end;
+  }
+
   public void setEnd(LocalDateTime end) {
     this.end = end;
+  }
+
+  public String getMediaXml() {
+    return mediaXml;
+  }
+
+  public void setMediaXml(String mediaXml) {
+    this.mediaXml = mediaXml;
+  }
+
+  public List<Account> getOrganizers() {
+    return organizers;
+  }
+
+  public void setOrganizers(List<Account> organizers) {
+    this.organizers = organizers;
+  }
+
+  public List<Team> getParticipants() {
+    return participants;
+  }
+
+  public void setParticipants(List<Team> participants) {
+    this.participants = participants;
   }
 }

@@ -3,6 +3,8 @@ package ch.heiafr.arsi.g6.hashcode.controller;
 import ch.heiafr.arsi.g6.hashcode.model.Team;
 import ch.heiafr.arsi.g6.hashcode.service.ITeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,8 +30,10 @@ public class TeamController {
     return null;
   }
 
-  public void createTeam(Team team) {
-    // Must be implanted!
+  @PutMapping
+  public void createTeam(@RequestBody Team team) {
+    System.out.println("----------------- " + team.getLeader());
+    teamService.createTeam(team);
   }
 
   public void deleteTeam(Team team) {
