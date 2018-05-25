@@ -4,6 +4,9 @@ import 'bootstrap';
 import {isNullOrUndefined} from 'util';
 import {Account} from '../../model/Account';
 import {AccountService} from '../../service/account.service';
+import {AuthenticationService} from '../../service/authentication.service';
+import {Roles} from '../../constant/roles';
+import { Role } from '../../model/Role';
 
 @Component({
   selector: 'app-challenge',
@@ -22,11 +25,25 @@ export class ChallengesComponent implements OnInit {
   public time: string;
   private accounts: Account[];
 
-  constructor(private _accountService: AccountService) {
+    public account: Account;
+
+    public roleValidatedUser:Role;
+    public roleValidatedOrganizer:Role;
+
+  constructor(private _accountService: AccountService,
+              private _authenticationService: AuthenticationService) {
     this.time = 'actual';
+    this.roleValidatedUser = Roles.VALIDATED_USER;
+    this.roleValidatedOrganizer = Roles.VALIDATED_ORGANIZER;
+
   }
 
   public ngOnInit(): void {
+
+    this.account = this._authenticationService.actual;
+    this._authenticationService.account.subscribe(account => {
+      this.account = account;
+    });
     const today = new Date();
     const date = today.getDate();
     const dd = (date < 10) ? '0' + date : date;

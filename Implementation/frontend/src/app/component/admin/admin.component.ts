@@ -6,7 +6,8 @@ import {AccountService} from '../../service/account.service';
 import {AuthenticationService} from '../../service/authentication.service';
 //import { Router } from '@angular/router';
 import * as $ from 'jquery';
-
+import {Roles} from '../../constant/roles';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -28,18 +29,32 @@ export class AdminComponent implements OnInit {
   public debug:string;
   public msgModal:string;
   private _isModalShowed: boolean;
+  public account: Account;
 
 
-
-  constructor(/*private _authenticationService: AuthenticationService,*/
+  constructor(
+    private _authenticationService: AuthenticationService,
     private _accountService: AccountService,
+    private router: Router
     ) {
       this._isModalShowed = false;
       this.msgModal = "[Pas de message]";
 }
 
   ngOnInit() {
-      this.debug = "default";
+
+
+      this.account = this._authenticationService.actual;
+      this._authenticationService.account.subscribe(account => {
+          this.account = account;
+          console.log("kaffakà");
+          if(this.account.role.name != Roles.ADMIN.name ){
+            this.router.navigate(['/home'])
+          }
+      });
+
+    //  if(!this.account) this.router.navigate(['/home'])
+
       //this.accountLogged = this._authenticationService.actual;
       //this._authenticationService.account.subscribe(accountLogged => this.accountLogged = accountLogged);
 

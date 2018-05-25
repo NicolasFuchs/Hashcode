@@ -11,14 +11,15 @@
     </label>
   </div>
 </div>
-
-<div>
+<div *ngIf="account?.role.name == roleValidatedOrganizer.name">
   <button type="button" class="btn btn-primary" (click)="showCreateChallengeModal()">Créer un concours</button>
 </div>
+
 
 <app-challenges-list time="past" *ngIf="time=='past'"></app-challenges-list>
 <app-challenge-details idChallenge=0 *ngIf="time=='actual'"></app-challenge-details>
 <app-challenges-list time="futur" *ngIf="time=='futur'"></app-challenges-list>
+
 
 <div #createChallengeModal id="createChallengeModal" class="modal" tabindex="-1" role="dialog" (click)="hideTrash($event)">
   <div class="modal-dialog" role="document">
@@ -30,10 +31,6 @@
         </button>
       </div>
       <div class="modal-body">
-
-
-
-
         <div class="container">
           <div class="row" stlye="float: none; margin: auto">
             <div class="form-group row">
@@ -42,19 +39,15 @@
             </div>
           </div>
           <div class="row">
-
             <div class="container">
               <div class="row">
                 <div class="col">
-
-
                   <div class="form-group row">
                     <label for="addOrganizer" class="col col-form-label">Ajouter un organisateur</label>
                     <input type="text" class="col form-control" id="addOrganizer" placeholder="Entrez le nom d'un organisateur" (focus)="addPotentialOrganizers()" (keyup)="addPotentialOrganizers()" list=organizers>
                     <datalist id="organizers"></datalist>
                     <button type="button" class="btn btn-primary" (click)="addOrganizer()">Ajouter</button>
                   </div>
-
                   <div class="card">
                     <div class="card-body">
                       <div class="table-wrapper-2">
@@ -64,14 +57,10 @@
                       </div>
                     </div>
                   </div>
-
-
                 </div>
                 <div class="col">
-
                   <label for="description">Description</label>
                   <textarea class="form-control" id="description"></textarea>
-
                 </div>
               </div>
               <div class="row">
