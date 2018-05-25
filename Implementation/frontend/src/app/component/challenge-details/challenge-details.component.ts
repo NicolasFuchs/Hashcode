@@ -173,6 +173,7 @@ export class ChallengeDetailsComponent implements OnInit {
       this.account,
       this.accountsToAdd));
     console.log('Team created!');
+
   }
 
   public modifyTeam(): void {

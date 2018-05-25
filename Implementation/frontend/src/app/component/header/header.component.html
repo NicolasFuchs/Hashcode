@@ -56,7 +56,7 @@
         <div class="form-group">
           <label for="passwordInput">Password</label>
           <input #passwordInput type="password" class="form-control" id="passwordInput"
-                 (keypress)="$event.code === 'Enter' ? login() : any">
+                 (keypress)="$event.code === 'Enter' ? login() : null">
         </div>
         <div class="text-danger">{{msgError}}</div>
       </div>
